@@ -22,7 +22,7 @@ public abstract class BaseRestController<T, ID extends Serializable>
 {
     private Logger logger = LoggerFactory.getLogger(BaseRestController.class);
 
-   private CrudRepository<T, ID> repo;
+    private CrudRepository<T, ID> repo;
 
 
     public BaseRestController(CrudRepository<T, ID> repo) {

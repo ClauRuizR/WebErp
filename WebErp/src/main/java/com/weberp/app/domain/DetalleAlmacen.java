@@ -49,6 +49,10 @@ public class DetalleAlmacen extends Auditable<String> {
 	@Version
 	private Long version;
 
+
+	@Transient
+	private String nombreAlmacenPadre;
+
 	public Long getId() {
 		return id;
 	}
@@ -129,4 +133,11 @@ public class DetalleAlmacen extends Auditable<String> {
 		this.almacen = almacen;
 	}
 
+	public String getNombreAlmacenPadre() {
+		return almacen.getNombre();
+	}
+
+	public void setNombreAlmacenPadre(String nombreAlmacenPadre) {
+		this.nombreAlmacenPadre = nombreAlmacenPadre;
+	}
 }

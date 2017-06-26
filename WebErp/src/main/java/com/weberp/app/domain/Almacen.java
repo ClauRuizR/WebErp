@@ -16,7 +16,11 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
-@Entity(name = "almacen")
+@Entity
+@NamedNativeQuery(name = "Almacen.findAlmacenByProducto",
+		query="SELECT count(*) FROM almacen al inner join detalle_almacen da on al.id= da.almacen_id where da.estado=1 and da.producto_id = ?1 and al.id= ?2 "
+)
+@Table(name = "almacen")
 public class Almacen extends Auditable<String> {
 
 	@Id

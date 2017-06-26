@@ -6,20 +6,11 @@
 <body>
 	<div th:fragment="content">
 		<div class="notifications top-rigth"></div>
-		<div id="page-content">
-			<div class="content-header">
+		<div id="page-content" ng-controller="productoEditController">
+			<input  hidden="hidden" th:attr="ng-init='id=\''+${id}+'\''"></input>
+			<div class="content-header" ng-init="init()">
 				<ul class="nav-horizontal text-center">
-					<!-- 	<li class="active"><a href="javascript:void(0)"><i
-							class="fa fa-home"></i> Home</a></li> -->
 				</ul>
-
-				<!-- 			<th:if test="${msg is not empty">
-					<div class="alert alert-success">
-						<strong th:text="${msg}"/>
-						
-					</div>
-
-				</th:if> -->
 				<div class="header-section">
 					<h1>
 						Formulario de Productos
@@ -28,10 +19,9 @@
 				</div>
 				<div class="row">
 					<form id="formProducto" class="form-horizontal form-bordered"
-						th:object="${producto}" method="post"
-						th:action="@{/productos/guardar}">
-						<input type="hidden" th:field="${producto.id}" /> <input
-							type="hidden" th:field="${producto.version}" />
+					>
+						<input type="hidden" ng-model="producto.id" /> <input
+							type="hidden" ng-model="producto.version" />
 						<div class="col-md-12">
 							<!-- Basic Form Elements Block -->
 							<div class="block" style="margin-left: 20px !important;">
@@ -44,14 +34,30 @@
 								</div>
 
 								<div class="col-md-6">
-									<div class="form-group has-error">
+
+
+									<div class="form-group">
+										<label class="col-md-3 control-label">Tipo Producto</label>
+										<div class="col-md-9">
+
+											<select  ng-model="producto.tipoProducto" id="selectTipoProductos"
+													 chosen=""
+
+
+													 options="listaTipoProductos"  ng-options="estado.nombre for estado in listaTipoProductos track by estado.id">
+												<option value="">Seleccione...</option>
+											</select>
+
+										</div>
+
+
+									</div>
+									<div class="form-group">
 										<label class="col-md-3 control-label">Nombre</label>
 										<div class="col-md-9">
 											<input type="text" id="example-text-input-1"
 												name="example-text-input" class="form-control"
-												placeholder="Nombre" th:field="${producto.nombre}" /> <span
-												class="help-block" th:if="${#fields.hasErrors('nombre')}"
-												th:errors="*{nombre}"> Producto Error</span>
+												placeholder="Nombre" ng-model="producto.nombre" />
 										</div>
 									</div>
 
@@ -60,77 +66,69 @@
 										<div class="col-md-9">
 											<input type="text" id="example-text-input-1"
 												name="example-text-input" class="form-control"
-												placeholder="Descripcion" th:field="${producto.descripcion}" />
+												placeholder="Descripcion" ng-model="producto.descripcion" />
 										</div>
 									</div>
-									<div class="form-group has-error">
+									<div class="form-group">
 										<label class="col-md-3 control-label">Codigo
 											Alfanumerico</label>
 										<div class="col-md-9">
 											<input type="text" id="example-text-input-1"
 												name="example-text-input" class="form-control"
 												placeholder="Codigo Alfanumerico 00001234"
-												th:field="${producto.codigoAlfanumerico}" /> <span
-												class="help-block"
-												th:if="${#fields.hasErrors('codigoAlfanumerico')}"
-												th:errors="*{codigoAlfanumerico}"> Producto Error</span>
+												ng-model="producto.codigoAlfanumerico" />
 										</div>
 									</div>
-									<div class="form-group has-error">
-										<label class="col-md-3 control-label" for="product-price">Precio</label>
+									<div class="form-group">
+										<label class="col-md-3 control-label" for="product-price">Precio Compra</label>
 										<div class="col-md-8">
 											<div class="input-group">
 												<div class="input-group-addon">
 													<i class="fa fa-usd"></i>
 												</div>
-												<input th:field="${producto.precio}" type="number"
+												<input ng-model="producto.precioCompra" type="number"
 													id="product-price" name="product-price"
-													class="form-control" placeholder="0,00" /> <span
-													class="help-block" th:if="${#fields.hasErrors('precio')}"
-													th:errors="*{precio}"> Producto Error</span>
+													class="form-control" placeholder="0,00" />
 											</div>
 										</div>
 									</div>
 
 
-									<div class="form-group has-error">
-										<label class="col-md-3 control-label">Tipo Producto</label>
-										<div class="col-md-9">
-
-											<select th:field="${producto.tipoProducto.id}"
-												class="select-chosen">
-												<option value="">Seleccione</option>
-												<option th:each="entry : ${tipoProductoList}"
-													th:value="${entry.id}" th:text="${entry.nombre}" />
-
-											</select> <span class="help-block"
-												th:if="${#fields.hasErrors('tipoProducto')}"
-												th:errors="*{tipoProducto}"> Producto Error</span>
+									<div class="form-group">
+										<label class="col-md-3 control-label" for="product-price">Precio Venta</label>
+										<div class="col-md-8">
+											<div class="input-group">
+												<div class="input-group-addon">
+													<i class="fa fa-usd"></i>
+												</div>
+												<input ng-model="producto.precioVenta" type="number"
+													   id="product-price" name="product-price"
+													   class="form-control" placeholder="0,00" />
+											</div>
 										</div>
 									</div>
+
 									<div class="form-group">
 										<label class="col-md-3 control-label">Cantidad</label>
 										<div class="col-md-9">
 											<input id="example-text-input-1" readonly="readonly"
 												name="example-text-input" class="form-control" type="number"
-												placeholder="Cantidad" th:field="${producto.cantidad}" />
+												placeholder="Cantidad" ng-model="producto.cantidad" />
 										</div>
 									</div>
 
 
 
-
-
-									<div class="form-group">
-										<label class="col-md-3 control-label" for="estado">Estado</label>
-										<div class="col-md-9">
-											<select id="estado" name="estado" class="form-control"
-												size="1" th:field="${producto.estado}">
-												<option value="1">Activo</option>
-												<option value="0">Inactivo</option>
-											</select>
-										</div>
-									</div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="estado">Estado</label>
+                                        <div class="col-md-9">
+                                            <select id="estado" name="estado" class="form-control"
+                                                    size="1" ng-model="producto.estado"
+                                                    ng-options="estado.value as estado.name for estado in estados">
+                                                <option value="">Seleccione...</option>
+                                            </select>
+                                        </div>
+                                    </div>
 								</div>
 
 								<div class="block">
@@ -159,17 +157,11 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr
-													th:each="listaDetalleAlmacen : ${listaAlmacen}">
+												<tr ng-repeat ="a in listaDetalleAlmacen">
 
 
-													<td id="tdPrecio" class="text-center"><label
-														class="form-control"
-														th:text="${listaDetalleAlmacen.almacen.nombre}"
-														 ></label></td>
-													<td id="tdCantidad" class="text-center"><label class="form-control"
-														th:text="${listaDetalleAlmacen.cantidad}"
-														></label></td>
+													<td id="tdPrecio" class="text-center"><label>	{{a.nombreAlmacenPadre}}</label></td>
+													<td id="tdCantidad" class="text-center"><label>	{{a.cantidad}}</label></td>
 
 
 
@@ -183,15 +175,17 @@
 									<div class="form-group form-actions"
 										style="margin-left: 20px !important;">
 										<div class="col-md-9 col-md-offset-3">
-											<button id="guardar" type="submit"
+											<button id="guardar" ng-click="saveProducto(producto)"
 												class="btn btn-alt btn-sm btn-primary">
 												<i class="fa fa-angle-right"></i> Guardar
 											</button>
 
 											<a class="btn btn-alt btn-sm btn-default"
-												th:href="@{/productos/crear}">Agregar Otro</a> <a
+												href="/productos/crear">Agregar Otro</a> <a
 												class="btn btn-alt btn-sm btn-default"
-												th:href="@{/productos}"><i class="gi gi-exit"></i> Salir</a>
+												href="/productos"><i class="gi gi-exit"></i> Salir</a>
+												 <a class="btn btn-alt btn-sm btn-default" onclick="goBack()"><i
+												class="gi gi-exit"></i> Regresar</a>
 										</div>
 									</div>
 								</div>

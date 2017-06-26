@@ -26,7 +26,11 @@ public class Producto extends Auditable<String> {
 	private String descripcion;
 
 	@NotNull
-	private BigDecimal precio = BigDecimal.ZERO;
+	private BigDecimal precioVenta = BigDecimal.ZERO;
+
+
+	@NotNull
+	private BigDecimal precioCompra = BigDecimal.ZERO;
 
 	@ManyToOne
 	@JoinColumn(name="tipo_producto_id")
@@ -36,8 +40,8 @@ public class Producto extends Auditable<String> {
 
 	private Integer estado = 1;
 
-	@Transient
-	private Long cantidad;
+	@Column(name="cantidad")
+	private Long cantidad = 0L;
 
 	@CreatedDate
 	private Date creadoEn;
@@ -78,12 +82,20 @@ public class Producto extends Auditable<String> {
 		this.descripcion = descripcion;
 	}
 
-	public BigDecimal getPrecio() {
-		return precio;
+	public BigDecimal getPrecioVenta() {
+		return precioVenta;
 	}
 
-	public void setPrecio(BigDecimal precio) {
-		this.precio = precio;
+	public void setPrecioVenta(BigDecimal precioVenta) {
+		this.precioVenta = precioVenta;
+	}
+
+	public BigDecimal getPrecioCompra() {
+		return precioCompra;
+	}
+
+	public void setPrecioCompra(BigDecimal precioCompra) {
+		this.precioCompra = precioCompra;
 	}
 
 	public TipoProducto getTipoProducto() {

@@ -22,7 +22,11 @@ public class FacturaValidator implements Validator {
 
 		Factura factura = (Factura) target;
 
-		if (factura.getTipoDocumento().getLlaveDocumento().equals(""))
+
+		if(null ==factura)
+			errors.rejectValue("factura", "factura", "No puede grabar el formulario vacio");
+
+		if (null == factura.getTipoDocumento().getLlaveDocumento())
 			errors.rejectValue("tipoDocumento", "tipoDocumento", "El Tipo Documento es obligatorio.");
 		if (null == factura.getCliente().getId())
 			errors.rejectValue("cliente", "cliente", "El cliente es obligatorio.");
@@ -30,25 +34,27 @@ public class FacturaValidator implements Validator {
 		if (BigDecimal.ZERO.compareTo(factura.getDescuento()) > 0)
 			errors.rejectValue("descuento", "descuento", "El descuento no puede ser negativo");
 
+
+		//TODO: VERIFICAR VALIDACION DEL DETALLE DE FACTURAS, AL MOMENTO DE CREARLAS.
 		for (int i = 0; i < factura.getDetalleFactura().size(); i++) {
 			DetalleFactura detalleFactura = factura.getDetalleFactura().get(i);
 
 			if (null == detalleFactura.getProducto().getId())
 				errors.rejectValue("DetalleFactura[" + i + "].producto", "DetalleFactura[" + i + "].producto",
 						"El producto es obligatorio.");
+			if(detalleFactura.getProducto().getTipoProducto().isFacturable()) {
+				if (null == detalleFactura.getPrecio())
+					errors.rejectValue("DetalleFactura[" + i + "].precio", "DetalleFactura[" + i + "].precio",
+							"El precio es obligatorio.");
 
-			if (null==detalleFactura.getPrecio())
-				errors.rejectValue("DetalleFactura[" + i + "].precio", "DetalleFactura[" + i + "].precio",
-						"El precio es obligatorio.");
-			
-			if (detalleFactura.getPrecio().equals(BigDecimal.ZERO))
-				errors.rejectValue("DetalleFactura[" + i + "].precio", "DetalleFactura[" + i + "].precio",
-						"El precio no puede ser cero.");
-			
-			if (BigDecimal.ZERO.compareTo(detalleFactura.getPrecio()) > 0)
-				errors.rejectValue("DetalleFactura[" + i + "].precio", "DetalleFactura[" + i + "].precio",
-						"El precio no puede ser negativo.");
+				if (detalleFactura.getPrecio().equals(BigDecimal.ZERO))
+					errors.rejectValue("DetalleFactura[" + i + "].precio", "DetalleFactura[" + i + "].precio",
+							"El precio no puede ser cero.");
 
+				if (BigDecimal.ZERO.compareTo(detalleFactura.getPrecio()) > 0)
+					errors.rejectValue("DetalleFactura[" + i + "].precio", "DetalleFactura[" + i + "].precio",
+							"El precio no puede ser negativo.");
+			}
 			if (null==detalleFactura.getCantidad())
 				errors.rejectValue("DetalleFactura[" + i + "].cantidad", "DetalleFactura[" + i + "].cantidad",
 						"La cantidad es obligatorio.");

@@ -56,8 +56,7 @@ public class TipoProductoController extends BaseController {
 
 	@RequestMapping("")
 	public String list(Model model) {
-		model.addAttribute("listaTipoProductos", tipoProductoService.listaTipoProductos());
-		model.addAttribute("tipoProductoDTO", new TipoProductoDTO());
+
 		setUsuario(model);
 		return "Mantenimientos/ConsultaTipoProductos";
 
@@ -65,50 +64,25 @@ public class TipoProductoController extends BaseController {
 
 	@RequestMapping("crear")
 	public String crear(Model model) {
-		model.addAttribute("tipoproducto", new TipoProducto());
+
 		setUsuario(model);
 		return "Mantenimientos/FormularioTipoProducto";
 	}
 
-	@RequestMapping(value = "guardar", method = RequestMethod.POST)
-	public String guardar(@ModelAttribute("tipoproducto") TipoProducto tipoproducto, BindingResult result,
-			Model model) {
-		setUsuario(model);
-		tipoProductoValidator.validate(tipoproducto, result);
-		if (result.hasErrors()) {
-			System.err.println(result.getFieldError());
-			return "Mantenimientos/FormularioTipoProducto";
-		}
-		tipoProductoService.guardar(tipoproducto);
 
-		return "redirect:/tipoproductos";
-	}
 
 	@RequestMapping("editar/{id}")
 	public String editar(@PathVariable Long id, Model model) {
-		model.addAttribute("tipoproducto", tipoProductoService.getTipoProductoById(id));
+
+		model.addAttribute("id",id);
 		setUsuario(model);
 		return "Mantenimientos/FormularioTipoProducto";
-	}
-
-	@RequestMapping(value = "/buscarTipoProductos", method = RequestMethod.POST)
-	public String buscarPor(TipoProductoDTO tipoProductoDTO, Model model) {
-		setUsuario(model);
-		List<TipoProducto> listaTipoProductos = new ArrayList<>();
-		try {
-			listaTipoProductos = tipoProductoService.buscarTipoProducto(tipoProductoDTO);
-			model.addAttribute("listaTipoProductos", listaTipoProductos);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return "Mantenimientos/ConsultaTipoProductos";
 	}
 
 	@RequestMapping(value = "generaExcel", method = RequestMethod.GET)
 	@ResponseBody
 	public String generarExcel(HttpServletRequest request, HttpServletResponse response) {
-		List<TipoProducto> tipoProducto = tipoProductoService.listaTipoProductos();
+		List<TipoProducto> tipoProducto = tipoProductoService.listaTipoProductoPorEmpresa();
 
 		try {
 			

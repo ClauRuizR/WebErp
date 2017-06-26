@@ -3,8 +3,8 @@
 
 	<div class='notifications top-rigth'></div>
 
-	<div id="page-content">
-		<div class="content-header">
+	<div id="page-content" ng-controller="productoConsultaController">
+		<div class="content-header" ng-init="init()">
 			<ul class="nav-horizontal text-center">
 				<!-- 	<li class="active"><a href="javascript:void(0)"><i
 							class="fa fa-home"></i> Home</a></li> -->
@@ -27,19 +27,21 @@
 
 			<div class="form-group">
 				<label class="col-md-3 control-label" for="example-text-input">Buscar</label>
-				<form th:action="@{/productos/buscarProductos}" method="post"
-					th:object="${productoDTO}">
+				<form >
 					<div class="col-md-5">
 
 
 						<input type="text" id="example-text-input"
-							th:field="${productoDTO.nombre}" name="txtBuscar"
-							class="form-control" placeholder="Nombre " />
+							ng-model="codigoAlfaNumerico" name="txtBuscar"
+							class="form-control" placeholder="Codigo Alfanúmerico " />
 
 					</div>
 
-					<button type="submit" class="btn btn-alt btn-sm btn-warning">
+					<button type="submit" class="btn btn-alt btn-sm btn-warning" ng-click="filtrarPorCodigoAlfaNumerico()">
 						<i class="gi gi-search"></i> Buscar
+					</button>
+					<button type="submit" class="btn btn-success" ng-click="pageChanged()">
+						<i class="hi hi-refresh"></i> Refrescar
 					</button>
 				</form>
 			</div>
@@ -55,7 +57,7 @@
 			<div class="table-responsive">
 
 				<a class="btn btn-alt btn-sm btn-success"
-					th:href="@{/productos/crear}"> <i class="hi hi-plus-sign"></i>
+					href="/productos/crear"> <i class="hi hi-plus-sign"></i>
 					Crear Producto
 				</a>
 
@@ -64,9 +66,12 @@
 					<thead>
 						<tr>
 							<th class="text-center">N&uacute;mero</th>
+							<th class="text-center">Tipo</th>
+
 							<th class="text-center">Nombre</th>
-							<th class="text-center">Codigo Alfanumerico</th>
-							<th class="text-center">Precio</th>
+							<th class="text-center">Codigo Alfanúmerico</th>
+							<th class="text-center">Precio Venta</th>
+							<th class="text-center">Precio Compra</th>
 							<th class="text-center">Cantidad</th>
 							<th class="text-center">Estado</th>
 							<th class="text-center">Editar</th>
@@ -76,19 +81,21 @@
 					</thead>
 
 					<tbody>
-						<tr th:each="producto, rowStat : ${listaProductos}">
-							<td class="text-center"><span th:text="${producto.id}"></span></td>
-							<td class="text-center"><span th:text="${producto.nombre}"></span></td>
-							<td class="text-center"><span
-								th:text="${producto.codigoAlfanumerico}"></span></td>
-							<td class="text-center"><span th:text="${producto.precio}"></span></td>
-							<td class="text-center"><span th:text="${producto.cantidad}"></span></td>
-							<td class="text-center" th:if="${producto.estado}==1"><a
-								href="javascript:void(0)" class="label label-primary">Activo</a></td>
-							<td class="text-center" th:if="${producto.estado}==0"><a
-								href="javascript:void(0)" class="label label-danger">Inactivo</a></td>
+						<tr ng-repeat ="a in listaProductos">
+							<td class="text-center"><span>{{a.id}}</span></td>
+							<td class="text-center"><span>{{a.tipoProducto.nombre}}</span></td>
+							<td class="text-center"><span>{{a.nombre}}</span></td>
+							<td class="text-center"><span>{{a.codigoAlfanumerico}}</span></td>
+							<td class="text-center"><span>{{a.precioVenta}}</span></td>
+							<td class="text-center"><span>{{a.precioCompra}}</span></td>
+							<td class="text-center"><span>{{a.cantidad}}</span></td>
+
+							<td class="text-center" ng-show="a.estado==1"><a
+									href="javascript:void(0)" class="label label-primary">Activo</a></td>
+							<td class="text-center" ng-show="a.estado==0"><a
+									href="javascript:void(0)" class="label label-danger">Inactivo</a></td>
 							<td class="text-center"><a
-								th:href="@{/productos/editar/}+ ${producto.id}"><i
+									href="/productos/editar/{{a.id}}"><i
 									class="fa fa-pencil-square-o"></i></a></td>
 
 						</tr>
@@ -98,23 +105,21 @@
 					<div class="col-sm-5 hidden-xs">
 						<div class="dataTables_info" id="example-datatable_info"
 							role="status" aria-live="polite">
-							<strong>1</strong>-<strong>10</strong> of <strong>60</strong>
+
 						</div>
 					</div>
 					<div class="col-sm-7 col-xs-12 clearfix">
 						<div class="dataTables_paginate paging_bootstrap"
 							id="example-datatable_paginate">
-							<ul class="pagination pagination-sm remove-margin">
-								<li class="prev disabled"><a href="javascript:void(0)"><i
-										class="fa fa-chevron-left"></i> </a></li>
-								<li class="active"><a href="javascript:void(0)">1</a></li>
-								<li><a href="javascript:void(0)">2</a></li>
-								<li><a href="javascript:void(0)">3</a></li>
-								<li><a href="javascript:void(0)">4</a></li>
-								<li><a href="javascript:void(0)">5</a></li>
-								<li class="next"><a href="javascript:void(0)"> <i
-										class="fa fa-chevron-right"></i></a></li>
-							</ul>
+							<ul class="pull-right"
+								ng-change="pageChanged()"
+								uib-pagination=""
+								previous-text="Anterior"
+								next-text="Siguiente"
+								total-items="totalItems"
+								items-per-page="itemsPerPage"
+								max-size="10"
+								ng-model="page"></ul>
 						</div>
 					</div>
 				</div>

@@ -9,7 +9,8 @@ CREATE TABLE `producto` (
   `descripcion` varchar(255) DEFAULT NULL,
   `estado` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
-  `precio` decimal(19,2) NOT NULL,
+  `precio_venta` decimal(19,2) NOT NULL,
+   `precio_compra` decimal(19,2) NOT NULL,
   `tipo_producto_id` bigint(20) NOT NULL,
   `version` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)

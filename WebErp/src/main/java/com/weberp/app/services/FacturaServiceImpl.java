@@ -1,31 +1,35 @@
 package com.weberp.app.services;
 
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.persistence.EntityManager;
 
-import org.apache.commons.lang.StringUtils;
+import com.weberp.app.common.model.UsuarioUtil;
+import com.weberp.app.domain.*;
+import com.weberp.app.dto.FacturaDTO;
+import com.weberp.app.dto.config.ConfigMapper;
+import com.weberp.app.utils.Utility;
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.weberp.app.domain.Almacen;
-import com.weberp.app.domain.Cliente;
-import com.weberp.app.domain.DetalleFactura;
-import com.weberp.app.domain.DiarioGeneral;
-import com.weberp.app.domain.Factura;
-import com.weberp.app.domain.Impuesto;
-import com.weberp.app.domain.MovimientoInventario;
-import com.weberp.app.domain.Producto;
-import com.weberp.app.domain.TipoDocumento;
 import com.weberp.app.enums.EstatusEnum;
-import com.weberp.app.enums.ImpuestoEnum;
-import com.weberp.app.enums.MovimientoInventarioEnums;
-import com.weberp.app.enums.TipoDocumentoEnums;
+import com.weberp.app.enums.TipoImpuesto;
+import com.weberp.app.enums.TipoMovimientoInventario;
+import com.weberp.app.enums.TipoDocumentoEnum;
+import com.weberp.app.exception.FacturaException;
 import com.weberp.app.model.TipoFactura;
 import com.weberp.app.repositories.FacturaRepository;
 
@@ -33,8 +37,8 @@ import com.weberp.app.repositories.FacturaRepository;
  * Created by claudioruiz on 7/27/16.
  */
 @Service
-@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor=Exception.class)
-public class FacturaServiceImpl implements FacturaService {
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+public class FacturaServiceImpl extends ConfigMapper implements FacturaService  {
 
 	Factura factura;
 
@@ -43,7 +47,11 @@ public class FacturaServiceImpl implements FacturaService {
 	Cliente cliente;
 
 	@Autowired
+	private ModelMapper modelMapper;
+
+	@Autowired
 	private EntityManager entityManager;
+
 	@Autowired
 	private AlmacenService almacenService;
 
@@ -56,11 +64,12 @@ public class FacturaServiceImpl implements FacturaService {
 	@Autowired
 	private ImpuestoService impuestoService;
 
-	@Autowired
-	private ClienteService clienteService;
 
 	@Autowired
-	private ProductoService productoService;
+	private ProduccionProductoService produccionProductoService;
+
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@Autowired
 	private MovimientoInventarioService moviemintoInventarioService;
@@ -72,47 +81,51 @@ public class FacturaServiceImpl implements FacturaService {
 	private DiarioGeneralService diarioGeneralService;
 
 	@Override
-	public List<Factura> listaFacturas() {
+	public Page<FacturaDTO> listaFacturas(Pageable pageRequest) {
+		Long empresaId = UsuarioUtil.getCurrentUserEmpresa().getEmpresa().getId();
 
-		return (List<Factura>) facturaRepository.findAll();
+		 Page<Factura> facturaPage = facturaRepository.findByEmpresa_Id(empresaId,pageRequest);
+
+		final Page<FacturaDTO> contactDtoPage = facturaPage.map(this::convertFacturaToDto);
+		return contactDtoPage;
 	}
+
+
 
 	@Override
 	public Factura guardar(Factura factura) {
+        validaFactura(factura);
+		Empresa   empresa = UsuarioUtil.getCurrentUserEmpresa().getEmpresa();
 
-		List<Factura> listFactura = new ArrayList<>();
 
-		Impuesto impuesto = impuestoService.findByLlaveAndEstado(ImpuestoEnum.ITBIS, 1);
-		TipoDocumento tipoDocumento = tipoDocumentoService
-				.buscarTipoDocumentoPorLlave(factura.getTipoDocumento().getLlaveDocumento());
-		factura.setTipoDocumento(tipoDocumento);
+		Impuesto impuesto = impuestoService.findByLlaveAndEstado(TipoImpuesto.ITBIS, 1);
 
-		cliente = clienteService.getClienteById(factura.getCliente().getId());
-		listFactura.add(factura);
 
-		factura.setCliente(cliente);
+        factura.setEmpresa(empresa);
 		if (null == factura.getId()) {
 
-			factura.setNumeroDocumento(tipoDocumento.getLlaveDocumento() + "-"
-					+ StringUtils.leftPad(tipoDocumento.getNumeroControl().toString(), 5, "0"));
+            factura.setFecha(new Date());
 
-			tipoDocumentoService.incrementaNumeroControl(tipoDocumento.getLlaveDocumento());
+			String numeroDocumento = tipoDocumentoService.getNumeroDocumento(factura.getTipoDocumento().getLlaveDocumento(),empresa.getId());
+
+			factura.setNumeroDocumento(numeroDocumento);
+
+			tipoDocumentoService.incrementaNumeroControl(factura.getTipoDocumento().getLlaveDocumento(),empresa.getId());
 
 		}
-		List<DetalleFactura> listaDetalleAlmacen = new ArrayList<>();
-
-		factura.setFecha(new Date());
 
 		for (int i = 0; i < factura.getDetalleFactura().size(); i++) {
 			factura.getDetalleFactura().get(i).setFactura(factura);
 
-			producto = productoService.getProductoById(factura.getDetalleFactura().get(i).getProducto().getId());
-			listaDetalleAlmacen.add(factura.getDetalleFactura().get(i));
+			if(factura.getDetalleFactura().get(i).getProducto().getTipoProducto().isFacturable()) {
+				factura.getDetalleFactura().get(i).setMonto(factura.getDetalleFactura().get(i).getTotal());
+				factura.getDetalleFactura().get(i).setItbis(factura.getDetalleFactura().get(i).getTotal()
+						.multiply(impuesto.getValor()).divide(new BigDecimal(100)));
+			}else{
+				factura.getDetalleFactura().get(i).setItbis(new BigDecimal(0));
+				factura.getDetalleFactura().get(i).setMonto(new BigDecimal(0));
+			}
 
-			factura.getDetalleFactura().get(i).setProducto(producto);
-			factura.getDetalleFactura().get(i).setMonto(factura.getDetalleFactura().get(i).getTotal());
-			factura.getDetalleFactura().get(i).setItbis(factura.getDetalleFactura().get(i).getTotal()
-					.multiply(impuesto.getValor()).divide(new BigDecimal(100)));
 
 		}
 		if (factura.isComprobanteFiscal()) {
@@ -146,9 +159,21 @@ public class FacturaServiceImpl implements FacturaService {
 		return listaTipoFactura;
 	}
 
-	public Factura validaFactura(Factura factura) {
 
-		return factura;
+	public void validaFactura(Factura factura) {
+
+	Long[] productosId= new Long[factura.getDetalleFactura().size()];
+
+	for(int i = 0; i < factura.getDetalleFactura().size();i++){
+
+		productosId[i] = factura.getDetalleFactura().get(i).getProducto().getId();
+	}
+
+	if(Utility.checkDuplicated_withSet(productosId)){
+		throw new IllegalArgumentException("Existen productos duplicados en el detalle de la factura.");
+
+	}
+
 
 	}
 
@@ -157,40 +182,61 @@ public class FacturaServiceImpl implements FacturaService {
 
 		factura = facturaRepository.findOne(Id);
 
-		MovimientoInventario movimientoInventario;
+		com.weberp.app.domain.MovimientoInventario movimientoInventario;
 
 		try {
 			if (factura.getEstatus().equals(EstatusEnum.PENDIENTE)) {
 
 				List<DetalleFactura> detalleFactura = factura.getDetalleFactura();
+				Almacen almacen = almacenService.findByPrincipalAndEstado(true, 1);
+
+				if (null == almacen) {
+					throw new FacturaException(
+							"Almacen debe estar creado para aprobar la factura " + factura.getNumeroDocumento());
+				}
+				List<MovimientoInventario> movimientoInventarioList = new ArrayList<>();
+				ConcurrentHashMap<Long,Long> productosSalida = new ConcurrentHashMap<Long,Long>();
+
 
 				for (int i = 0; i < detalleFactura.size(); i++) {
-					Almacen almacen = almacenService.findByPrincipalAndEstado(true, 1);
+
 					movimientoInventario = new MovimientoInventario();
 
 					movimientoInventario.setCantidad(detalleFactura.get(i).getCantidad());
 					movimientoInventario.setProducto(detalleFactura.get(i).getProducto());
 					movimientoInventario.setNumeroDocumento(factura.getNumeroDocumento());
 					movimientoInventario.setTipoDocumento(factura.getTipoDocumento());
-					movimientoInventario.setTipoMovimiento(MovimientoInventarioEnums.SALIDA);
+					movimientoInventario.setTipoMovimiento(TipoMovimientoInventario.SALIDA);
 					movimientoInventario.setAlmacen(almacen);
 
-					moviemintoInventarioService.guardar(movimientoInventario);
 
-					almacenService.afectaCantidadSalidaProductos(detalleFactura.get(i).getProducto().getId(),
+
+
+					movimientoInventarioList.add(movimientoInventario);
+
+					productosSalida.put(detalleFactura.get(i).getProducto().getId(),
 							detalleFactura.get(i).getCantidad());
 
+
 				}
+
+				almacenService.afectaSalidaProductosBatch(productosSalida);
+
+                produccionProductoService.generaProduccionProducto(factura.getDetalleFactura(),factura.getNumeroDocumento());
+
+				moviemintoInventarioService.saveBatch(movimientoInventarioList);
+
+
 				factura.setEstatus(EstatusEnum.APROBADO);
 				facturaRepository.save(factura);
+				return true;
 
 			}
 
-		} catch (Exception ex) {
+		} catch (FacturaException	 ex) {
 			return false;
-		} finally {
-			return true;
 		}
+		return false; 
 
 	}
 
@@ -206,19 +252,20 @@ public class FacturaServiceImpl implements FacturaService {
 		diarioGeneral.setNumeroDocumento(factura.getNumeroDocumento());
 		diarioGeneral.setDescripcion("VENTA AL CLIENTE: " + factura.getCliente().getNombre());
 		diarioGeneral.setDebito(factura.getMontoTotal());
-
+		diarioGeneral.setCredito(new BigDecimal(0));
+		diarioGeneral.setEmpresa(factura.getEmpresa());
 		facturaRepository.save(factura);
 		diarioGeneralService.guardar(diarioGeneral);
 
 	}
 
 	@Override
-	public void cambiarEstatusFactura(Factura factura) {
+	public Factura cambiarEstatusFactura(Factura factura) {
 		String[] tipoDocumento = factura.getNumeroDocumento().split("-");
+		Long idFactura=0L;
+		if (tipoDocumento[0].toString().equals(TipoDocumentoEnum.FACTURA)) {
 
-		if (tipoDocumento[0].toString().equals(TipoDocumentoEnums.FACTURA)) {
-
-			Long idFactura = factura.getId();
+			idFactura = factura.getId();
 
 			if (factura.getEstatus().equals(EstatusEnum.APROBADO)
 					&& !validEstatusActualFactura(idFactura, factura.getEstatus())) {
@@ -230,6 +277,9 @@ public class FacturaServiceImpl implements FacturaService {
 				pagarFactura(idFactura);
 			}
 		}
+
+		factura = facturaRepository.findOne(idFactura);
+		return factura;
 
 	}
 
@@ -246,4 +296,22 @@ public class FacturaServiceImpl implements FacturaService {
 
 		return facturaRepository.findByEstatus(EstatusEnum.APROBADO);
 	}
+
+	@Override
+	public Page<FacturaDTO> findPaginated(int page, int size) {
+		Page<Factura> facturaPage=  (facturaRepository.findAll(new PageRequest(page,size)));
+
+		final Page<FacturaDTO> contactDtoPage = facturaPage.map(this::convertFacturaToDto);
+		return contactDtoPage;
+	}
+
+	@Override
+	public Page<FacturaDTO> findFacturaAndPaginated(String numeroDocumento, Pageable pageRequest) {
+		Page<Factura> facturaPage=  facturaRepository.findByNumeroDocumento(numeroDocumento,pageRequest);
+
+		final Page<FacturaDTO> contactDtoPage = facturaPage.map(this::convertFacturaToDto);
+		return contactDtoPage;
+	}
+
+
 }

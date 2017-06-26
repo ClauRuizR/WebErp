@@ -3,8 +3,8 @@
 
 	<div class='notifications top-rigth'></div>
 
-	<div id="page-content">
-		<div class="content-header">
+	<div id="page-content" ng-controller="ordenCompraConsultaController">
+		<div class="content-header" ng-init="init()" >
 			<ul class="nav-horizontal text-center">
 				<!-- 	<li class="active"><a href="javascript:void(0)"><i
 							class="fa fa-home"></i> Home</a></li> -->
@@ -27,25 +27,27 @@
 
 			<div class="form-group">
 				<label class="col-md-3 control-label" for="example-text-input">Buscar</label>
-				<form th:action="@{/ordencompras/buscarOrdenCompra}" method="post"
-					th:object="${ordenCompraDTO}">
+				<form >
 					<div class="col-md-5">
 
 
 						<input type="text" id="example-text-input"
-							th:field="${ordenCompraDTO.Id}" name="txtBuscar"
+							ng-model="numeroOrdenCompra" name="txtBuscar"
 							class="form-control" placeholder="Numero Orden Compra " />
 
 					</div>
 
-					<button type="submit" class="btn btn-alt btn-sm btn-warning">
+					<button type="submit" class="btn btn-alt btn-sm btn-warning" ng-click="filtrarPorNumeroOrden()">
 						<i class="gi gi-search"></i> Buscar
+					</button>
+					<button type="submit" class="btn btn-success" ng-click="pageChanged()">
+						<i class="hi hi-refresh"></i> Refrescar
 					</button>
 				</form>
 			</div>
 		</div>
 
-		<div class="block">
+		<div class="block" ng-init="init()">
 			<!-- Table Styles Title -->
 			<div class="block-title"></div>
 			<div class="table-options clearfix">
@@ -66,8 +68,8 @@
 							<th class="text-center">Id</th>
 							<th class="text-center">N&uacute;mero Orden</th>
 							<th class="text-center">Proveedor</th>
+							<th class="text-center">Monto Total</th>
 							<th class="text-center">Estatus</th>
-
 							<th class="text-center">Editar</th>
 							<th class="text-center">Ver</th>
 							<th class="text-center"></th>
@@ -76,47 +78,41 @@
 					</thead>
 
 					<tbody>
-						<tr th:each="ordenCompra, rowStat : ${listaOrdenCompras}">
-							<td class="text-center"><span th:text="${ordenCompra.id}"></span></td>
-							<td class="text-center"><span
-								th:text="${ordenCompra.numeroOrdenCompra}"></span></td>
-							<td class="text-center"><span
-								th:text="${ordenCompra.proveedor.nombre}"></span></td>
-
-
-							<td class="text-center"><span
-								th:text="${ordenCompra.estatusNombre}"></span></td>
+						<tr ng-repeat="oc in ordencompra  | filter: {estatusNombre: 'Pagada'} || {estatusNombre: 'Pendiente'}">
+							<td class="text-center"><span><span>{{oc.id}}</span></span></td>
+							<td class="text-center"><span><span>{{oc.numeroOrdenCompra}}</span></span></td>
+							<td class="text-center"><span><span>{{oc.proveedor.nombre}}</span></span></td>
+							<td class="text-center"><span><span>{{oc.montoTotal}}</span></span></td>
+							<td class="text-center"><span><span>{{oc.estatusNombre}}</span></span></td>
 							<td class="text-center"><a
-								th:href="@{/ordencompras/editar/}+ ${ordenCompra.id}"><i
+									href="/ordencompras/editar/{{oc.id}}"><i
 									class="fa fa-pencil-square-o"></i></a></td>
 							<td class="text-center"><a
-								th:href="@{/ordencompras/view/}+ ${ordenCompra.id}"><i
+								href="/ordencompras/view/{{oc.id}}"><i
 									class="fa fa-external-link"></i></a></td>
 
 						</tr>
 					</tbody>
 				</table>
-					<div class="row">
+				<div class="row">
 					<div class="col-sm-5 hidden-xs">
 						<div class="dataTables_info" id="example-datatable_info"
 							role="status" aria-live="polite">
-							<strong>1</strong>-<strong>10</strong> of <strong>60</strong>
+
 						</div>
 					</div>
 					<div class="col-sm-7 col-xs-12 clearfix">
 						<div class="dataTables_paginate paging_bootstrap"
 							id="example-datatable_paginate">
-							<ul class="pagination pagination-sm remove-margin">
-								<li class="prev disabled"><a href="javascript:void(0)"><i
-										class="fa fa-chevron-left"></i> </a></li>
-								<li class="active"><a href="javascript:void(0)">1</a></li>
-								<li><a href="javascript:void(0)">2</a></li>
-								<li><a href="javascript:void(0)">3</a></li>
-								<li><a href="javascript:void(0)">4</a></li>
-								<li><a href="javascript:void(0)">5</a></li>
-								<li class="next"><a href="javascript:void(0)"> <i
-										class="fa fa-chevron-right"></i></a></li>
-							</ul>
+							<ul class="pull-right"
+								ng-change="pageChanged()"
+								uib-pagination=""
+								previous-text="Anterior"
+								next-text="Siguiente"
+								total-items="totalItems"
+								items-per-page="itemsPerPage"
+								max-size="10"
+								ng-model="page"></ul>
 						</div>
 					</div>
 				</div>

@@ -18,7 +18,8 @@ public class LocalidadValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre", "nombre", "El nombre es obligatorio.");
-		
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "empresa", "empresa", "La empresa es obligatorio.");
+
 	}
 
 }

@@ -1,30 +1,44 @@
 package com.weberp.app.controllers;
 
+import com.weberp.app.common.view.BaseController;
 import com.weberp.app.domain.Usuario;
 import com.weberp.app.services.UsuarioService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping(value="/usuarios")
-public class UsuarioController {
+public class UsuarioController extends BaseController {
 
     private UsuarioService usuarioService;
 
     public UsuarioController(UsuarioService usuarioService){
-        this.usuarioService = usuarioService;
+        super(usuarioService);
     }
 
-    @RequestMapping(value = "cambiarContrasena", method = RequestMethod.POST)
-    public String guardar(Usuario usuario) {
+    @Secured("ROLE_ADMIN")
+    @RequestMapping()
+    public String consultaUsuarios(Model model) {
 
-
-        try{
-            usuarioService.cambiarClave(usuario.getUsuario(),usuario.getClave());
-        }catch (Exception ex){
-            return "false";
-        }
-
-        return "OK";
+        return "Seguridad/ConsultaUsuarios";
     }
+    @Secured("ROLE_ADMIN")
+    @RequestMapping("/editar/{id}")
+    public String formularioUsuarios(@PathVariable Long id, Model model) {
+        model.addAttribute("id",id);
+        return "Seguridad/FormularioUsuario";
+    }
+
+
+    @Secured("ROLE_ADMIN")
+    @RequestMapping("crear")
+    public String crear(Model model) {
+
+        setUsuario(model);
+        return "Seguridad/FormularioUsuario";
+    }
+
+
 }

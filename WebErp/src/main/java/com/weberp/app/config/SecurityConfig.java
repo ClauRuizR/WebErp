@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,8 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureAuth(AuthenticationManagerBuilder auth) throws Exception{
 		auth.userDetailsService(userService)
-			.passwordEncoder(passwordEncoder()) //to enable password encryption
-			;
+			.passwordEncoder(passwordEncoder());
 	}
 
 	@Override
@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers("/angularjs/**").permitAll()
 					.antMatchers("/app/**").permitAll()
 					.antMatchers("/console/**").permitAll()
+
 					.anyRequest().authenticated()
 					.and()
 				.formLogin()
@@ -47,8 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.and()
 				.logout()
 					.logoutSuccessUrl("/login?logout")
-					.permitAll()
-				;
+					.permitAll();
 		
 		// to bypass h2 console
 		http.csrf().disable();
@@ -63,5 +63,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public AuditorAware<String>auditorProvider(){
 		return new UserNameAuditorAware();
+	}
+
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers("/api/**");
 	}
 }

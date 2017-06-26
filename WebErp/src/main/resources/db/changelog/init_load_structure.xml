@@ -90,8 +90,51 @@
         <sqlFile path="classpath:/db/changelog/tables/erp_usuario_rol.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
     </changeSet>
 
-    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0028">
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0028">
+        <sqlFile path="classpath:/db/changelog/tables/erp_usuario_usuario_rol.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0029">
         <sqlFile path="classpath:/db/changelog/tables/erp_diario_general.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-08-0030">
+        <sqlFile path="classpath:/db/changelog/tables/erp_grupo_empresa.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-08-0031">
+        <sqlFile path="classpath:/db/changelog/tables/erp_empresa.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0032">
+        <sqlFile path="classpath:/db/changelog/tables/erp_grupo_empresa_empresa.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0033">
+        <sqlFile path="classpath:/db/changelog/tables/erp_tipo_servicio.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0034">
+        <sqlFile path="classpath:/db/changelog/tables/erp_servicio.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0035">
+        <sqlFile path="classpath:/db/changelog/tables/erp_detalle_tipo_servicio.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0036">
+        <sqlFile path="classpath:/db/changelog/tables/erp_tipo_servicio_detalle_tipo_servicio.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0037">
+        <sqlFile path="classpath:/db/changelog/tables/erp_produccion_producto.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
     </changeSet>
 
 

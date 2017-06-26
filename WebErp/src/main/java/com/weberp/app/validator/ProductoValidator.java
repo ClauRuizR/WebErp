@@ -2,6 +2,9 @@ package com.weberp.app.validator;
 
 import java.math.BigDecimal;
 
+import com.weberp.app.dto.ProductoDTO;
+import com.weberp.app.services.TipoProductoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -12,30 +15,46 @@ import com.weberp.app.domain.Producto;
 @Component
 public class ProductoValidator implements Validator {
 
+	@Autowired
+	private TipoProductoService tipoProductoService;
+
 	@Override
 	public boolean supports(Class<?> arg0) {
-		return Producto.class.isAssignableFrom(arg0);
+		return ProductoDTO.class.isAssignableFrom(arg0);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre", "nombre", "El nombre es obligatorio.");
-		ValidationUtils.rejectIfEmpty(errors, "precio", "precio", "El precio es obligatorio.");
+		ValidationUtils.rejectIfEmpty(errors, "precioCompra", "precioCompra", "El precio de compra es obligatorio.");
+
+
+		ValidationUtils.rejectIfEmpty(errors, "precioVenta", "precioVenta", "El precio de venta es obligatorio.");
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "codigoAlfanumerico", "codigoAlfanumerico",
 				"El Codigo Alfanumerico es obligatorio.");
 
-		Producto producto = (Producto) target;
+		ProductoDTO producto = (ProductoDTO) target;
 
 		if (null == producto.getTipoProducto())
 			errors.rejectValue("producto", "producto", "El Tipo Producto es obligatorio.");
 
-		if (producto.getPrecio().equals(BigDecimal.ZERO))
-			errors.rejectValue("precio", "precio", "El precio no puede ser cero");
+		if (producto.getPrecioCompra().equals(BigDecimal.ZERO))
+			errors.rejectValue("precioCompra", "precioCompra", "El precio de compra no puede ser cero");
 
-		if (BigDecimal.ZERO.compareTo(producto.getPrecio()) > 0)
-			errors.rejectValue("precio", "precio", "El precio no puede ser negativo");
+		if (BigDecimal.ZERO.compareTo(producto.getPrecioCompra()) > 0)
+			errors.rejectValue("precioCompra", "precioCompra", "El precio de compra no puede ser negativo");
 
+		boolean isFacturable = tipoProductoService.getTipoProductoById(producto.getTipoProducto().getId()).isFacturable();
+
+		if(isFacturable) {
+
+			if (producto.getPrecioVenta().equals(BigDecimal.ZERO))
+				errors.rejectValue("precioVenta", "precioVenta", "El precio de venta no puede ser cero");
+
+			if (BigDecimal.ZERO.compareTo(producto.getPrecioVenta()) > 0)
+				errors.rejectValue("precioVenta", "precioVenta", "El precio de venta no puede ser negativo");
+		}
 	}
 
 }

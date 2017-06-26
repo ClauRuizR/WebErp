@@ -3,12 +3,7 @@ package com.weberp.app.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -51,6 +46,12 @@ public class DiarioGeneral extends Auditable<String> {
 
 	@LastModifiedBy
 	private String modificadoPor;
+
+
+	@ManyToOne
+	@JoinColumn(name="empresa_id")
+	private Empresa empresa;
+
 
 	@Version
 	private Long version;
@@ -151,4 +152,11 @@ public class DiarioGeneral extends Auditable<String> {
 		this.version = version;
 	}
 
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 }

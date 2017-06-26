@@ -7,6 +7,7 @@ CREATE TABLE `detalle_orden_compra` (
   `modificado_por` varchar(255) DEFAULT NULL,
   `cantidad` bigint(20) DEFAULT NULL,
   `estado` int(11) NOT NULL,
+  `precio` decimal(19,2) DEFAULT NULL,
   `monto` decimal(19,2) DEFAULT NULL,
   `version` bigint(20) DEFAULT NULL,
   `orden_compra_id` bigint(20) DEFAULT NULL,

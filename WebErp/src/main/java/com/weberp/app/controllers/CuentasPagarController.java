@@ -39,10 +39,6 @@ public class CuentasPagarController extends BaseController {
 
 	@RequestMapping("")
 	public String list(Model model) {
-		setUsuario(model);
-		List<OrdenCompra> listaOrdenCompra = ordenCompraService.ordensPorPagar();
-		model.addAttribute("listaOrdenCompras", listaOrdenCompra);
-		model.addAttribute("ordenCompraDTO", new OrdenCompraDTO());
 
 		return "CuentasPagar/ConsultaCuentasPagar";
 	}
@@ -50,22 +46,10 @@ public class CuentasPagarController extends BaseController {
 	@RequestMapping("view/{id}")
 	public String view(@PathVariable Long id, Model model) {
 		setUsuario(model);
-		OrdenCompra ordenCompra = ordenCompraService.getOrdenCompraById(id);
-		model.addAttribute("ordenCompra", ordenCompra);
-		model.addAttribute("proveedorList", proveedorService.getProveedores());
-		model.addAttribute("estatusList", estatusService.findByEstatus(ordenCompra.getEstatus()));
-		model.addAttribute("noDocumento", "Orden Compra: " + ordenCompra.getNumeroOrdenCompra());
-		model.addAttribute("productoList", productoService.listaProductos());
+		model.addAttribute("id",id);
 
 		return "CuentasPagar/ViewCuentasPagar";
 	}
 
-	@RequestMapping(value = "cambiarEstatusOrdenCompra", method = RequestMethod.POST)
-	public String aprobar(OrdenCompra ordenCompra,Model model) {
-		setUsuario(model);
 
-		ordenCompraService.cambiarEstatusOrdenCompra(ordenCompra);
-
-		return "redirect:/cuentaspagar/view/" + ordenCompra.getId();
-	}
 }

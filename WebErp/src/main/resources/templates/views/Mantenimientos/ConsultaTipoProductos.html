@@ -1,10 +1,11 @@
 <html class="no-js" xmlns:th="http://www.thymeleaf.org">
+
 <div th:fragment="content">
 
 	<div class='notifications top-rigth'></div>
 
-	<div id="page-content">
-		<div class="content-header">
+	<div id="page-content" ng-controller="tipoProductoConsultaController">
+		<div class="content-header" ng-init="init()">
 			<ul class="nav-horizontal text-center">
 				<!-- 	<li class="active"><a href="javascript:void(0)"><i
 							class="fa fa-home"></i> Home</a></li> -->
@@ -16,7 +17,6 @@
 			</div>
 		</div>
 		<div class="form-horizontal">
-
 			<div class="form-group">
 				<label class="col-md-3 control-label" for="example-text-input"></label>
 				<div class="col-md-5"></div>
@@ -27,19 +27,22 @@
 
 			<div class="form-group">
 				<label class="col-md-3 control-label" for="example-text-input">Buscar</label>
-				<form th:action="@{/tipoproductos/buscarTipoProductos}"
-					method="post" th:object="${tipoProductoDTO}">
+				<form >
 					<div class="col-md-5">
 
 
 						<input type="text" id="example-text-input"
-							th:field="${tipoProductoDTO.nombre}" name="txtBuscar"
+							ng-model="nombre" name="txtBuscar"
 							class="form-control" placeholder="Nombre " />
 
 					</div>
 
-					<button type="submit" class="btn btn-info">
+					<button type="submit" class="btn btn-info" ng-click="filtrarPorNombre()">
 						<i class="fa fa-angle-right"></i> Buscar
+					</button>
+
+					<button type="submit" class="btn btn-success" ng-click="pageChanged()">
+						<i class="hi hi-refresh"></i> Refrescar
 					</button>
 				</form>
 			</div>
@@ -54,10 +57,11 @@
 			</div>
 			<div class="table-responsive">
 
-				<a class="btn btn-alt btn-sm btn-success" th:href="@{/tipoproductos/crear}">
-				 <i class="hi hi-plus-sign"></i> Crear
-					tipo producto</a> <a class="btn btn-alt btn-sm btn-default"
-					th:href="@{/tipoproductos/generaExcel}"> <i
+				<a class="btn btn-alt btn-sm btn-success"
+					href="/tipoproductos/crear"> <i class="hi hi-plus-sign"></i>
+					Crear tipo producto
+				</a> <a class="btn btn-alt btn-sm btn-default"
+					href="/tipoproductos/generaExcel"> <i
 					class="gi gi-cloud-download"></i> Imprimir Reporte
 				</a>
 
@@ -75,43 +79,40 @@
 					</thead>
 
 					<tbody>
-						<tr th:each="tipoProducto, rowStat : ${listaTipoProductos}">
-							<td class="text-center"><span th:text="${tipoProducto.id}"></span></td>
-							<td class="text-center"><span
-								th:text="${tipoProducto.nombre}"></span></td>
+						<tr ng-repeat="tp in tipoProducto">
+							<td class="text-center"><span>{{tp.id}}</span></td>
+							<td class="text-center"><span>{{tp.nombre}}</span></td>
 
-							<td class="text-center" th:if="${tipoProducto.estado}==1"><a
+							<td class="text-center" ng-show="tp.estado==1"><a
 								href="javascript:void(0)" class="label label-primary">Activo</a></td>
-							<td class="text-center" th:if="${tipoProducto.estado}==0"><a
+							<td class="text-center" ng-show="tp.estado==0"><a
 								href="javascript:void(0)" class="label label-danger">Inactivo</a></td>
 							<td class="text-center"><a
-								th:href="@{/tipoproductos/editar/}+ ${tipoProducto.id}"><i
+								href="/tipoproductos/editar/{{tp.id}}"><i
 									class="fa fa-pencil-square-o"></i></a></td>
 
 						</tr>
 					</tbody>
 				</table>
-					<div class="row">
+				<div class="row">
 					<div class="col-sm-5 hidden-xs">
 						<div class="dataTables_info" id="example-datatable_info"
 							role="status" aria-live="polite">
-							<strong>1</strong>-<strong>10</strong> of <strong>60</strong>
+
 						</div>
 					</div>
 					<div class="col-sm-7 col-xs-12 clearfix">
 						<div class="dataTables_paginate paging_bootstrap"
 							id="example-datatable_paginate">
-							<ul class="pagination pagination-sm remove-margin">
-								<li class="prev disabled"><a href="javascript:void(0)"><i
-										class="fa fa-chevron-left"></i> </a></li>
-								<li class="active"><a href="javascript:void(0)">1</a></li>
-								<li><a href="javascript:void(0)">2</a></li>
-								<li><a href="javascript:void(0)">3</a></li>
-								<li><a href="javascript:void(0)">4</a></li>
-								<li><a href="javascript:void(0)">5</a></li>
-								<li class="next"><a href="javascript:void(0)"> <i
-										class="fa fa-chevron-right"></i></a></li>
-							</ul>
+							<ul class="pull-right"
+								ng-change="pageChanged()"
+								uib-pagination=""
+								previous-text="Anterior"
+								next-text="Siguiente"
+								total-items="totalItems"
+								items-per-page="itemsPerPage"
+								max-size="10"
+								ng-model="page"></ul>
 						</div>
 					</div>
 				</div>

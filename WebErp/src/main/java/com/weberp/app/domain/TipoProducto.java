@@ -2,12 +2,7 @@ package com.weberp.app.domain;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Version;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -18,91 +13,123 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity(name = "tipo_producto")
 public class TipoProducto extends Auditable<String> {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	private String nombre;
+    @Column(name = "NOMBRE")
+    private String nombre;
 
-	private Integer estado = 1;
 
-	@CreatedDate
-	private Date creadoEn;
+    @Column(name = "ESTADO")
+    private Integer estado = 1;
 
-	@CreatedBy
-	private String creadoPor;
 
-	@LastModifiedDate
-	private Date modificadoEn;
+    @Column(name = "FACTURABLE")
+    private boolean facturable = false;
 
-	@LastModifiedBy
-	private String modificadoPor;
 
-	@Version
-	private Long version;
+    @CreatedDate
+    private Date creadoEn;
 
-	public Long getId() {
-		return id;
-	}
+    @CreatedBy
+    private String creadoPor;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @LastModifiedDate
+    private Date modificadoEn;
 
-	public String getNombre() {
-		return nombre;
-	}
+    @LastModifiedBy
+    private String modificadoPor;
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    @Version
+    private Long version;
 
-	public int getEstado() {
-		return estado;
-	}
 
-	public void setEstado(Integer estado) {
-		this.estado = estado;
-	}
+    @OneToOne
+    @JoinColumn(name = "empresa_id")
+    private Empresa empresa;
 
-	public Date getCreadoEn() {
-		return creadoEn;
-	}
 
-	public void setCreadoEn(Date creadoEn) {
-		this.creadoEn = creadoEn;
-	}
+    public Empresa getEmpresa() {
+        return empresa;
+    }
 
-	public String getCreadoPor() {
-		return creadoPor;
-	}
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
 
-	public void setCreadoPor(String creadoPor) {
-		this.creadoPor = creadoPor;
-	}
+    @Override
+    public Date getModificadoEn() {
+        return modificadoEn;
+    }
 
-	public Date getModiicadoEn() {
-		return modificadoEn;
-	}
+    @Override
+    public void setModificadoEn(Date modificadoEn) {
+        this.modificadoEn = modificadoEn;
+    }
 
-	public void setModificadoEn(Date modificadoEn) {
-		this.modificadoEn = modificadoEn;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getModificadoPor() {
-		return modificadoPor;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setModificadoPor(String modificadoPor) {
-		this.modificadoPor = modificadoPor;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public Long getVersion() {
-		return version;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setVersion(Long version) {
-		this.version = version;
-	}
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
+
+    public Date getCreadoEn() {
+        return creadoEn;
+    }
+
+    public void setCreadoEn(Date creadoEn) {
+        this.creadoEn = creadoEn;
+    }
+
+    public String getCreadoPor() {
+        return creadoPor;
+    }
+
+    public void setCreadoPor(String creadoPor) {
+        this.creadoPor = creadoPor;
+    }
+
+    public boolean isFacturable() {
+        return facturable;
+    }
+
+    public void setFacturable(boolean facturable) {
+        this.facturable = facturable;
+    }
+
+    public String getModificadoPor() {
+        return modificadoPor;
+    }
+
+    public void setModificadoPor(String modificadoPor) {
+        this.modificadoPor = modificadoPor;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
 
 }

@@ -9,6 +9,7 @@ CREATE TABLE `factura` (
   `descuento` decimal(19,2) DEFAULT NULL,
   `estado` int(11) NOT NULL,
   `estatus` varchar(255) DEFAULT NULL,
+    `empresa_id` bigint(20) NOT NULL ,
   `fecha` datetime DEFAULT NULL,
   `numero_comprobante_fiscal` varchar(255) DEFAULT NULL,
   `numero_documento` varchar(255) DEFAULT NULL,

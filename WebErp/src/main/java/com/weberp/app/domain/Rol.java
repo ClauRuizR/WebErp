@@ -44,9 +44,6 @@ public class Rol extends Auditable<String> implements Serializable {
 	@Version
 	private Long version;
 
-	@ManyToMany(mappedBy = "roles")
-	private Set<Usuario> usuarios = new HashSet<>();
-
 	public Rol() {
 	}
 
@@ -122,12 +119,8 @@ public class Rol extends Auditable<String> implements Serializable {
 		this.rol = rol;
 	}
 
-	public Set<Usuario> getUsuarios() {
-		return usuarios;
-	}
-
-	public void setUsuarios(Set<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
 	}
 
 	@Override

@@ -31,6 +31,8 @@ public class DetalleOrdenCompra extends Auditable<String> {
 
 	private Long cantidad = 0L;
 
+	private BigDecimal precio = BigDecimal.ZERO;
+	
 	private BigDecimal monto = BigDecimal.ZERO;
 
 	@ManyToOne()
@@ -144,6 +146,14 @@ public class DetalleOrdenCompra extends Auditable<String> {
 
 	public void setMonto(BigDecimal monto) {
 		this.monto = monto;
+	}
+
+	public BigDecimal  getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(BigDecimal precio) {
+		this.precio = precio;
 	}
 
 }

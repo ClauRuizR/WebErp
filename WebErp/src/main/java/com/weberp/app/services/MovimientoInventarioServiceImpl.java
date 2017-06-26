@@ -26,7 +26,9 @@ public class MovimientoInventarioServiceImpl implements MovimientoInventarioServ
 
 	@Override
 	public MovimientoInventario guardar(MovimientoInventario invetario) {
-		// TODO Auto-generated method stub
+
+
+
 		return movimientoInventarioRepository.save(invetario);
 	}
 
@@ -47,6 +49,13 @@ public class MovimientoInventarioServiceImpl implements MovimientoInventarioServ
 	public boolean findByTipoMovimientoAndNumeroDocumento(String tipoMovimiento, String numeroDocumento) {
 		
 		return movimientoInventarioRepository.findByTipoMovimientoAndNumeroDocumento(tipoMovimiento, numeroDocumento);
+	}
+
+	@Override
+	public void saveBatch(Iterable<MovimientoInventario> movimientoInventarios) {
+
+		movimientoInventarioRepository.save(movimientoInventarios);
+
 	}
 
 }

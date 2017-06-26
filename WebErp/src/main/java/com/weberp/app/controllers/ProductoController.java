@@ -6,6 +6,7 @@ import java.util.List;
 import com.weberp.app.common.view.BaseController;
 import com.weberp.app.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,54 +44,28 @@ public class ProductoController extends BaseController {
 	@RequestMapping("")
 	public String list(Model model) {
 	setUsuario(model);
-		model.addAttribute("listaProductos", productoService.listaProductos());
-		model.addAttribute("productoDTO", new ProductoDTO());
+
 
 		return "Mantenimientos/ConsultaProductos";
 	}
 
+	@Secured("ROLE_ADMIN")
 	@RequestMapping("crear")
 	public String crear(Model model) {
 		setUsuario(model);
-		model.addAttribute("producto", new Producto());
-		model.addAttribute("tipoProductoList", tipoProductoService.listaTipoProductos());
+
+
 		return "Mantenimientos/FormularioProducto";
 	}
 
-	@RequestMapping(value = "guardar", method = RequestMethod.POST)
-	public String guardar(@ModelAttribute("producto") Producto producto, BindingResult result, Model model) {
-		setUsuario(model);
-		productoValidator.validate(producto, result);
-		model.addAttribute("tipoProductoList", tipoProductoService.listaTipoProductos());
-		if (result.hasErrors()) {
-			return "Mantenimientos/FormularioProducto";
-		}
-		productoService.guardar(producto);
-
-		return "redirect:/productos";
-	}
-
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@RequestMapping("editar/{id}")
 	public String editar(@PathVariable Long id, Model model) {
 		setUsuario(model);
-		model.addAttribute("producto", productoService.getProductoById(id));
-		model.addAttribute("tipoProductoList", tipoProductoService.listaTipoProductos());
-		model.addAttribute("listaAlmacen", productoService.buscarProductosEnAlmacenes(id));
+		model.addAttribute("id",id);
 		return "Mantenimientos/FormularioProducto";
 	}
 
-	@RequestMapping(value = "/buscarProductos", method = RequestMethod.POST)
-	public String buscarPor(ProductoDTO productoDTO, Model model) {
-		setUsuario(model);
-		List<Producto> listaProductos = new ArrayList<>();
-		try {
-			listaProductos = productoService.buscarProducto(productoDTO);
-			model.addAttribute("listaProductos", listaProductos);
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return "Mantenimientos/ConsultaProductos";
-	}
 
 }

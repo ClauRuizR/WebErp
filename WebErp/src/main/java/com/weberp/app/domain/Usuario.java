@@ -1,19 +1,27 @@
 package com.weberp.app.domain;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.*;
 
-@Entity(name = "usuario")
-public class Usuario extends Auditable<String> implements Serializable  {
+@Entity
+@NamedNativeQuery(name = "Almacen.findAlmacenByEmpresa",
+		query="select al.* from usuario u \n" +
+				"inner join localidad lo on lo.empresa_id = u.empresa_id\n" +
+				"inner join almacen al on al.localidad_id =lo.id \n" +
+				"where al.principal = 1 and  u.usuario = ?1",
+		resultClass = Almacen.class
+)
+@Table(name = "usuario")
+public class 	Usuario extends Auditable<String> implements Serializable  {
 
 	private static final long serialVersionUID = -486827370610335742L;
 
@@ -27,12 +35,30 @@ public class Usuario extends Auditable<String> implements Serializable  {
 	@Column(nullable = false)
 	private String clave;
 
+
+	private String email;
+
+
+
+
 	private String nombre;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "usuario_rol", joinColumns = { @JoinColumn(name = "usuario_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "rol_id") })
-	private Set<Rol> roles = new HashSet<>();
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<UsuarioRol> UsuarioRol = new ArrayList<>();
+
+	@OneToOne
+	@JoinColumn(name="empresa_id")
+	private Empresa empresa;
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
 
 	private Integer estado;
 
@@ -51,7 +77,13 @@ public class Usuario extends Auditable<String> implements Serializable  {
 	@Version
 	private Long version;
 
+	public String getEmail() {
+		return email;
+	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public Usuario() {
 		estado = 1;
@@ -93,19 +125,6 @@ public class Usuario extends Auditable<String> implements Serializable  {
 		this.nombre = nombre;
 	}
 
-	public Set<Rol> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Set<Rol> roles) {
-		this.roles = roles;
-	}
-
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", usuario=" + usuario + ", clave=" + clave + ", nombre=" + nombre + ", roles="
-				+ roles + ", activo=" + (estado.equals(1)) + "]";
-	}
 
 	public Integer getEstado() {
 		return estado;
@@ -117,6 +136,14 @@ public class Usuario extends Auditable<String> implements Serializable  {
 		}
 
 		this.estado = estado;
+	}
+
+	public List<UsuarioRol> getUsuarioRol() {
+		return UsuarioRol;
+	}
+
+	public void setUsuarioRol(List<UsuarioRol> usuarioRol) {
+		UsuarioRol = usuarioRol;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.weberp.app.services;
 import java.util.Collection;
 import java.util.HashSet;
 
+import com.weberp.app.domain.Empresa;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +22,7 @@ public class UserDetailsImpl implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> authorities = new HashSet<>();
-		usuario.getRoles().forEach(r -> authorities.add(new SimpleGrantedAuthority(r.getRol())));
+		usuario.getUsuarioRol().forEach(r -> authorities.add(new SimpleGrantedAuthority("ROLE_"+r.getRol().getRol())));
 		return authorities;
 	}
 
@@ -36,6 +37,7 @@ public class UserDetailsImpl implements UserDetails {
 	}
 	
 
+	public Empresa getEmpresa(){ return usuario.getEmpresa();}
 
 	public String getNombre() {
 		return usuario.getNombre();

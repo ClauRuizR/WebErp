@@ -40,7 +40,9 @@ public class DetalleFactura extends Auditable<String> {
 
 	@Transient
 	private BigDecimal total;
+
 	private BigDecimal precio = new BigDecimal(0);
+
 	@ManyToOne
 	@JoinColumn(name = "producto_id")
 	private Producto producto;
@@ -173,5 +175,7 @@ public class DetalleFactura extends Auditable<String> {
 	public void setVersion(Long version) {
 		this.version = version;
 	}
+
+
 
 }

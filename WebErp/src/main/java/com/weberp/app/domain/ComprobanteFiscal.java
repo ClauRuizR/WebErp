@@ -3,11 +3,7 @@ package com.weberp.app.domain;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -18,7 +14,7 @@ import org.springframework.data.annotation.LastModifiedDate;
  * Created by claudioruiz on 8/14/16.
  */
 @Entity(name="comprobante_fiscal")
-public class ComprobanteFiscal extends Auditable<String> {
+public class ComprobanteFiscal extends Auditable<String>  {
 
 
 
@@ -50,6 +46,9 @@ public class ComprobanteFiscal extends Auditable<String> {
     @Version
     private Long version;
 
+    @OneToOne
+    @JoinColumn(name="empresa_id")
+    private Empresa empresa;
 
 
     public Long getId() {
@@ -140,6 +139,13 @@ public class ComprobanteFiscal extends Auditable<String> {
         this.creadoPor = creadoPor;
     }
 
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
 
     public Date getModificadoEn() {
 		return modificadoEn;

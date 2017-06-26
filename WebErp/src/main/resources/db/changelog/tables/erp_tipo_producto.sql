@@ -6,6 +6,7 @@ CREATE TABLE `tipo_producto` (
   `modificado_en` datetime DEFAULT NULL,
   `modificado_por` varchar(255) DEFAULT NULL,
   `estado` int(11) NOT NULL,
+  `empresa_id` bigint(20) NOT NULL ,
   `nombre` varchar(255) DEFAULT NULL,
   `version` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)

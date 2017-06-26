@@ -1,5 +1,6 @@
 package com.weberp.app.validator;
 
+import com.weberp.app.dto.TipoProductoDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -12,7 +13,7 @@ public class TipoProductoValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> arg0) {
-		return TipoProducto.class.isAssignableFrom(arg0);
+		return TipoProductoDTO.class.isAssignableFrom(arg0);
 	}
 
 	@Override

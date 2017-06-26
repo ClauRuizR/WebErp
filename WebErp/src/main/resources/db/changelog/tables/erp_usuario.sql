@@ -10,6 +10,7 @@ CREATE TABLE `usuario` (
   `modificado_en` datetime DEFAULT NULL,
   `modificado_por` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
+  `empresa_id` bigint(20) NOT NULL,
   `version` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_i02kr8ui5pqddyd7pkm3v4jbt` (`usuario`)

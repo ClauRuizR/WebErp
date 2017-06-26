@@ -11,6 +11,7 @@ CREATE TABLE `comprobante_fiscal` (
   `estado` int(11) NOT NULL,
   `fecha_efectividad` datetime DEFAULT NULL,
   `hasta` bigint(20) DEFAULT NULL,
+    `empresa_id` bigint(20) NOT NULL ,
   `secuencia` int(11) NOT NULL,
   `secuencia_caracteres` varchar(255) DEFAULT NULL,
   `version` bigint(20) DEFAULT NULL,

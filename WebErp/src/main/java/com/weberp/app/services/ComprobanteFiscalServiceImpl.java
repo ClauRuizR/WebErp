@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.weberp.app.common.model.UsuarioUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class ComprobanteFiscalServiceImpl implements ComprobanteFiscalService {
 
 	@Autowired
 	private EntityManager entityManager;
+
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@Autowired
 	private ComprobanteFiscalRepository comprobanteFiscalRepository;
@@ -49,11 +53,11 @@ public class ComprobanteFiscalServiceImpl implements ComprobanteFiscalService {
 	}
 
 	@Override
-	public String obtenerComprobanteFiscal() {
+	public String obtenerComprobanteFiscal(Long empresaId) {
 		Date fechaActual = new Date();
 		fechaActual.setTime(getInstance().getTime().getTime());
 		List<ComprobanteFiscal> listaComprobanteFiscal = (List<ComprobanteFiscal>) comprobanteFiscalRepository
-				.findAll();
+				.findByEmpresa_Id(empresaId);
 		for (int i = 0; i < listaComprobanteFiscal.size() ; i++) {
 			if (null != listaComprobanteFiscal().get(i).getFechaEfectividad()
 					&& listaComprobanteFiscal().get(i).getFechaEfectividad().before(fechaActual)) {
@@ -77,4 +81,6 @@ public class ComprobanteFiscalServiceImpl implements ComprobanteFiscalService {
 		
 		
 	}
+
+
 }

@@ -2,7 +2,9 @@ package com.weberp.app.config;
 
 import org.h2.server.web.WebServlet;
 import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.JobLauncherCommandLineRunner;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -31,14 +33,18 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 	}
 
 	private static final String[] CLASSPATH_RESOURCE_LOCATIONS = { "classpath:/META-INF/resources/",
-			"classpath:/resources/", "classpath:/static/", "classpath:/public/", "classpath:/WEB-INF/","classpath:/xls/","classpath:/META-INF" };
+			"classpath:/resources/", "classpath:/static/", "classpath:/public/",
+			"classpath:/WEB-INF/","classpath:/xls/","classpath:/META-INF" ,"classpath:/resources/logo/" };
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
 	}
 
-
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 
 	@Bean
 	public ServletRegistrationBean h2servletRegistration() {
@@ -47,6 +53,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		registrationBean.addUrlMappings("/console/*");
 		return registrationBean;
 	}
+	
 
 
 	@Bean

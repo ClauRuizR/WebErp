@@ -4,18 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
@@ -44,7 +33,10 @@ public class Cliente extends Auditable<String> {
 	private String dni;
 
 	private String direccion;
-	private int estado = 1;
+
+	private String sexo;
+
+	private Integer estado = 1;
 
 	@Transient
 	private String contacto;
@@ -61,6 +53,19 @@ public class Cliente extends Auditable<String> {
 	@LastModifiedBy
 	private String modificadoPor;
 
+
+	@OneToOne
+	@JoinColumn(name="empresa_id")
+	private Empresa empresa;
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
 	@Version
 	private Long version;
 
@@ -68,7 +73,6 @@ public class Cliente extends Auditable<String> {
 	@JoinTable(name = "contacto_cliente", joinColumns = { @JoinColumn(name = "cliente_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "contacto_id") })
 	@LazyCollection(LazyCollectionOption.FALSE)
-	@JsonIgnore
 	private List<Contacto> contactos = new ArrayList<>();
 
 	public Long getId() {
@@ -190,4 +194,11 @@ public class Cliente extends Auditable<String> {
 		this.contactos = contactos;
 	}
 
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
 }

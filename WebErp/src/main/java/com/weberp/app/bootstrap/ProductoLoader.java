@@ -38,7 +38,8 @@ public class ProductoLoader implements ApplicationListener<ContextRefreshedEvent
 
 		producto.setCodigoAlfanumerico(StringUtils.leftPad("12345", 5, "0"));
 		producto.setTipoProducto(tipoProducto);
-		producto.setPrecio(new BigDecimal(250));
+		producto.setPrecioCompra(new BigDecimal(100));
+		producto.setPrecioVenta(new BigDecimal(250));
 		// productoRepository.save(producto);
 	}
 

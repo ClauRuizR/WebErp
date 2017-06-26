@@ -6,6 +6,7 @@ import com.weberp.app.common.view.BaseController;
 import com.weberp.app.services.LocalidadService;
 import com.weberp.app.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,64 +51,41 @@ public class AlmacenController extends BaseController {
 		this.transferenciaAlmacenValidator = transferenciaAlmacenValidator;
 		this.localidadService = localidadService;
 	}
-
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping("transferenciaAlmacen")
 	public String transferenciaAlmacen(Model model) {
 		setUsuario(model);
-		model.addAttribute("transferenciaAlmacen", new TransferenciaAlmacen());
-		model.addAttribute("almacenOrigenList", almacenService.listaAlmacen());
-
-		model.addAttribute("productoList", productoService.listaProductos());
-
-		model.addAttribute("almacenDestinoList", almacenService.listaAlmacen());
 
 		return "Almacen/TransferenciaAlmacen";
 	}
-
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping("aplicarTransferencia")
 	public String aplicarTransferencia(@ModelAttribute("almacen") TransferenciaAlmacen transferenciaAlmacen,
 			BindingResult result, Model model) {
 		setUsuario(model);
-		model.addAttribute("transferenciaAlmacen", new TransferenciaAlmacen());
-		model.addAttribute("almacenOrigenList", almacenService.listaAlmacen());
 
-		model.addAttribute("productoList", productoService.listaProductos());
-
-		model.addAttribute("almacenDestinoList", almacenService.listaAlmacen());
-		transferenciaAlmacenValidator.validate(transferenciaAlmacen, result);
-		if (result.hasErrors()) {
-			return "Almacen/TransferenciaAlmacen";
-		}
 		return "Almacen/TransferenciaAlmacen";
 	}
 
 	@RequestMapping("")
 	public String list(Model model) {
 		setUsuario(model);
-		model.addAttribute("listaAlmacen", almacenService.listaAlmacen());
-		model.addAttribute("almacenDTO", new AlmacenDTO());
+
 
 		return "Almacen/ConsultaAlmacen";
 	}
-
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping("crear")
 	public String crear(Model model) {
 		setUsuario(model);
-		model.addAttribute("almacen", new Almacen());
-		model.addAttribute("productoList", productoService.listaProductos());
-		model.addAttribute("localidadList", localidadService.listaLocalidades());
+
 		return "Almacen/FormularioAlmacen";
 	}
-
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value = "guardar", method = RequestMethod.POST)
 	public String guardar(@ModelAttribute("almacen") Almacen almacen, BindingResult result, Model model) {
 		setUsuario(model);
-		almacenValidator.validate(almacen, result);
-		model.addAttribute("localidadList", localidadService.listaLocalidades());
-		if (result.hasErrors()) {
-			return "Mantenimientos/FormularioProducto";
-		}
-		almacenService.guardar(almacen);
+
 
 		return "redirect:/almacen/editar/" + almacen.getId();
 	}
@@ -115,30 +93,6 @@ public class AlmacenController extends BaseController {
 	@RequestMapping("editar/{id}")
 	public String editar(@PathVariable Long id, Model model) {
 		setUsuario(model);
-		model.addAttribute("almacen", almacenService.getAlmacenById(id));
-		model.addAttribute("productoList", productoService.listaProductos());
-		model.addAttribute("localidadList", localidadService.listaLocalidades());
-		return "Almacen/FormularioAlmacen";
-	}
-
-	@RequestMapping(value = "/agregarDetalleAlmacen", params = { "agregarDetalleAlmacen" }, method = RequestMethod.POST)
-	public String agregarDetalleAlmacen(Almacen almacen, Model model) {
-		setUsuario(model);
-		almacen.getDetalleAlmacen().add(new DetalleAlmacen());
-		model.addAttribute("productoList", productoService.listaProductos());
-		model.addAttribute("localidadList", localidadService.listaLocalidades());
-
-		return "Almacen/FormularioAlmacen";
-	}
-
-	@RequestMapping(value = "/quitarDetalleAlmacen", params = { "quitarDetalleAlmacen" }, method = RequestMethod.POST)
-	public String quitarDetalleAlmacen(Almacen almacen, HttpServletRequest req, Model model) {
-		setUsuario(model);
-		model.addAttribute("localidadList", localidadService.listaLocalidades());
-		int index = Integer.valueOf(req.getParameter("quitarDetalleAlmacen"));
-
-		almacen.getDetalleAlmacen().remove(index);
-		model.addAttribute("productoList", productoService.listaProductos());
 
 		return "Almacen/FormularioAlmacen";
 	}

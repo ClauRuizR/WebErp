@@ -6,6 +6,8 @@ CREATE TABLE `orden_compra` (
   `modificado_en` datetime DEFAULT NULL,
   `modificado_por` varchar(255) DEFAULT NULL,
   `estado` int(11) NOT NULL,
+  `empresa_id` bigint(20) NOT NULL ,
+  `fecha` datetime DEFAULT NULL,
   `estatus` varchar(255) DEFAULT NULL,
   `numero_orden_compra` varchar(255) DEFAULT NULL,
   `version` bigint(20) DEFAULT NULL,

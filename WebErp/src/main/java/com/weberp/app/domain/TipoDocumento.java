@@ -43,6 +43,19 @@ public class TipoDocumento extends Auditable<String> {
 	@Version
 	private Long version;
 
+
+	@OneToOne
+	@JoinColumn(name="empresa_id")
+	private Empresa empresa;
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
 	public Long getId() {
 		return id;
 	}

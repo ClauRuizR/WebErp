@@ -1,21 +1,35 @@
 package com.weberp.app.services;
 
+import com.weberp.app.common.model.UsuarioUtil;
 import com.weberp.app.domain.Almacen;
 import com.weberp.app.domain.DetalleAlmacen;
 import com.weberp.app.domain.Producto;
+import com.weberp.app.domain.TipoProducto;
+import com.weberp.app.dto.DetalleAlmacenDTO;
 import com.weberp.app.dto.ProductoDTO;
+import com.weberp.app.dto.TipoProductoDTO;
+import com.weberp.app.dto.config.ConfigMapper;
+import com.weberp.app.mapperobject.Mapper;
+import com.weberp.app.mapperobject.MapperObject;
 import com.weberp.app.repositories.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Service
-public class ProductoServiceImpl implements ProductoService {
+public class ProductoServiceImpl extends ConfigMapper implements ProductoService {
 
     Producto producto;
 
@@ -31,9 +45,11 @@ public class ProductoServiceImpl implements ProductoService {
     @Autowired
     private AlmacenService almacenService;
 
+
+
     @Override
     public List<Producto> listaProductos() {
-        // TODO Auto-generated method stub
+
         List<Producto> listaProducto = (List<Producto>) productoRepository.findAll();
         for (Producto item : listaProducto) {
             item.setCantidad(buscarCantidadEnAlmacen(item.getId()));
@@ -45,7 +61,10 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public Producto guardar(Producto producto) {
 
-        producto.setTipoProducto(tipoProductoService.getTipoProductoById(producto.getTipoProducto().getId()));
+        TipoProducto tipoProducto = tipoProductoService.getTipoProductoById(producto.getTipoProducto().getId());
+
+
+        producto.setTipoProducto(tipoProducto);
 
 
         return productoRepository.save(producto);
@@ -53,7 +72,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public Producto getProductoById(Long id) {
-        // TODO Auto-generated method stub
+
         Producto producto = productoRepository.findOne(id);
         producto.setCantidad(buscarCantidadEnAlmacen(id));
         return producto;
@@ -78,7 +97,7 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    public List<DetalleAlmacen> buscarProductosEnAlmacenes(Long productoId) {
+    public List<DetalleAlmacenDTO> buscarProductosEnAlmacenes(Long productoId) {
         List<Almacen> listaAlmacen = almacenService.listaAlmacen();
         List<DetalleAlmacen> listaDetalleAlmacen = null;
         for (int i = 0; i < listaAlmacen.size(); i++) {
@@ -96,8 +115,7 @@ public class ProductoServiceImpl implements ProductoService {
             }
 
         }
-
-        return listaDetalleAlmacen;
+    return listaDetalleAlmacen==null ? null : convertDetalleAlmacenToDto(listaDetalleAlmacen);
     }
 
     @Override
@@ -112,6 +130,81 @@ public class ProductoServiceImpl implements ProductoService {
         }
 
         return cantidad;
+    }
+
+    @Override
+    public List<Producto> listaProductosPorEmpresa() {
+        Long empresaId = UsuarioUtil.getCurrentUserEmpresa().getEmpresa().getId();
+
+        return productoRepository.findByTipoProducto_Empresa_Id(empresaId);
+
+    }
+    @Override
+    public Page<ProductoDTO> findPaginated(Pageable pageRequest) {
+        Page<Producto> productoPage=  (productoRepository.findAll(pageRequest));
+
+        final Page<ProductoDTO> contactDtoPage = productoPage.map(this::convertProductoToDto);
+        return contactDtoPage;
+    }
+
+    @Override
+    public Page<ProductoDTO> findProductoAndPaginated(String codigoAlfaNumerico, Pageable pageRequest) {
+        Page<Producto> ordenPage=  productoRepository.findByCodigoAlfanumerico(codigoAlfaNumerico,pageRequest);
+
+        final Page<ProductoDTO> contactDtoPage = ordenPage.map(this::convertProductoToDto);
+        return contactDtoPage;
+    }
+
+    @Override
+    public void afectaEntradaProducto(Producto producto	, Long cantidad) {
+        producto.setCantidad(producto.getCantidad()+cantidad);
+        productoRepository.save(producto);
+    }
+
+    @Override
+    public void afectaSalidaProducto(Producto producto,	 Long cantidad) {
+        producto.setCantidad(producto.getCantidad()- cantidad);
+        productoRepository.save(producto);
+    }
+
+    @Override
+    public  List<Long> getStockProductos() throws ParseException {
+
+        Long empresaId = UsuarioUtil.getCurrentUserEmpresa().getEmpresa().getId();
+
+
+        List<Long> productoLista = new ArrayList<>();
+        List<Producto> productoList = productoRepository.findAll().stream().filter(o-> o.getCantidad() > 0 && o.getTipoProducto().getEmpresa().getId().equals(empresaId)).collect(Collectors.toList());
+
+
+
+        for (Producto prod: productoList) {
+            productoLista.add(prod.getCantidad());
+
+
+
+        }
+
+
+        return productoLista;
+    }
+
+    @Override
+    public List<String> getStockProductoLabel() throws ParseException {
+        Long empresaId = UsuarioUtil.getCurrentUserEmpresa().getEmpresa().getId();
+
+
+        List<String> productoLista = new ArrayList<>();
+        List<Producto> productoList = productoRepository.findAll().stream().filter(o-> o.getCantidad() > 0 && o.getTipoProducto().getEmpresa().getId().equals(empresaId)).collect(Collectors.toList());
+
+
+        for (Producto prod: productoList) {
+            productoLista.add(prod.getNombre());
+
+        }
+
+
+        return productoLista;
     }
 
 

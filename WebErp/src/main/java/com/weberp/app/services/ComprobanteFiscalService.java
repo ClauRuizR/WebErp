@@ -16,8 +16,9 @@ public interface ComprobanteFiscalService  {
 
     void borrar(Long id);
 
-    String obtenerComprobanteFiscal();
+    String obtenerComprobanteFiscal(Long empresaId);
     
     void incrementarComprobanteFiscal(Long id);
+
 
 }

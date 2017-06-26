@@ -8,6 +8,8 @@ CREATE TABLE `cliente` (
   `apellido` varchar(255) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
   `dni` varchar(255) DEFAULT NULL,
+  `sexo` varchar(5) DEFAULT NULL,
+    `empresa_id` bigint(20) NOT NULL ,
   `estado` int(11) NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
   `tipo_dni` bigint(20) DEFAULT NULL,

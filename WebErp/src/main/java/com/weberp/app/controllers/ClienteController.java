@@ -45,15 +45,14 @@ public class ClienteController extends BaseController {
 	@RequestMapping("")
 	public String list(Model model) {
 		setUsuario(model);
-		model.addAttribute("listaClientes", clienteService.listaClientes());
-		model.addAttribute("clienteDTO", new ClienteDTO());
+
 		return "Clientes/ConsultaClientes";
 	}
 
 	@RequestMapping("crear")
 	public String crear(Model model) {
 		setUsuario(model);
-		model.addAttribute("cliente", new Cliente());
+
 
 		return "Clientes/FormularioCliente";
 	}
@@ -61,17 +60,7 @@ public class ClienteController extends BaseController {
 	@RequestMapping(value = "guardar", method = RequestMethod.POST)
 	public String guardar(@ModelAttribute("cliente") Cliente cliente, BindingResult result, Model model) {
 		setUsuario(model);
-		clienteValidator.validate(cliente, result);
-		if (result.hasErrors()) {
-			//System.err.println(result);
-			return "Clientes/FormularioCliente";
-		}
 
-
-		if (clienteService.existeCliente(cliente) && cliente.getId() == null)
-			return "Clientes/FormularioCliente";
-
-		clienteService.guardar(cliente);
 
 		return "redirect:/clientes";
 	}
@@ -79,7 +68,7 @@ public class ClienteController extends BaseController {
 	@RequestMapping("editar/{id}")
 	public String editar(@PathVariable Long id, Model model) {
 		setUsuario(model);
-		model.addAttribute("cliente", clienteService.getClienteById(id));
+		model.addAttribute("id", id);
 
 		return "Clientes/FormularioCliente";
 	}
@@ -87,30 +76,17 @@ public class ClienteController extends BaseController {
 	@RequestMapping(value = "/agregarContacto", params = { "agregarContacto" }, method = RequestMethod.POST)
 	public String agregarContacto(Cliente cliente,Model model) {
 		setUsuario(model);
-		cliente.getContactos().add(new Contacto());
+
 		return "Clientes/FormularioCliente";
 	}
 
 	@RequestMapping(value = "/quitarContacto", params = { "quitarContacto" }, method = RequestMethod.POST)
 	public String quitarContacto(Cliente cliente, HttpServletRequest req,Model model) {
 		setUsuario(model);
-		int index = Integer.valueOf(req.getParameter("quitarContacto"));
-		cliente.getContactos().remove(index);
+
 		return "Clientes/FormularioCliente";
 	}
 
-	@RequestMapping(value = "/buscarcliente", method = RequestMethod.POST)
-	public String buscarCliente(ClienteDTO clienteDTO, Model model) {
-		setUsuario(model);
-		List<Cliente> listaCliente = new ArrayList<>();
-		try {
-			listaCliente = clienteService.buscarCliente(clienteDTO);
-			model.addAttribute("listaCliente", listaCliente);
 
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-		return "Clientes/ConsultaClientes";
-	}
 
 }

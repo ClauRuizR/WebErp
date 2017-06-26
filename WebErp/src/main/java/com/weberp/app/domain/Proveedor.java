@@ -4,17 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Version;
+import javax.persistence.*;
 
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -50,6 +40,22 @@ public class Proveedor extends Auditable<String> {
 
 	@Version
 	private Long version;
+	@Transient
+	private String contacto;
+
+
+
+	@OneToOne
+	@JoinColumn(name="empresa_id")
+	private Empresa empresa;
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "contacto_proveedor", joinColumns = { @JoinColumn(name = "proveedor_id") }, inverseJoinColumns = {
@@ -139,6 +145,21 @@ public class Proveedor extends Auditable<String> {
 
 	public void setVersion(Long version) {
 		this.version = version;
+	}
+
+	public String getContacto() {
+
+		for (int i = 0; i < getContactos().size(); i++) {
+			if (getContactos().get(i).getTipoContacto().equals("email")) {
+				return getContactos().get(i).getValor();
+			}
+
+		}
+		return contacto;
+	}
+
+	public void setContacto(String contacto) {
+		this.contacto = contacto;
 	}
 
 	@Override

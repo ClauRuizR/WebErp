@@ -8,8 +8,8 @@
 <body>
 	<div th:fragment="content">
 
-		<div id="page-content">
-			<div class="content-header">
+		<div id="page-content" ng-controller="homeConsultaController">
+			<div class="content-header" ng-init="init()">
 				<ul class="nav-horizontal text-center">
 					<!-- 	<li class="active"><a href="javascript:void(0)"><i
 							class="fa fa-home"></i> Home</a></li> -->
@@ -26,15 +26,49 @@
 			<div class="block">
 				<!-- Table Styles Title -->
 				<div class="block-title"></div>
-				<div class="table-options clearfix">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="block full">
+						<div class="block-title">
+							<div class="block-options pull-right">
 
-					<div class="btn-group btn-group-sm pull-left"></div>
+							</div>
+							<h2><strong>Ingresos</strong> Mensuales</h2>
+						</div>
+						<div id="dash-chart-live" class="chart" style="padding: 0px; position: relative;">
+
+							<canvas class="chart chart-bar" chart-data="graficoIngresosMensuales" chart-labels="labelIngresosMensuales"
+
+									chart-series="seriesIngresosMensuales" chart-click="onClick"
+									chart-options="options"></canvas>
+
+
+
+						</div>
+					</div>
 				</div>
-				<div class="table-responsive">
+				<div class="col-md-6">
+					<div class="block full">
+						<div class="block-title">
+							<div class="block-options pull-right">
 
-					
+							</div>
+							<h2><strong>Productos</strong> Stock</h2>
+						</div>
+						<div id="dash-chart-live" class="chart" style="padding: 0px; position: relative;height:360px;width:300px;">
 
+							<canvas id="doughnut" class="chart chart-doughnut"
+
+									chart-data="graficoProductoStock" chart-labels="graficoProductoStockLabel"
+									chart-options="options">
+							</canvas>
+
+
+
+						</div>
+					</div>
 				</div>
+			</div>
 
 			</div>
 		</div>

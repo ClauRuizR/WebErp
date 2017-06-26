@@ -14,9 +14,15 @@ public interface TipoDocumentoService {
 
 	void borrar(Long id);
 	
-	void incrementaNumeroControl(String llave);
+	void incrementaNumeroControl(String llave,Long empresaId);
 	
-	TipoDocumento buscarTipoDocumentoPorLlave(String llave);
+	TipoDocumento buscarTipoDocumentoPorLlave(String llave,Long empresaId);
 	
 	List<TipoDocumento> listaTiposDocumentosSalida();
+
+
+
+	TipoDocumento getTipoDocumentoByEmpresaId(Long empresaId);
+
+	String getNumeroDocumento(String llaveDocumento,Long empresaId);
 }

@@ -49,31 +49,17 @@ public class CuentasCobrarController extends BaseController {
 	@RequestMapping("")
 	public String list(Model model) {
 		setUsuario(model);
-		List<Factura> listaFacturas = facturaService.facturasPorCobrar();
-		model.addAttribute("listaFacturas", listaFacturas);
-		model.addAttribute("facturaDTO", new FacturaDTO());
+
 		return "CuentasCobrar/ConsultaCuentasCobrar";
 	}
 
 	@RequestMapping("view/{id}")
 	public String view(@PathVariable Long id, Model model) {
 		setUsuario(model);
-		Factura factura = facturaService.getFacturaById(id);
-		model.addAttribute("factura", factura);
-		model.addAttribute("clienteList", clienteService.listaClientes());
-		model.addAttribute("tipoDocumentoList", tipoDocumentoService.listaTiposDocumentosSalida());
-		model.addAttribute("noDocumento", "Factura: " + factura.getNumeroDocumento());
-		model.addAttribute("productoList", productoService.listaProductos());
-		model.addAttribute("estatusList", estatusService.findByEstatus(factura.getEstatus()));
+		model.addAttribute("id",id);
 
 		return "CuentasCobrar/ViewCuentasCobrar";
 	}
 
-	@RequestMapping(value = "cambiarEstatusFactura", method = RequestMethod.POST)
-	public String aprobar(Factura factura,Model model) {
-		setUsuario(model);
-		facturaService.cambiarEstatusFactura(factura);
 
-		return "redirect:/cuentascobrar/view/" + factura.getId();
-	}
 }

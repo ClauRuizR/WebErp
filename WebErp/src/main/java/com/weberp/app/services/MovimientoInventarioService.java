@@ -14,4 +14,6 @@ public interface MovimientoInventarioService {
 	void borrar(Long id);
 	
 	boolean findByTipoMovimientoAndNumeroDocumento(String tipoMovimiento, String numeroDocumento);
+
+	void saveBatch(Iterable<MovimientoInventario> movimientoInventarios);
 }

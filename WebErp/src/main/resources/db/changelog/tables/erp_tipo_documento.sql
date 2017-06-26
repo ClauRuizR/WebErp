@@ -6,6 +6,7 @@ CREATE TABLE `tipo_documento` (
   `modificado_en` datetime DEFAULT NULL,
   `modificado_por` varchar(255) DEFAULT NULL,
   `documento` varchar(255) DEFAULT NULL,
+    `empresa_id` bigint(20) NOT NULL ,
   `estado` int(11) DEFAULT NULL,
   `llave_documento` varchar(255) DEFAULT NULL,
   `numero_control` bigint(20) DEFAULT NULL,

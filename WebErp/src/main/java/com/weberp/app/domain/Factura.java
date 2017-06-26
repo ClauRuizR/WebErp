@@ -5,27 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Transient;
-import javax.persistence.Version;
+import javax.persistence.*;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -35,6 +16,11 @@ import com.weberp.app.enums.EstatusEnum;
 
 @Entity(name = "factura")
 public class Factura extends Auditable<String> {
+
+
+	public Factura() {
+		fecha = new Date();
+	}
 
 	@Id
 	@Column(name = "id")
@@ -49,7 +35,8 @@ public class Factura extends Auditable<String> {
 
 	private BigDecimal descuento = BigDecimal.ZERO;
 
-	private Date fecha;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fecha ;
 
 	private String estatus = EstatusEnum.PENDIENTE;
 
@@ -72,13 +59,30 @@ public class Factura extends Auditable<String> {
 	@Version
 	private Long version;
 
+
+	@OneToOne
+	@JoinColumn(name="empresa_id")
+	private Empresa empresa;
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
 	@Transient
 	private BigDecimal montoTotal = new BigDecimal(0);
 
 	@ManyToOne
+	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
+
 	@OneToOne()
+	@JoinColumn(name="tipo_documento_id")
 	private TipoDocumento tipoDocumento;
+
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<DetalleFactura> DetalleFactura = new ArrayList<>();
 
@@ -205,7 +209,10 @@ public class Factura extends Auditable<String> {
 	public BigDecimal getMontoTotal() {
 		BigDecimal resultado = BigDecimal.ZERO;
 		for (int i = 0; i < getDetalleFactura().size(); i++) {
-			resultado = resultado.add(getDetalleFactura().get(i).getTotal());
+			if(getDetalleFactura().get(i).getEstado()==1) {
+				if(null!= getDetalleFactura().get(i).getTotal())
+					resultado = resultado.add(getDetalleFactura().get(i).getTotal());
+			}
 		}
 		resultado = resultado.subtract(getDescuento());
 		return resultado;
@@ -218,14 +225,14 @@ public class Factura extends Auditable<String> {
 	public String getEstatusNombre() {
 
 		switch (getEstatus()) {
-		case EstatusEnum.PENDIENTE:
-			return "Pendiente";
+			case EstatusEnum.PENDIENTE:
+				return "Pendiente";
 
-		case EstatusEnum.APROBADO:
-			return "Aprobado";
+			case EstatusEnum.APROBADO:
+				return "Aprobado";
 
-		case EstatusEnum.PAGADA:
-			return "Pagada";
+			case EstatusEnum.PAGADA:
+				return "Pagada";
 
 		}
 		return estatusNombre;

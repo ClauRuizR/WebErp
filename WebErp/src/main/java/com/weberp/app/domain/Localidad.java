@@ -18,6 +18,11 @@ public class Localidad extends Auditable<String> {
 
 	private Integer estado = 1;
 
+
+	@ManyToOne
+	@JoinColumn(name="empresa_id")
+	private Empresa empresa;
+
 	@CreatedDate
 	private Date creadoEn;
 
@@ -37,9 +42,7 @@ public class Localidad extends Auditable<String> {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	public void setId(Long id) { this.id = id; }
 
 	public String getNombre() {
 		return nombre;
@@ -73,14 +76,6 @@ public class Localidad extends Auditable<String> {
 		this.creadoPor = creadoPor;
 	}
 
-	public Date getModiicadoEn() {
-		return modificadoEn;
-	}
-
-	public void setModificadoEn(Date modificadoEn) {
-		this.modificadoEn = modificadoEn;
-	}
-
 	public String getModificadoPor() {
 		return modificadoPor;
 	}
@@ -89,6 +84,8 @@ public class Localidad extends Auditable<String> {
 		this.modificadoPor = modificadoPor;
 	}
 
+	public Date getModificadoEn() { return modificadoEn; }
+
 	public Long getVersion() {
 		return version;
 	}
@@ -96,5 +93,9 @@ public class Localidad extends Auditable<String> {
 	public void setVersion(Long version) {
 		this.version = version;
 	}
+
+	public Empresa getEmpresa() { return empresa; }
+
+	public void setEmpresa(Empresa empresa) { this.empresa = empresa; }
 
 }

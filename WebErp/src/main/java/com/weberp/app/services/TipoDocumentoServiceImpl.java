@@ -5,38 +5,47 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import com.weberp.app.common.model.UsuarioUtil;
+import com.weberp.app.domain.Empresa;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.weberp.app.domain.TipoDocumento;
-import com.weberp.app.enums.TipoDocumentoEnums;
+import com.weberp.app.enums.TipoDocumentoEnum;
 import com.weberp.app.repositories.TipoDocumentoRepository;
 
 @Service
 public class TipoDocumentoServiceImpl implements TipoDocumentoService {
 
-	TipoDocumento tipoDocumento;
+	com.weberp.app.domain.TipoDocumento tipoDocumento;
 
 	@Autowired
 	private EntityManager entityManager;
 
 	@Autowired
+	private UsuarioService usuarioService;
+
+	@Autowired
 	private TipoDocumentoRepository tipoDocumentoRepository;
 
 	@Override
-	public List<TipoDocumento> listaTipoDocumento() {
+	public List<com.weberp.app.domain.TipoDocumento> listaTipoDocumento() {
 		// TODO Auto-generated method stub
-		return (List<TipoDocumento>) tipoDocumentoRepository.findAll();
+		return (List<com.weberp.app.domain.TipoDocumento>) tipoDocumentoRepository.findAll();
 	}
 
 	@Override
-	public TipoDocumento guardar(TipoDocumento tipoDocumento) {
+	public com.weberp.app.domain.TipoDocumento guardar(com.weberp.app.domain.TipoDocumento tipoDocumento) {
 		// TODO Auto-generated method stub
+
+		Empresa empresa = UsuarioUtil.getCurrentUserEmpresa().getEmpresa();
+
+		tipoDocumento.setEmpresa(empresa);
 		return tipoDocumentoRepository.save(tipoDocumento);
 	}
 
 	@Override
-	public TipoDocumento getTipoDocumentoById(Long id) {
+	public com.weberp.app.domain.TipoDocumento getTipoDocumentoById(Long id) {
 		// TODO Auto-generated method stub
 		return tipoDocumentoRepository.findOne(id);
 	}
@@ -48,27 +57,43 @@ public class TipoDocumentoServiceImpl implements TipoDocumentoService {
 	}
 
 	@Override
-	public void incrementaNumeroControl(String llave) {
-		TipoDocumento tipoDocumento = tipoDocumentoRepository.findByLlaveDocumento(llave);
+	public void incrementaNumeroControl(String llave, Long empresaId) {
+
+		com.weberp.app.domain.TipoDocumento tipoDocumento = tipoDocumentoRepository.findByLlaveDocumentoAndEmpresa_Id(llave,empresaId);
 		tipoDocumento.setNumeroControl(tipoDocumento.getNumeroControl() + 1);
 		tipoDocumentoRepository.save(tipoDocumento);
 
 	}
 
 	@Override
-	public TipoDocumento buscarTipoDocumentoPorLlave(String llave) {
+	public com.weberp.app.domain.TipoDocumento buscarTipoDocumentoPorLlave(String llave, Long empresaId) {
 		// TODO Auto-generated method stub
-		return tipoDocumentoRepository.findByLlaveDocumento(llave);
+		return tipoDocumentoRepository.findByLlaveDocumentoAndEmpresa_Id(llave,empresaId);
 	}
 
 	@Override
-	public List<TipoDocumento> listaTiposDocumentosSalida() {
+	public List<com.weberp.app.domain.TipoDocumento> listaTiposDocumentosSalida() {
+		Long empresaId = UsuarioUtil.getCurrentUserEmpresa().getEmpresa().getId();
+
 		List<String> llaves = new ArrayList();
-		llaves.add(TipoDocumentoEnums.COTIZACION);
-		llaves.add(TipoDocumentoEnums.FACTURA);
-		List<TipoDocumento> tipoDocumentoList = tipoDocumentoRepository.findByLlaveDocumentoIn(llaves);
+		llaves.add(TipoDocumentoEnum.COTIZACION);
+		llaves.add(TipoDocumentoEnum.FACTURA);
+		List<com.weberp.app.domain.TipoDocumento> tipoDocumentoList = tipoDocumentoRepository.findByLlaveDocumentoInAndEmpresa_Id(llaves,empresaId);
 
 		return tipoDocumentoList;
+	}
+
+	@Override
+	public com.weberp.app.domain.TipoDocumento getTipoDocumentoByEmpresaId(Long empresaId) {
+		return tipoDocumentoRepository.findByEmpresa_Id(empresaId);
+	}
+
+	@Override
+	public String getNumeroDocumento(String llaveDocumento,Long empresaId) {
+		com.weberp.app.domain.TipoDocumento tipoDocumento = buscarTipoDocumentoPorLlave(llaveDocumento,empresaId);
+		String numeroDocumento = tipoDocumento.getLlaveDocumento() + "-"
+				+ StringUtils.leftPad(tipoDocumento.getNumeroControl().toString(), 5, "0");
+		return numeroDocumento;
 	}
 
 }

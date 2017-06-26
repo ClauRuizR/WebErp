@@ -7,6 +7,7 @@ CREATE TABLE `localidad` (
   `modficado_en` datetime DEFAULT NULL,
   `modificado_por` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) NOT NULL,
+    `empresa_id` bigint(20) NOT NULL ,
   `version` bigint(20) DEFAULT NULL,
   `modificado_en` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)

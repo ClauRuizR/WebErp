@@ -22,8 +22,13 @@ public class ClienteValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre", "nombre", "El nombre es obligatorio.");
 
 		ValidationUtils.rejectIfEmpty(errors, "apellido", "apellido", "El apellido es obligatorio.");
+		ValidationUtils.rejectIfEmpty(errors, "sexo", "sexo", "El sexo es obligatorio.");
 
 		Cliente cliente = (Cliente) target;
+
+		if(cliente.getContactos().size()==0)
+			errors.rejectValue("contactos", "contactos", "Favor agregar al menos un contracto");
+
 
 		for (int i = 0; i < cliente.getContactos().size(); i++) {
 

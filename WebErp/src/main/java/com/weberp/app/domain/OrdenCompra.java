@@ -5,24 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-import javax.persistence.Version;
+import javax.persistence.*;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -33,6 +17,10 @@ import com.weberp.app.enums.EstatusEnum;
 @Entity(name = "orden_compra")
 public class OrdenCompra extends Auditable<String> {
 
+	public OrdenCompra() {
+		fecha = new Date();
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -42,6 +30,11 @@ public class OrdenCompra extends Auditable<String> {
 	private String estatus = EstatusEnum.PENDIENTE;
 
 	private Integer estado = 1;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date fecha;
+
+
 
 	@Transient
 	private String estatusNombre;
@@ -67,13 +60,29 @@ public class OrdenCompra extends Auditable<String> {
 	@Version
 	private Long version;
 
+
+	@OneToOne
+	@JoinColumn(name="empresa_id")
+	private Empresa empresa;
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
 	@Transient
 	private BigDecimal montoTotal = new BigDecimal(0);
 
 	public BigDecimal getMontoTotal() {
 		BigDecimal resultado = BigDecimal.ZERO;
 		for (int i = 0; i < getDetalleOrdenCompra().size(); i++) {
-			resultado = resultado.add(getDetalleOrdenCompra().get(i).getMonto());
+			if(getDetalleOrdenCompra().get(i).getEstado()==1) {
+
+				resultado = resultado.add(getDetalleOrdenCompra().get(i).getMonto());
+			}
 		}
 
 		return resultado;
@@ -172,18 +181,27 @@ public class OrdenCompra extends Auditable<String> {
 	}
 
 	public String getEstatusNombre() {
+
 		switch (getEstatus()) {
-		case EstatusEnum.PENDIENTE:
-			return "Pendiente";
+			case EstatusEnum.PENDIENTE:
+				return "Pendiente";
 
-		case EstatusEnum.APROBADO:
-			return "Aprobado";
+			case EstatusEnum.APROBADO:
+				return "Aprobado";
 
-		case EstatusEnum.PAGADA:
-			return "Pagada";
+			case EstatusEnum.PAGADA:
+				return "Pagada";
 
 		}
 		return estatusNombre;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 
 	public void setEstatusNombre(String estatusNombre) {

@@ -8,8 +8,8 @@ import com.weberp.app.domain.TipoDocumento;
 
 public interface TipoDocumentoRepository extends CrudRepository<TipoDocumento, Long> {
 
-	TipoDocumento findByLlaveDocumento(String llave);
-	List<TipoDocumento> findByLlaveDocumentoIn(List<String> llaves);
+	TipoDocumento findByLlaveDocumentoAndEmpresa_Id(String llave,Long empresaId);
+	List<TipoDocumento> findByLlaveDocumentoInAndEmpresa_Id(List<String> llaves,Long empresaId);
 	
-
+    TipoDocumento findByEmpresa_Id(Long empresaId);
 }

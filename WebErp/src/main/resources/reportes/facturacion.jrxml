@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-05-26T09:12:53 -->
+<!-- 2017-06-15T17:08:28 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturacion" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="35791f28-9098-41a4-b090-9e7aa220dbe1">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="erpConn.xml"/>
@@ -15,7 +15,6 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="pId" class="java.lang.Long"/>
 	<parameter name="pLogo" class="java.awt.Image"/>
-	<parameter name="pEmpresa" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select a.numero_documento,td.llave_documento,concat(c.nombre,' ' ,c.apellido) cliente
 ,DATE_FORMAT(a.fecha,'%d/%m/%Y') as fecha
@@ -30,12 +29,17 @@
 ,b.cantidad
 ,b.itbis
 ,b.monto
-from erp.factura a 
-join erp.detalle_factura b on a.id = b.factura_id
-join erp.cliente c on a.cliente_id  = c.id
-join erp.tipo_documento td on a.tipo_documento_id = td.id
-join erp.producto p on p.id = b.producto_id
-where a.id = $P{pId}]]>
+,emp.direccion as empresa_direccion
+,emp.nombre  as empresa_nombre
+from factura a 
+join detalle_factura b on a.id = b.factura_id
+join cliente c on a.cliente_id  = c.id
+join tipo_documento td on a.tipo_documento_id = td.id
+join producto p on p.id = b.producto_id
+join empresa emp on emp.id = a.empresa_id
+join producto pro on pro.id = b.producto_id
+join tipo_producto tpro on tpro.id = pro.tipo_producto_id
+where tpro.facturable = 1 and  a.id = $P{pId}]]>
 	</queryString>
 	<field name="numero_documento" class="java.lang.String"/>
 	<field name="llave_documento" class="java.lang.String"/>
@@ -50,6 +54,8 @@ where a.id = $P{pId}]]>
 	<field name="cantidad" class="java.lang.Long"/>
 	<field name="itbis" class="java.math.BigDecimal"/>
 	<field name="monto" class="java.math.BigDecimal"/>
+	<field name="empresa_direccion" class="java.lang.String"/>
+	<field name="empresa_nombre" class="java.lang.String"/>
 	<variable name="monto1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{monto}]]></variableExpression>
 	</variable>
@@ -79,13 +85,6 @@ where a.id = $P{pId}]]>
 				<reportElement x="0" y="0" width="90" height="70" uuid="3120e901-0979-4285-a2ac-b15b36ac96b1"/>
 				<imageExpression><![CDATA[$P{pLogo}]]></imageExpression>
 			</image>
-			<textField>
-				<reportElement x="90" y="29" width="290" height="30" uuid="18c75093-e701-4518-8d1d-26adf287d374"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{pEmpresa}]]></textFieldExpression>
-			</textField>
 			<textField>
 				<reportElement x="100" y="76" width="100" height="20" uuid="a491f1eb-77fc-4f74-af09-93753d06a83e"/>
 				<textElement>
@@ -118,6 +117,13 @@ where a.id = $P{pId}]]>
 				</textElement>
 				<text><![CDATA[Comprobante Fiscal:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="190" y="30" width="200" height="20" uuid="4650133a-178b-4e9c-b0d5-1cd77583c278"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empresa_nombre}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -182,7 +188,7 @@ where a.id = $P{pId}]]>
 				<text><![CDATA[Precio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="3" y="3" width="100" height="21" uuid="747730a5-680b-49ea-9f76-9f7e02304666"/>
+				<reportElement x="3" y="3" width="110" height="21" uuid="747730a5-680b-49ea-9f76-9f7e02304666"/>
 				<textElement>
 					<font size="14"/>
 				</textElement>
@@ -227,7 +233,7 @@ where a.id = $P{pId}]]>
 				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="3" y="5" width="100" height="21" uuid="c005eb97-c861-4b0d-a8bf-b0351e04c717"/>
+				<reportElement x="3" y="5" width="110" height="21" uuid="c005eb97-c861-4b0d-a8bf-b0351e04c717"/>
 				<textElement textAlignment="Left">
 					<font size="14"/>
 				</textElement>

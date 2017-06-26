@@ -4,7 +4,8 @@ import java.util.List;
 
 import com.weberp.app.domain.Cliente;
 import com.weberp.app.dto.ClienteDTO;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface ClienteService {
@@ -20,6 +21,8 @@ public interface ClienteService {
 	boolean existeCliente(Cliente cliente);
 	
 	List<Cliente> buscarCliente(ClienteDTO clienteDTO);
-	//public List<Paciente> buscarPaciente(PacienteDTO pacienteDTO);
+	Page<ClienteDTO> findPaginated(int page, int size);
+
+	Page<ClienteDTO> findClienteAndPaginated(String nombre, Pageable pageRequest);
 	
 }
