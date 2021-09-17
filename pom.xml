@@ -17,7 +17,17 @@
 		<version>1.5.3.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
+	<repositories>
 
+		<repository>
+
+			<id>jaspersoft-third-party</id>
+
+			<url>http://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
+
+		</repository>
+
+	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -226,17 +236,13 @@
 	</dependencies>
 
 	<build>
-		<finalName>ROOT</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>3.0.4</version>
 				<configuration>
-					<fork>true</fork>
-					<jvmArguments>
-						-Xdebug
-						-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=7001
-					</jvmArguments>
+					<appName>${heroku.appName}</appName>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -1,5 +1,6 @@
 package com.weberp.app.restcontroller;
 
+import com.weberp.app.domain.TipoProducto;
 import com.weberp.app.dto.TipoProductoDTO;
 import com.weberp.app.dto.config.ConfigMapper;
 import com.weberp.app.services.TipoProductoService;
@@ -7,17 +8,11 @@ import com.weberp.app.validator.TipoProductoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-
-import com.weberp.app.common.view.BaseRestController;
-import com.weberp.app.domain.TipoProducto;
-import com.weberp.app.repositories.TipoProductoRepository;
-import sun.security.krb5.Config;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
