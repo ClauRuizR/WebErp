@@ -81,12 +81,14 @@
 			<version>1.7.25</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+		
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-			<version>6.3.0</version>
+			<version>6.17.0</version>
 		</dependency>
+
+
 		<!-- https://mvnrepository.com/artifact/net.sf.jxls/jxls-core -->
 		<dependency>
 			<groupId>net.sf.jxls</groupId>
