@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="cruiz" id="erp-2017-06-02-0001">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			stripComments="true">
+
+			ALTER TABLE `movimiento_inventario`
+			DROP FOREIGN KEY `FK1bl1vbilcmrolo34fxq223f08`,
+			DROP FOREIGN KEY `FK94wggfjaggy2avspex2ohs7tf`,
+			DROP FOREIGN KEY `FKd6bavqmj4o0mvn82ve46jac9v`;
+
+		</sql>
+	</changeSet>
+	<changeSet author="cruiz" id="erp-2017-06-02-0002">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			stripComments="true">
+			ALTER TABLE `movimiento_inventario`
+			CHANGE COLUMN `almacen_id` `almacen_id` BIGINT(20) NOT NULL ,
+			CHANGE COLUMN `producto_id` `producto_id` BIGINT(20) NOT NULL ,
+			CHANGE COLUMN `tipo_documento_id` `tipo_documento_id` BIGINT(20) NOT NULL ;
+		</sql>
+	</changeSet>
+	<changeSet author="cruiz" id="erp-2017-06-02-0003">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			stripComments="true">
+			ALTER TABLE `movimiento_inventario`
+			ADD CONSTRAINT `fkTipoDocumento`
+			FOREIGN KEY (`tipo_documento_id`)
+			REFERENCES `tipo_documento` (`id`),
+			ADD CONSTRAINT `fkAlmacen`
+			FOREIGN KEY (`almacen_id`)
+			REFERENCES `almacen` (`id`),
+			ADD CONSTRAINT `fkProducto`
+			FOREIGN KEY (`producto_id`)
+			REFERENCES `producto` (`id`);
+
+		</sql>
+	</changeSet>
+
+
+</databaseChangeLog>

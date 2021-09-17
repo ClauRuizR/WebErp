@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if IE 9]>
+<html class="no-js lt-ie10"> <![endif]-->
+<!--[if gt IE 9]><!-->
+
+<html class="no-js" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <title>Web Erp</title>
+
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"
+            th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js}"></script>
+
+
+    <script type="text/javascript" src="/js/jquery-ui.js"
+            th:src="@{/js/jquery-ui.js}"></script>
+
+
+    <link type="text/css" rel="stylesheet" href="/js/angularChosen/chosen.min.css"
+          th:href="@{/js/angularChosen/chosen.min.css}"/>
+
+    <script type="text/javascript" src="/js/angularChosen/chosen.jquery.min.js"
+            th:src="@{/js/angularChosen/chosen.jquery.min.js}"></script>
+
+
+    <script type="text/javascript" src="/angularjs/angular.min.js"
+            th:src="@{/angularjs/angular.min.js}"></script>
+
+
+    <script type="text/javascript" src="/js/angularChosen/angular-chosen.min.js"
+            th:src="@{/js/angularChosen/angular-chosen.min.js}"></script>
+
+    <script type="text/javascript" src="/js/ChartJs/Chart.min.js"
+            th:src="@{/js/ChartJs/Chart.min.js}"></script>
+
+    <script type="text/javascript" src="/js/angular-chart-js/angular-chart.min.js"
+            th:src="@{/js/angular-chart-js/angular-chart.min.js}"></script>
+
+    <script type="text/javascript" src="/app/WebApp.js"
+            th:src="@{/app/WebApp.js}"></script>
+
+
+    <script type="text/javascript" src="/js/ui-bootstrap-tpls-2.5.0.min.js"
+            th:src="@{/js/ui-bootstrap-tpls-2.5.0.min.js}"></script>
+
+
+
+
+
+    <script type="text/javascript" src="/js/moment/moment.js"
+            th:src="@{/js/moment/moment.js}"></script>
+
+    <script type="text/javascript" src="/js/moment-timezone/moment-timezone.js"
+            th:src="@{/js/moment-timezone/moment-timezone.js}"></script>
+
+
+
+
+    <script type="text/javascript" src="/js/ui-bootstrap-tpls-2.5.0.min.js"
+            th:src="@{/js/ui-bootstrap-tpls-2.5.0.min.js}"></script>
+
+
+
+    <script type="text/javascript"
+            src="/controller/tipoproducto/consulta.js"
+            th:src="@{/controller/tipoproducto/consulta.js}"></script>
+    <script type="text/javascript" src="/controller/tipoproducto/edit.js"
+            th:src="@{/controller/tipoproducto/edit.js}"></script>
+
+
+
+    <script type="text/javascript"
+            src="/controller/cliente/consulta.js"
+            th:src="@{/controller/cliente/consulta.js}"></script>
+    <script type="text/javascript" src="/controller/cliente/edit.js"
+            th:src="@{/controller/cliente/edit.js}"></script>
+
+
+
+
+    <script type="text/javascript"
+            src="/controller/proveedor/consulta.js"
+            th:src="@{/controller/proveedor/consulta.js}"></script>
+    <script type="text/javascript" src="/controller/proveedor/edit.js"
+            th:src="@{/controller/proveedor/edit.js}"></script>
+
+
+    <script type="text/javascript"
+            src="/controller/producto/consulta.js"
+            th:src="@{/controller/producto/consulta.js}"></script>
+    <script type="text/javascript" src="/controller/producto/edit.js"
+            th:src="@{/controller/producto/edit.js}"></script>
+
+
+
+    <script type="text/javascript" src="/controller/facturacion/edit.js"
+            th:src="@{/controller/facturacion/edit.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/facturacion/consulta.js"
+            th:src="@{/controller/facturacion/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/facturacion/view.js"
+            th:src="@{/controller/facturacion/view.js}"></script>
+
+
+
+
+    <script type="text/javascript" src="/controller/ordencompra/edit.js"
+            th:src="@{/controller/ordencompra/edit.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/ordencompra/consulta.js"
+            th:src="@{/controller/ordencompra/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/ordencompra/view.js"
+            th:src="@{/controller/ordencompra/view.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/grupoempresa/consulta.js"
+            th:src="@{/controller/grupoempresa/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/grupoempresa/edit.js"
+            th:src="@{/controller/grupoempresa/edit.js}"></script>
+
+
+    <script type="text/javascript"
+            src="/controller/empresa/consulta.js"
+            th:src="@{/controller/empresa/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/empresa/edit.js"
+            th:src="@{/controller/empresa/edit.js}"></script>
+
+
+
+
+    <script type="text/javascript"
+            src="/controller/tiposervicio/consulta.js"
+            th:src="@{/controller/tiposervicio/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/tiposervicio/edit.js"
+            th:src="@{/controller/tiposervicio/edit.js}"></script>
+
+
+    <script type="text/javascript"
+            src="/controller/servicio/consulta.js"
+            th:src="@{/controller/servicio/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/servicio/edit.js"
+            th:src="@{/controller/servicio/edit.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/produccionproducto/consulta.js"
+            th:src="@{/controller/produccionproducto/consulta.js}"></script>
+    <script type="text/javascript"
+            src="/controller/rol/consulta.js"
+            th:src="@{/controller/rol/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/rol/edit.js"
+            th:src="@{/controller/rol/edit.js}"></script>
+
+
+
+
+    <script type="text/javascript"
+            src="/controller/usuarios/consulta.js"
+            th:src="@{/controller/usuarios/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/usuarios/edit.js"
+            th:src="@{/controller/usuarios/edit.js}"></script>
+
+
+    <script type="text/javascript"
+            src="/controller/almacen/consulta.js"
+            th:src="@{/controller/almacen/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/almacen/edit.js"
+            th:src="@{/controller/almacen/edit.js}"></script>
+
+
+    <script type="text/javascript"
+            src="/controller/tipoCliente/consulta.js"
+            th:src="@{/controller/tipoCliente/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/tipoCliente/edit.js"
+            th:src="@{/controller/tipoCliente/edit.js}"></script>
+
+
+    <script type="text/javascript"
+            src="/controller/tipoNcf/consulta.js"
+            th:src="@{/controller/tipoNcf/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/tipoNcf/edit.js"
+            th:src="@{/controller/tipoNcf/edit.js}"></script>
+
+
+
+    <script type="text/javascript"
+            src="/controller/comprobanteFiscal/consulta.js"
+            th:src="@{/controller/comprobanteFiscal/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/comprobanteFiscal/edit.js"
+            th:src="@{/controller/comprobanteFiscal/edit.js}"></script>
+
+
+
+
+    <script type="text/javascript"
+            src="/controller/localidad/consulta.js"
+            th:src="@{/controller/localidad/consulta.js}"></script>
+
+    <script type="text/javascript"
+            src="/controller/localidad/edit.js"
+            th:src="@{/controller/localidad/edit.js}"></script>
+
+
+    <script type="text/javascript"
+            src="/controller/diariogeneral/consulta.js"
+            th:src="@{/controller/diariogeneral/consulta.js}"></script>
+
+
+    <script type="text/javascript"
+            src="/controller/home/consulta.js"
+            th:src="@{/controller/home/consulta.js}"></script>
+
+
+    <script type="text/javascript"
+            src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            th:src="@{http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+
+
+    <script type="text/javascript" src="/js/vendor/modernizr-respond.min.js"
+            th:src="@{/js/vendor/modernizr-respond.min.js}"></script>
+    <script type="text/javascript" src="/js/vendor/jquery-1.11.3.min.js"
+            th:src="@{/js/vendor/jquery-1.11.3.min.js}"></script>
+    <script type="text/javascript" src="/js/vendor/bootstrap.min.js"
+            th:src="@{/js/vendor/bootstrap.min.js}"></script>
+    <script type="text/javascript" src="/js/plugins.js"
+            th:src="@{/js/plugins.js}"></script>
+    <script type="text/javascript" src="/js/app.js" th:src="@{/js/app.js}"></script>
+    <script type="text/javascript" src="/js/pages/formsWizard.js"
+            th:src="@{/js/pages/formsWizard.js}"></script>
+    <script type="text/javascript" src="/app/utils.js"
+            th:src="@{/app/utils.js}"></script>
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"
+          th:href="@{/css/bootstrap.min.css}"/>
+    <link type="text/css" rel="stylesheet" href="/css/plugins.css"
+          th:href="@{/css/plugins.css}"/>
+    <link type="text/css" rel="stylesheet" href="/css/main.css"
+          th:href="@{/css/main.css}"/>
+    <link type="text/css" rel="stylesheet" href="/css/themes.css"
+          th:href="@{/css/themes.css}"/>
+
+    <link type="text/css" rel="stylesheet" href="/css/notify.css"
+          th:href="@{/css/notify.css}"/>
+
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+
+
+
+
+    <!-- Icons -->
+    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+    <link rel="shortcut icon" href="../img/favicon.png"   th:href="@{../img/favicon.png}" />
+    <link rel="apple-touch-icon" href="img/icon57.png" sizes="57x57"   th:href="@{img/icon57.png}" />
+    <link rel="apple-touch-icon" href="img/icon72.png" sizes="72x72"   th:href="@{img/icon72.png}" />
+    <link rel="apple-touch-icon" href="img/icon76.png" sizes="76x76"   th:href="@{img/icon76.png}" />
+    <link rel="apple-touch-icon" href="img/icon114.png" sizes="114x114"   th:href="@{img/icon114.png}" />
+    <link rel="apple-touch-icon" href="img/icon120.png" sizes="120x120"   th:href="@{img/icon120.png}" />
+    <link rel="apple-touch-icon" href="img/icon144.png" sizes="144x144"   th:href="@{img/icon144.png}" />
+    <link rel="apple-touch-icon" href="img/icon152.png" sizes="152x152"   th:href="@{img/icon152.png}" />
+    <link rel="apple-touch-icon" href="img/icon180.png" sizes="180x180"     th:href="@{img/icon180.png}" />
+    <!-- END Icons -->
+
+</head>
+
+
+
+
+<body ng-app="WebErpApp" ng-cloak="">
+
+
+<div id="page-wrapper">
+    <!-- Preloader -->
+    <!-- Preloader functionality (initialized in js/app.js) - pageLoading() -->
+    <!-- Used only if page preloader is enabled from inc/config (PHP version) or the class 'page-loading' is added in #page-wrapper element (HTML version) -->
+    <div class="preloader themed-background">
+        <h1 class="push-top-bottom text-light text-center">
+            <strong>WebErp</strong>
+        </h1>
+        <div class="inner">
+            <h3 class="text-light visible-lt-ie9 visible-lt-ie10">
+                <strong>Loading..</strong>
+            </h3>
+            <div class="preloader-spinner hidden-lt-ie9 hidden-lt-ie10"></div>
+        </div>
+    </div>
+    <!-- END Preloader -->
+
+    <div id="page-container"
+         class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
+
+        <!-- Main Sidebar -->
+        <div id="sidebar">
+            <!-- Wrapper for scrolling functionality -->
+            <div id="sidebar-scroll">
+                <!-- Sidebar Content -->
+                <div class="sidebar-content">
+                    <!-- Brand -->
+                    <a href="/home" class="sidebar-brand"> <i
+                            class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>Web
+									Erp</strong> </span>
+                    </a>
+                    <!-- END Brand -->
+
+                    <div
+                            class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">
+                        <div class="sidebar-user-avatar">
+                            <a href="#"> <img
+                                    src="/img/placeholders/avatars/avatar2.jpg"
+                                    th:src="@{/img/placeholders/avatars/avatar2.jpg}" alt="avatar"/>
+                            </a>
+                        </div>
+                        <div class="sidebar-user-name"
+                             sec:authentication="principal.nombre"></div>
+                        <div class="sidebar-user-links">
+
+                            <!-- Opens the user settings modal that can be found at the bottom of each page (page_footer.html in PHP version) -->
+                            <a href="javascript:void(0)" class="enable-tooltip"
+                               data-placement="bottom" title="Configuración"
+                               onclick="$('#modal-user-settings').modal('show');"><i
+                                    class="gi gi-cogwheel"></i></a>
+
+                            <a href="javascript:{}"
+                               onclick="document.getElementById('frmlogout').submit(); return false;" title="Salir" ><i
+                                class="gi gi-exit"></i></a>
+
+
+
+                          
+
+                        </div>
+                    </div>
+
+                    <!-- Theme Colors -->
+
+                    <!-- END Theme Colors -->
+
+                    <!-- Sidebar Navigation -->
+                    <ul class="sidebar-nav">
+                        <li><a href="#" class="sidebar-nav-menu"><i
+                                class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i
+                                class="gi gi-briefcase sidebar-nav-icon"></i><span
+                                class="sidebar-nav-mini-hide">Operaciones</span></a>
+                            <ul>
+                                <li><a th:href="@{/almacen}">Almacén</a></li>
+                                <li><a th:href="@{/facturas}">Facturación</a></li>
+                                <li><a th:href="@{/ordencompras}">Ordenes de Compra</a></li>
+                                <li><a th:href="@{/clientes}">Clientes</a></li>
+                                <li><a th:href="@{/proveedores}">Proveedores</a></li>
+
+
+                                <!--<li><a th:href="@{/almacen/transferenciaAlmacen}">Transferencia-->
+                                    <!--Almacen</a></li>-->
+                                <li><a th:href="@{/cuentascobrar}">Cuentas por Cobrar</a></li>
+
+                                <li><a th:href="@{/cuentaspagar}">Cuentas por Pagar</a></li>
+
+                            </ul>
+                        </li>
+
+
+                        <li><a href="#" class="sidebar-nav-menu open"><i
+                                class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i
+                                class="gi gi-settings sidebar-nav-icon"></i><span
+                                class="sidebar-nav-mini-hide">Configuraciones</span></a>
+                            <ul style="display: block;">
+                                <li><a href="#" class="sidebar-nav-submenu"><i
+                                        class="fa fa-angle-left sidebar-nav-indicator"></i>Mantenimientos</a>
+                                    <ul>
+                                        <li><a th:href="@{/grupoempresa}">Grupo Empresa</a></li>
+                                        <li><a th:href="@{/empresa}">Empresa</a></li>
+                                        <li><a th:href="@{/tipoproductos}">Tipo Productos</a></li>
+                                        <li><a th:href="@{/productos}">Productos</a></li>
+                                        <li><a th:href="@{/localidad}">Localidad</a></li>
+                                        <li><a th:href="@{/tiposervicio}">Tipo Servicio</a></li>
+                                        <li><a th:href="@{/tipoCliente}">Tipo Cliente</a></li>
+                                        <li><a th:href="@{/tipoNcf}">Tipo Ncf</a></li>
+                                        <li><a th:href="@{/comprobanteFiscal}">Comprobante Fiscal</a></li>
+                                        <li><a th:href="@{/servicio}">Servicio</a></li>
+
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li><a href="#" class="sidebar-nav-menu"><i
+                                class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i
+                                class="gi gi-lock sidebar-nav-icon"></i><span
+                                class="sidebar-nav-mini-hide">Seguridad</span></a>
+                            <ul>
+                                <li><a th:href="@{/rol}">Rol</a></li>
+                                <li><a th:href="@{/usuarios}">Usuarios</a></li>
+
+
+                            </ul>
+                        </li>
+
+
+                        <li><a href="#" class="sidebar-nav-menu"><i
+                                class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i><i
+                                class="gi gi-stats sidebar-nav-icon"></i><span
+                                class="sidebar-nav-mini-hide">Reportes/Estadisticas</span></a>
+                            <ul>
+
+                                <li><a th:href="@{/diariogeneral}">Reporte Diario
+                                    General</a></li>
+
+                                <li><a th:href="@{/reportes}">Reportes</a></li>
+                                <li><a th:href="@{/produccionProducto}">Producción Producto</a></li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+
+
+                    <!-- END Sidebar Navigation -->
+
+
+                </div>
+                <!-- END Sidebar Content -->
+            </div>
+            <!-- END Wrapper for scrolling functionality -->
+        </div>
+        <!-- END Main Sidebar -->
+
+        <!-- Main Container -->
+        <div id="main-container">
+
+            <header class="navbar navbar-default">
+                <!-- Left Header Navigation -->
+                <ul class="nav navbar-nav-custom">
+                    <!-- Main Sidebar Toggle Button -->
+                    <li><a href="javascript:void(0)"
+                           onclick="App.sidebar('toggle-sidebar');this.blur();"> <i
+                            class="fa fa-bars fa-fw"></i>
+                    </a></li>
+                    <!-- END Main Sidebar Toggle Button -->
+
+                    <!-- Template Options -->
+                    <!-- Change Options functionality can be found in js/app.js - templateOptions() -->
+                    <li class="dropdown"><a href="javascript:void(0)"
+                                            class="dropdown-toggle" data-toggle="dropdown"> <i
+                            class="gi gi-settings"></i>
+                    </a>
+                        <ul class="dropdown-menu dropdown-custom dropdown-options">
+                            <li class="dropdown-header text-center">Header Style</li>
+                            <li>
+                                <div class="btn-group btn-group-justified btn-group-sm">
+                                    <a href="javascript:void(0)" class="btn btn-primary"
+                                       id="options-header-default">Light</a> <a
+                                        href="javascript:void(0)" class="btn btn-primary"
+                                        id="options-header-inverse">Dark</a>
+                                </div>
+                            </li>
+                            <li class="dropdown-header text-center">Page Style</li>
+                            <li>
+                                <div class="btn-group btn-group-justified btn-group-sm">
+                                    <a href="javascript:void(0)" class="btn btn-primary"
+                                       id="options-main-style">Default</a> <a
+                                        href="javascript:void(0)" class="btn btn-primary"
+                                        id="options-main-style-alt">Alternative</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END Template Options -->
+                </ul>
+
+                <div id="horizontal-menu-collapse" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a th:href="@{/home}">Inicio</a></li>
+
+                    </ul>
+
+                    <div class="navbar-text">
+                        <form sec:authorize="isAuthenticated()" id="frmlogout"
+                              th:action="@{/logout}" method="post" class="form-inline">
+                            <a href="javascript:{}"
+                               onclick="document.getElementById('frmlogout').submit(); return false;">Cerrar
+                                Sesi&oacute;n</a>
+                        </form>
+                    </div>
+                </div>
+            </header>
+            <!-- END Header -->
+
+            <div th:replace="${view} :: content"></div>
+
+
+            <!-- END Page Content -->
+
+            <!-- Footer -->
+            <footer class="clearfix">
+                <div class="pull-right"></div>
+                <div class="pull-left"></div>
+            </footer>
+            <!-- END Footer -->
+        </div>
+        <!-- END Main Container -->
+    </div>
+    <!-- END Page Container -->
+</div>
+<!-- END Page Wrapper -->
+
+<!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
+<a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
+
+<!-- User Settings, modal which opens from Settings link (found in top right user menu) and the Cog link (found in sidebar user info) -->
+<div id="modal-user-settings" class="modal fade" tabindex="-1"
+     role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header text-center">
+                <h2 class="modal-title">
+                    <i class="fa fa-pencil"></i> Perfil de Usuario
+                </h2>
+                <div class="modal-body">
+                    <form class="form-horizontal form-bordered"
+                          onsubmit="return false;">
+                        <fieldset>
+                            <legend>Información</legend>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Usuario</label>
+                                <div class="col-md-8">
+                                    <p class="form-control-static" id="usuario"
+                                    sec:authentication="principal.username"></p>
+
+                                    <!--<input type="text" readonly="readonly" id="usuario"-->
+                                           <!--class="form-control" th:value="${usuario.usuario}"/>-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Nombre</label>
+                                <div class="col-md-8">
+                                    <!--<input type="text" readonly="readonly" id="usuario"-->
+                                           <!--class="form-control" th:value="${usuario.nombre}"/>-->
+                                </div>
+                            </div>
+
+                        </fieldset>
+                        <fieldset>
+                            <legend>Cambio de contraseña</legend>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       for="user-settings-password">Nueva contraseña</label>
+                                <div class="col-md-8">
+                                    <input type="password" id="user-settings-password"
+                                           name="user-settings-password" class="form-control"
+                                           placeholder="Por favor eliga una contraseña compleja"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label"
+                                       for="user-settings-repassword">Confirmar Nueva
+                                    contraseña</label>
+                                <div class="col-md-8">
+                                    <input type="password" id="user-settings-repassword"
+                                           name="user-settings-repassword" class="form-control"
+                                           placeholder="confirme su contraseña"/>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-group form-actions">
+                            <div class="col-xs-12 text-right">
+                                <button type="button" class="btn btn-sm btn-default"
+                                        data-dismiss="modal" id="btnCerrarCambioContrasena">Close
+                                </button>
+
+                                <a class="btn btn-sm btn-primary" onclick="cambiarContrasena()">Guardar</a>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="/js/bootstrap-notify.js"
+        th:src="@{/js/bootstrap-notify.js}"></script>
+
+</body>
+</html>

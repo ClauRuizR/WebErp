@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+    <title>Consulta</title>
+
+   
+</head>
+<body>
+<div class="container">
+  
+    <div th:if="${not #lists.isEmpty(pacientes)}">
+        <h2>paciente List</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Id</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Tipo DNI</th>
+                <th>DNI</th>
+                <th>Lugar de Nacimiento</th>
+            </tr>
+            <tr th:each="paciente : ${pacientes}">
+                <td th:text="${paciente.id}">Id</td>
+                <td th:text="${paciente.nombres}">Nombres</td>
+                <td th:text="${paciente.apellidos">Apellidos</td>
+                <td th:text="${paciente.tipoDni">Tipo Dni</td>
+                <td th:text="${paciente.Dni">Dni</td>
+                <td th:text="${paciente.lugarNacimiento">Lugar de Nacimiento</td>
+                
+                
+            </tr>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

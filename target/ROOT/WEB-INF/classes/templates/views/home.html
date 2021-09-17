@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+<title>Consulta</title>
+</head>
+<body>
+	<div th:fragment="content">
+
+		<div id="page-content" ng-controller="homeConsultaController">
+			<div class="content-header" ng-init="init()">
+				<ul class="nav-horizontal text-center">
+					<!-- 	<li class="active"><a href="javascript:void(0)"><i
+							class="fa fa-home"></i> Home</a></li> -->
+				</ul>
+				<div class="header-section">
+					<h1>
+						<strong>Bienvenidos a WebErp</strong>
+					</h1>
+				</div>
+			</div>
+	
+			
+
+			<div class="block">
+				<!-- Table Styles Title -->
+				<div class="block-title"></div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="block full">
+						<div class="block-title">
+							<div class="block-options pull-right">
+
+							</div>
+							<h2><strong>Ingresos</strong> Mensuales</h2>
+						</div>
+						<div id="dash-chart-live" class="chart" style="padding: 0px; position: relative;">
+
+							<canvas class="chart chart-bar" chart-data="graficoIngresosMensuales" chart-labels="labelIngresosMensuales"
+
+									chart-series="seriesIngresosMensuales" chart-click="onClick"
+									chart-options="options"></canvas>
+
+
+
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="block full">
+						<div class="block-title">
+							<div class="block-options pull-right">
+
+							</div>
+							<h2><strong>Productos</strong> Stock</h2>
+						</div>
+						<div id="dash-chart-live" class="chart" style="padding: 0px; position: relative;height:360px;width:300px;">
+
+							<canvas id="doughnut" class="chart chart-doughnut"
+
+									chart-data="graficoProductoStock" chart-labels="graficoProductoStockLabel"
+									chart-options="options">
+							</canvas>
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

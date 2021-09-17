@@ -1,0 +1,204 @@
+<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+
+</head>
+<body>
+<div th:fragment="content">
+    <div class="notifications top-rigth"></div>
+    <div id="page-content" ng-controller="tipoServicioEditController">
+        <input  hidden="hidden" th:attr="ng-init='id=\''+${id}+'\''"></input>
+        <div class="content-header" ng-init="init()">
+            <ul class="nav-horizontal text-center">
+                <!-- 	<li class="active"><a href="javascript:void(0)"><i
+                        class="fa fa-home"></i> Home</a></li> -->
+            </ul>
+
+            <!-- 			<th:if test="${msg is not empty">
+                <div class="alert alert-success">
+                    <strong th:text="${msg}"/>
+
+                </div>
+
+            </th:if> -->
+            <div class="header-section">
+                <h1>
+                    Formulario de tipo servicio
+                    <!-- <i class="gi gi-table">Formulario de clientes</i><br> -->
+                </h1>
+            </div>
+            <div class="row">
+                <form id="formtiposervicio" class="form-horizontal form-bordered">
+                    <input type="hidden" ng-model="tipoServicio.id" /> <input
+                        type="hidden" ng-model="tipoServicio.version" />
+                    <div class="col-md-12">
+                        <!-- Basic Form Elements Block -->
+                        <div class="block" style="margin-left: 20px !important;">
+                            <!-- Basic Form Elements Title -->
+                            <div class="block-title">
+                                <div class="block-options pull-right"></div>
+                                <h2>
+                                    <strong>Datos B&aacute;sicos </strong>
+                                </h2>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group has-error">
+                                    <label class="col-md-3 control-label">Nombre</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="example-text-input-1"
+                                               name="example-text-input" class="form-control"
+                                               ng-model="tipoServicio.nombre" />
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Tipo Producto</label>
+                                    <div class="col-md-9">
+
+                                        <select  ng-model="tipoServicio.tipoProducto" id="selectTipoProductos"
+                                                 chosen=""
+
+
+                                                 options="listaTipoProductos"  ng-options="estado.nombre for estado in listaTipoProductos track by estado.id">
+                                            <option value="">Seleccione...</option>
+                                        </select>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="estado">Estado</label>
+                                    <div class="col-md-9">
+                                        <select id="estado" name="estado" class="form-control"
+                                                size="1" ng-model="tipoServicio.estado"
+                                                ng-options="estado.value as estado.name for estado in estados">
+                                            <option value="">Seleccione...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="block">
+                                <!-- Table Styles Title -->
+                                <div class="block-title"></div>
+                                <div class="table-options clearfix">
+                                    <div class="btn-group btn-group-sm pull-left"></div>
+                                </div>
+                                <div class="block-title">
+                                    <h2>
+                                        <strong>Detalle Factura</strong>
+                                    </h2>
+                                </div>
+                                <div class="form-horizontal form-bordered">
+
+
+                                    <button name="agregarDetalleTipoServicio"
+                                           class="btn btn-alt btn-sm btn-success"
+
+                                           ng-click="agregarDetalleTipoServicio()"
+                                           value="Agregar Servicios"
+                                          >
+
+                                    <i class="hi hi-plus-sign"></i> Agregar Servicios
+                                    </button>
+
+                                    <table class="table table-striped table-vcenter"
+                                           id="detalleTipoServicio">
+                                        <thead>
+                                        <tr>
+
+                                            <th class="text-center">Servicio</th>
+                                            <th class="text-center">Costo</th>
+                                            <th class="text-center"></th>
+                                            <th class="text-center"></th>
+                                            <th class="text-center"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="tipoSerDet in tipoServicio.detalleTipoServicio | filter: {estado: 1}">
+
+
+                                            <td id="tdfacturaid" class="text-center">
+                                                <div class="form-group has-error">
+                                                    <select
+                                                            ng-model="tipoSerDet.servicio"
+                                                            chosen=""
+
+
+                                                            options="listaServicios"  ng-options="estado.nombre for estado in listaServicios track by estado.id">
+                                                        <option>Seleccione...</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td id="tdfacturaid" class="text-center">
+                                                <div class="form-group has-error">
+                                                    <span>{{}}</span>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <button name="quitarDetalleTipoServicio"
+                                                        class="fa fa-trash btn btn-danger"
+                                                        ng-click="tipoSerDet.estado='0'"
+
+                                                ></button>
+                                            </td>
+                                            <td id="tdmonto" class="text-center" hidden="hidden"><input
+                                                    id="resultMontoTotal" class="form-control"
+                                                    readonly="readonly"
+                                                    ng-model="tipoSerDet.estado"></input></td>
+                                            <td id="tdmonto" class="text-center" hidden="hidden"><input
+                                                    id="resultMontoTotal" class="form-control"
+                                                    readonly="readonly"
+                                                    ng-model="tipoSerDet.id"></input></td>
+                                            <td id="tdmonto" class="text-center" hidden="hidden"><input
+                                                    id="resultMontoTotal" class="form-control"
+                                                    readonly="readonly"
+                                                    ng-model="tipoSerDet.version"></input>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <div class="block-title">
+                                <div class="block-options pull-right"></div>
+                                <div class="form-group form-actions"
+                                     style="margin-left: 20px !important;">
+                                    <div class="col-md-9 col-md-offset-3">
+                                        <button
+                                                 ng-click="saveTipoServicio(tipoServicio)"
+                                                value="Guardar"
+                                                class="btn btn-alt btn-sm btn-primary">
+                                            <i class="fa fa-angle-right"></i>  Guardar
+                                        </button>
+
+                                        <a class="btn btn-alt btn-sm btn-default"
+                                           th:href="@{/tiposervicio/crear}">Agregar Otro</a> <a
+                                            class="btn btn-alt btn-sm btn-default"
+                                            th:href="@{/tiposervicio}"><i class="gi gi-exit"></i>
+                                        Salir</a> <a class="btn btn-alt btn-sm btn-default"
+                                                     onclick="goBack()"><i class="gi gi-exit"></i> Regresar</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

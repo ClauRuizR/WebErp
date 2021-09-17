@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0001">
+        <sqlFile path="classpath:/db/changelog/tables/erp_localidad.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0002">
+        <sqlFile path="classpath:/db/changelog/tables/erp_almacen.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0003">
+        <sqlFile path="classpath:/db/changelog/tables/erp_tipo_producto.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0004">
+        <sqlFile path="classpath:/db/changelog/tables/erp_producto.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0005">
+        <sqlFile path="classpath:/db/changelog/tables/erp_detalle_almacen.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0006">
+        <sqlFile path="classpath:/db/changelog/tables/erp_almacen_detalle_almacen.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0007">
+        <sqlFile path="classpath:/db/changelog/tables/erp_cliente.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0008">
+        <sqlFile path="classpath:/db/changelog/tables/erp_proveedor.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0009">
+        <sqlFile path="classpath:/db/changelog/tables/erp_comprobante_fiscal.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0010">
+        <sqlFile path="classpath:/db/changelog/tables/erp_contacto.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0011">
+        <sqlFile path="classpath:/db/changelog/tables/erp_contacto_cliente.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0012">
+        <sqlFile path="classpath:/db/changelog/tables/erp_contacto_proveedor.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0013">
+        <sqlFile path="classpath:/db/changelog/tables/erp_tipo_documento.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0014">
+        <sqlFile path="classpath:/db/changelog/tables/erp_factura.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0015">
+        <sqlFile path="classpath:/db/changelog/tables/erp_detalle_factura.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0016">
+        <sqlFile path="classpath:/db/changelog/tables/erp_factura_detalle_factura.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0017">
+        <sqlFile path="classpath:/db/changelog/tables/erp_estatus.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0018">
+        <sqlFile path="classpath:/db/changelog/tables/erp_orden_compra.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0019">
+        <sqlFile path="classpath:/db/changelog/tables/erp_detalle_orden_compra.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0020">
+        <sqlFile path="classpath:/db/changelog/tables/erp_orden_compra_detalle_orden_compra.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0021">
+        <sqlFile path="classpath:/db/changelog/tables/erp_impuesto.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0022">
+        <sqlFile path="classpath:/db/changelog/tables/erp_movimiento_inventario.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0023">
+        <sqlFile path="classpath:/db/changelog/tables/erp_pago.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0024">
+        <sqlFile path="classpath:/db/changelog/tables/erp_reporte.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0025">
+        <sqlFile path="classpath:/db/changelog/tables/erp_rol.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0026">
+        <sqlFile path="classpath:/db/changelog/tables/erp_usuario.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0027">
+        <sqlFile path="classpath:/db/changelog/tables/erp_usuario_rol.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0028">
+        <sqlFile path="classpath:/db/changelog/tables/erp_usuario_usuario_rol.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-05-29-0029">
+        <sqlFile path="classpath:/db/changelog/tables/erp_diario_general.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-08-0030">
+        <sqlFile path="classpath:/db/changelog/tables/erp_grupo_empresa.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-08-0031">
+        <sqlFile path="classpath:/db/changelog/tables/erp_empresa.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0032">
+        <sqlFile path="classpath:/db/changelog/tables/erp_grupo_empresa_empresa.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0033">
+        <sqlFile path="classpath:/db/changelog/tables/erp_tipo_servicio.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0034">
+        <sqlFile path="classpath:/db/changelog/tables/erp_servicio.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0035">
+        <sqlFile path="classpath:/db/changelog/tables/erp_detalle_tipo_servicio.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0036">
+        <sqlFile path="classpath:/db/changelog/tables/erp_tipo_servicio_detalle_tipo_servicio.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0037">
+        <sqlFile path="classpath:/db/changelog/tables/erp_produccion_producto.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0038">
+        <sqlFile path="classpath:/db/changelog/tables/erp_tipo_ncf.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0039">
+        <sqlFile path="classpath:/db/changelog/tables/erp_tipo_cliente.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0040">
+        <sqlFile path="classpath:/db/changelog/tables/erp_cuentas_pagar.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0041">
+        <sqlFile path="classpath:/db/changelog/tables/erp_cuentas_cobrar.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+
+</databaseChangeLog>

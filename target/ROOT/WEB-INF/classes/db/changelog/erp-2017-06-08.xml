@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="cruiz" id="erp-2017-06-08-0002">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			 stripComments="true">
+			INSERT INTO `grupo_empresa` (`creado_por`, `estado`, `nombre`, `version`) VALUES ('cruiz', '1', 'Grupo Empresarial Pin Pon', '0');
+
+		</sql>
+	</changeSet>
+
+	<changeSet author="cruiz" id="erp-2017-06-08-0003">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			 stripComments="true">
+			INSERT INTO `empresa` (`creado_en`, `creado_por`, `estado`, `nombre`, `logo`, `direccion`, `website`, `grupo_empresa_id`, `version`) VALUES ('2017-06-08', 'cruiz', '0', 'Pin Pon RD', 'pinponLogo.png', 'Avenida Jacobo', 'pinponrd.net', '1', '0');
+
+		</sql>
+	</changeSet>
+
+	<changeSet author="cruiz" id="erp-2017-06-08-0004">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			 stripComments="true">
+			INSERT INTO `rol` (`rol`, `creado_en`, `creado_por`, `estado`, `version`) VALUES ('ADMIN', '2017-06-08', 'admin', '1', '0');
+
+		</sql>
+	</changeSet>
+	<changeSet author="cruiz" id="erp-2017-06-08-0005">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			 stripComments="true">
+			INSERT INTO  `rol` (`rol`, `creado_en`, `creado_por`, `estado`) VALUES ('USER', '2017-06-08', 'admin', '1');
+
+		</sql>
+	</changeSet>
+	<changeSet author="cruiz" id="erp-2017-06-08-0006">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			 stripComments="true">
+			INSERT INTO `usuario_rol` (`usuario_id`, `rol_id`) VALUES ('1', '1');
+
+		</sql>
+	</changeSet>
+
+	<changeSet author="cruiz" id="erp-2017-06-08-0007">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			 stripComments="true">
+			ALTER TABLE `empresa`
+			ADD COLUMN `email` VARCHAR(255) NULL AFTER `version`;
+
+		</sql>
+	</changeSet>
+</databaseChangeLog>

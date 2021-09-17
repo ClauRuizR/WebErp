@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="cruiz" id="erp-2017-06-22-0001">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			 stripComments="true">
+			ALTER TABLE `producto`
+			ADD COLUMN `cantidad` BIGINT(20) NULL DEFAULT 0 AFTER `version`;
+
+		</sql>
+	</changeSet>
+
+	<changeSet author="cruiz" id="erp-2017-06-22-0002">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			 stripComments="true">
+			ALTER TABLE `diario_general`
+			ADD COLUMN `empresa_id` BIGINT(20) NOT NULL AFTER `version`,
+			ADD INDEX `fkDiarioGeneralEmpresa_idx` (`empresa_id` ASC);
+
+		</sql>
+	</changeSet>
+
+	<changeSet author="cruiz" id="erp-2017-06-22-0003">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			 stripComments="true">
+			ALTER TABLE  `diario_general`
+			ADD CONSTRAINT `fkDiarioGeneralEmpresa`
+			FOREIGN KEY (`empresa_id`)
+			REFERENCES `empresa` (`id`)
+			ON DELETE NO ACTION
+			ON UPDATE NO ACTION;
+		</sql>
+	</changeSet>
+
+</databaseChangeLog>

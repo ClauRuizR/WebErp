@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <include file="/db/changelog/init_load_structure.xml"/>
+
+    <include file="/db/changelog/init_insert_data.xml"/>
+
+    <include file="/db/changelog/erp-2017-06-02.xml"/>
+
+    <include file="/db/changelog/erp-2017-06-08.xml"/>
+
+    <include file="/db/changelog/erp-2017-06-15.xml"/>
+
+    <include file="/db/changelog/erp-2017-06-22.xml"/>
+
+    <include file="/db/changelog/erp-2017-07-05.xml"/>
+
+    <include file="/db/changelog/erp-2017-07-22.xml"/>
+
+</databaseChangeLog>

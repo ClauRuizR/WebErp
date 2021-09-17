@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+				   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="cruiz" id="erp-2017-07-05-0001">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			 stripComments="true">
+			ALTER TABLE `comprobante_fiscal`
+			DROP COLUMN `secuencia_caracteres`,
+			DROP COLUMN `secuencia`,
+			DROP COLUMN `empresa_id`,
+			DROP COLUMN `fecha_efectividad`,
+			DROP COLUMN `descripcion`,
+			DROP COLUMN `codigo`,
+			ADD COLUMN `letra` VARCHAR(10) NOT NULL AFTER `version`,
+			ADD COLUMN `numero_base` VARCHAR(10) NOT NULL AFTER `letra`,
+			ADD COLUMN `cantidad` BIGINT(20) NOT NULL AFTER `numero_base`,
+			ADD COLUMN `contador` BIGINT(20) NOT NULL AFTER `cantidad`,
+			CHANGE COLUMN `desde` `desde` VARCHAR(8) NULL DEFAULT NULL ,
+			CHANGE COLUMN `hasta` `hasta` VARCHAR(8) NULL DEFAULT NULL ;
+
+
+
+		</sql>
+	</changeSet>
+
+
+	<changeSet author="cruiz" id="erp-2017-07-05-0002">
+		<sql dbms="mysql" endDelimiter="\nGO" splitStatements="true"
+			 stripComments="true">
+			ALTER TABLE `cliente`
+			ADD COLUMN `tipo_cliente_id` BIGINT(20) NOT NULL AFTER `version`;
+		</sql>
+	</changeSet>
+</databaseChangeLog>
