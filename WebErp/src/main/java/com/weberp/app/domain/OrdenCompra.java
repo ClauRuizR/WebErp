@@ -186,8 +186,8 @@ public class OrdenCompra extends Auditable<String> {
 			case EstatusEnum.PENDIENTE:
 				return "Pendiente";
 
-			case EstatusEnum.APROBADO:
-				return "Aprobado";
+			case EstatusEnum.APROBADA:
+				return "Aprobada";
 
 			case EstatusEnum.PAGADA:
 				return "Pagada";

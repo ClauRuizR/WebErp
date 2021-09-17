@@ -17,6 +17,7 @@ public interface ClienteRepository extends CrudRepository<Cliente, Long>{
 
 	Page<Cliente> findByEmpresa_Id(Long empresaId, Pageable pageRequest);
 
+
 	Page<Cliente> findByNombre(String nombre, Pageable pageCriteira);
 
 

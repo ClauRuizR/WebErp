@@ -17,6 +17,8 @@ public interface AlmacenRepository extends CrudRepository<Almacen, Long> {
 
 	Page<Almacen> findByLocalidadEmpresa_Id (Long empresaId, Pageable pageRequest);
 
+	Page<Almacen> findByLocalidadEmpresaId(Long empresaId, Pageable pageRequest);
+
 	Page<Almacen> findByCodigo(String codigo, Pageable pageCriteira);
 
 

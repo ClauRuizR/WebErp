@@ -34,7 +34,7 @@ public class DiarioGeneralDTO extends ParsableObject<DiarioGeneral,DiarioGeneral
     private BigDecimal credito;
 
     @Mapping
-    private Integer estado = 1;
+    private Integer estado;
 
     @Mapping
     private Date creadoEn;

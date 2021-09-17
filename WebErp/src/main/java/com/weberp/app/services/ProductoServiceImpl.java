@@ -125,8 +125,9 @@ public class ProductoServiceImpl extends ConfigMapper implements ProductoService
         List<DetalleAlmacen> listaDetalleAlmacen = entityManager.createNamedQuery("DetalleAlmacen.findByProductoId", DetalleAlmacen.class).setParameter(1, productoId).getResultList();
         Long cantidad = 0L;
         for (int i = 0; i < listaDetalleAlmacen.size(); i++) {
-            // System.err.print(listaDetalleAlmacen.get(i).getCantidad());
-            cantidad = cantidad + listaDetalleAlmacen.get(i).getCantidad();
+            if(listaDetalleAlmacen.get(i).getCantidad() != null) {
+                cantidad = cantidad + listaDetalleAlmacen.get(i).getCantidad();
+            }
         }
 
         return cantidad;

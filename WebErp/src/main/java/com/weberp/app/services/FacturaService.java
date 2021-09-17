@@ -25,9 +25,9 @@ public interface FacturaService {
 
 
 
-	boolean generaSalidaProductos(Long Id);
+	boolean generaSalidaProductos(Factura factura);
 
-	void pagarFactura(Long id);
+	void crearRegistroEnDiarioGeneral(Factura factura);
 
 	Factura cambiarEstatusFactura(Factura factura);
 

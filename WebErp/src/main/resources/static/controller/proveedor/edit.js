@@ -36,15 +36,15 @@ angular.module("WebErpApp").controller("proveedorEditController", function($scop
 
             $('#myModalProveedor').hide();
             $('.modal-backdrop').hide();
-            $scope.loadProveedor();
-            notificarQue('Orden de Compra fue guardado con exito! ','success');
+            $scope.proveedor = result.data;
+            notificarQue('Proveedor fue guardado con exito! ','success');
 
 
 
         },function(error){
 
 
-            notificarQue('hubo un error intentando guardar la orden de compra! { '+error.data.message+' }','danger');
+            notificarQue('hubo un error intentando guardarel proveedor { '+error.data.message+' }','danger');
 
 
         })

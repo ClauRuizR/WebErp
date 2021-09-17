@@ -88,9 +88,8 @@ required="required"
                                     <div class="col-md-9">
                                         <input type="checkbox"
                                                class="form-control"
-                                               ng-click="loadComprobanteFiscal(factura.comprobanteFiscal)"
-                                               ng-true-value="1"
-                                               ng-false-value="0"
+                                               ng-true-value="true"
+                                               ng-false-value="false"
                                                ng-model="factura.comprobanteFiscal"> </input>
                                         <input
                                             type="text" id="txtComprobanteFiscal" readonly="readonly"
@@ -154,7 +153,13 @@ required="required"
                                     <i class="hi hi-plus-sign"></i>
                                         Agregar Detalle Factura
                                     </button>
+                                    <div class="form-group ">
+                                        <label class="col-md-3 control-label">Producto: </label>
+                                        <div class="col-md-9">
 
+                                            <input ng-model="searchProducto"/>
+                                        </div>
+                                    </div>
                                     <table class="table table-striped table-vcenter"
                                            id="detalleFactura">
                                         <thead>
@@ -163,15 +168,19 @@ required="required"
                                             <th id="thProducto" class="text-center">Producto</th>
                                             <th id="thPrecio" class="text-center">Precio</th>
                                             <th id="thCantidad" class="text-center">Cantidad</th>
-                                            <th id="thItbis" class="text-center">Itbis</th>
                                             <th id="thmonto" class="text-center">Monto</th>
+                                            <th id="thmonto" class="text-center">Descuento</th>
+                                            <th id="thmonto" class="text-center">Importe</th>
+                                            <th id="thmonto" class="text-center">Sub Total</th>
+                                            <th id="thItbis" class="text-center">Itbis</th>
+                                            <th id="thmonto" class="text-center">Total</th>
                                             <th class="text-center"></th>
                                             <th class="text-center"></th>
                                             <th class="text-center"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ng-repeat="fact in factura.detalleFactura | filter: {estado: 1}">
+                                        <tr ng-repeat="fact in factura.detalleFactura | filter: {estado: 1,productoDetalleNombre:searchProducto }">
 
 
                                             <td id="tdfacturaid" class="text-center">
@@ -202,20 +211,43 @@ required="required"
                                                            type="number" ></input>
                                                 </div>
                                             </td>
+                                            <td id="tdmonto" class="text-center"><input
+                                                    id="monto" class="form-control"
+                                                    readonly="readonly"
+                                                    ng-model="fact.monto"></input>
+                                            </td>
+                                            <td id="tdmonto" class="text-center"><input
+                                                    id="monto" class="form-control"
+
+                                                    ng-model="fact.descuento"></input>
+                                            </td>
+                                            <td id="tdmonto" class="text-center"><input
+                                                    id="monto" class="form-control"
+                                                    readonly="readonly"
+                                                    ng-model="fact.importe"></input>
+                                            </td>
+                                            <td id="tdmonto" class="text-center"><input
+                                                    id="monto" class="form-control"
+                                                    readonly="readonly"
+                                                    ng-model="fact.subTotal"></input>
+                                            </td>
+
+
                                             <td id="tdCantidad" class="text-center"><input
                                                     class="form-control" readonly="readonly"
                                                    ng-model="fact.itbis"
                                                     type="number"></input></td>
 
                                             <td id="tdmonto" class="text-center"><input
-                                                    id="resultMontoTotal" class="form-control"
+                                                    id="monto" class="form-control"
                                                     readonly="readonly"
-                                                    ng-model="fact.monto"></input>
+                                                    ng-model="fact.total"></input>
                                             </td>
 
 
                                             <td>
                                                 <button name="quitarDetalleFactura"
+                                                        ng-disabled="factura.estatus != 'P'"
                                                         class="fa fa-trash btn btn-danger"
                                                         ng-click="fact.estado='0'"
 
@@ -337,6 +369,20 @@ required="required"
 
                                                                             </select>
 
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group ">
+                                                                        <label class="col-md-3 control-label">Tipo Cliente</label>
+                                                                        <div class="col-md-9">
+
+                                                                            <select ng-model="cliente.tipoCliente"
+                                                                                    chosen=""
+                                                                                    options="listaTipoCliente"
+                                                                                    ng-options="a.nombre for a in listaTipoCliente track by a.id ">
+
+                                                                                <option value="">Seleccione...</option>
+
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">

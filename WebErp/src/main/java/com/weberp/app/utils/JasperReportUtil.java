@@ -41,24 +41,24 @@ public class JasperReportUtil {
 
 	public final static String LOGO = "/pinponLogo.png";
 
-	public  Connection getConnection () throws SQLException, IOException{
-		Properties prop = new Properties();
-		String propFileName = "application.properties";
+		public  Connection getConnection () throws SQLException, IOException{
+			Properties prop = new Properties();
+			String propFileName = "application.properties";
 
-		InputStream	inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+			InputStream	inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
 
-		if (inputStream != null) {
-			prop.load(inputStream);
-		} else {
-			throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+			if (inputStream != null) {
+				prop.load(inputStream);
+			} else {
+				throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+			}
+			String url = prop.getProperty("spring.datasource.url");
+			String username = prop.getProperty("spring.datasource.username");
+			String password = prop.getProperty("spring.datasource.password");
+			Connection conn = (Connection) DriverManager.getConnection(url, username, password);
+
+			return conn;
 		}
-		String url = prop.getProperty("spring.datasource.url");
-		String username = prop.getProperty("spring.datasource.username");
-		String password = prop.getProperty("spring.datasource.password");
-		Connection conn = (Connection) DriverManager.getConnection(url, username, password);
-
-		return conn;
-	}
 
 	public void imprimirFactura(HttpServletResponse response, Long id, String numeroDocumento, ServletContext context)
 			throws JRException, IOException, SQLException {

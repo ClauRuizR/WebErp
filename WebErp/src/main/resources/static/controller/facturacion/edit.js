@@ -21,13 +21,13 @@ angular.module("WebErpApp").controller("facturacionEditController", function($sc
 
     }
 
-    $scope.loadComprobanteFiscal = function(valor){
+    $scope.loadComprobanteFiscal = function(valor,cliente){
 
 
       if(valor == "1"){
         $http.get("/rest/comprobantefiscal").then(function(result){
             $scope.comprobantefiscal = result.data;
-            $scope.factura.numeroComprobanteFiscal= $scope.comprobantefiscal.comprobante;
+            $scope.factura.numeroComprobanteFiscal= cliente.tipoCliente.tipoNcf.comprobanteFiscal.ncf;
 
         })
       }else{
@@ -55,6 +55,14 @@ angular.module("WebErpApp").controller("facturacionEditController", function($sc
         })
     }
 
+    $scope.loadTipoCliente = function(){
+
+        $http.get("/rest/tipoCliente").then(function(result){
+
+            $scope.listaTipoCliente = result.data;
+        })
+    }
+
     $scope.init=function(){
 
         $scope.valor={};
@@ -64,6 +72,7 @@ angular.module("WebErpApp").controller("facturacionEditController", function($sc
         $scope.factura.estado=1;
         $scope.loadTipoDocumento();
         $scope.loadCliente();
+        $scope.loadTipoCliente();
 
         $scope.loadProducto();
         if($scope.id > 0) {
@@ -92,7 +101,7 @@ $scope.agregarContactoCliente= function(){
 
 $scope.agregarDetalleFactura= function(){
 
-    $scope.factura.detalleFactura.push({estado: 1});
+    $scope.factura.detalleFactura.push({estado: 1, descuento: 0});
 }
 
 $scope.saveCliente= function(cliente){
@@ -128,7 +137,7 @@ $scope.saveCliente= function(cliente){
 
             notificarQue('Factura fue guardado con exito! ','success');
 
-
+             window.location.href = "/facturas/view/"+result.data.id;
 
         },function(error){
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 
@@ -69,7 +70,7 @@ public class FacturaServiceImpl extends ConfigMapper implements FacturaService  
 	private ProduccionProductoService produccionProductoService;
 
 	@Autowired
-	private UsuarioService usuarioService;
+	private CuentasCobrarService cuentasCobrarService;
 
 	@Autowired
 	private MovimientoInventarioService moviemintoInventarioService;
@@ -106,31 +107,47 @@ public class FacturaServiceImpl extends ConfigMapper implements FacturaService  
 
             factura.setFecha(new Date());
 
-			String numeroDocumento = tipoDocumentoService.getNumeroDocumento(factura.getTipoDocumento().getLlaveDocumento(),empresa.getId());
-
-			factura.setNumeroDocumento(numeroDocumento);
-
-			tipoDocumentoService.incrementaNumeroControl(factura.getTipoDocumento().getLlaveDocumento(),empresa.getId());
 
 		}
 
+		BigDecimal importe = new BigDecimal(0);
+		BigDecimal itbis = new BigDecimal(0);
+		BigDecimal subTotal = new BigDecimal(0);
+
+		BigDecimal total = new BigDecimal(0);
 		for (int i = 0; i < factura.getDetalleFactura().size(); i++) {
 			factura.getDetalleFactura().get(i).setFactura(factura);
 
 			if(factura.getDetalleFactura().get(i).getProducto().getTipoProducto().isFacturable()) {
-				factura.getDetalleFactura().get(i).setMonto(factura.getDetalleFactura().get(i).getTotal());
-				factura.getDetalleFactura().get(i).setItbis(factura.getDetalleFactura().get(i).getTotal()
-						.multiply(impuesto.getValor()).divide(new BigDecimal(100)));
+				factura.getDetalleFactura().get(i).setMonto(factura.getDetalleFactura().get(i).getProducto().getPrecioVenta());
+				factura.getDetalleFactura().get(i).setImporte(factura.getDetalleFactura().get(i).getMonto().multiply(new BigDecimal(factura.getDetalleFactura().get(i).getCantidad())));
+				factura.getDetalleFactura().get(i).setSubTotal(factura.getDetalleFactura().get(i).getImporte().subtract(factura.getDescuento()));
+				factura.getDetalleFactura().get(i).setItbis(factura.getDetalleFactura().get(i).getSubTotal().multiply(impuesto.getValor()).divide(new BigDecimal(100)));
+				factura.getDetalleFactura().get(i).setSubTotal(factura.getDetalleFactura().get(i).getSubTotal().subtract(factura.getDetalleFactura().get(i).getItbis()));
+				factura.getDetalleFactura().get(i).setTotal(factura.getDetalleFactura().get(i).getSubTotal().add(factura.getDetalleFactura().get(i).getItbis()));
+
 			}else{
 				factura.getDetalleFactura().get(i).setItbis(new BigDecimal(0));
 				factura.getDetalleFactura().get(i).setMonto(new BigDecimal(0));
+				factura.getDetalleFactura().get(i).setSubTotal(new BigDecimal(0));
+				factura.getDetalleFactura().get(i).setTotal(new BigDecimal(0));
+				factura.getDetalleFactura().get(i).setImporte(new BigDecimal(0));
 			}
 
 
+			importe = importe.add(factura.getDetalleFactura().get(i).getImporte());
+			itbis  = itbis.add(factura.getDetalleFactura().get(i).getItbis());
+			subTotal = subTotal.add(factura.getDetalleFactura().get(i).getSubTotal());
+			total = total.add(factura.getDetalleFactura().get(i).getTotal());
+
 		}
-		if (factura.isComprobanteFiscal()) {
-			comprobanteFiscalService.incrementarComprobanteFiscal(1L);
-		}
+
+		factura.setImporte(importe);
+		factura.setItbis(itbis);
+
+		factura.setSubTotal(subTotal);
+		factura.setTotal(total);
+
 
 		return facturaRepository.save(factura);
 	}
@@ -178,14 +195,12 @@ public class FacturaServiceImpl extends ConfigMapper implements FacturaService  
 	}
 
 	@Override
-	public boolean generaSalidaProductos(Long Id) {
+	public boolean generaSalidaProductos(Factura factura) {
 
-		factura = facturaRepository.findOne(Id);
-
-		com.weberp.app.domain.MovimientoInventario movimientoInventario;
+		MovimientoInventario movimientoInventario;
 
 		try {
-			if (factura.getEstatus().equals(EstatusEnum.PENDIENTE)) {
+			if (factura.getEstatus().equals(EstatusEnum.APROBADA)) {
 
 				List<DetalleFactura> detalleFactura = factura.getDetalleFactura();
 				Almacen almacen = almacenService.findByPrincipalAndEstado(true, 1);
@@ -226,9 +241,6 @@ public class FacturaServiceImpl extends ConfigMapper implements FacturaService  
 
 				moviemintoInventarioService.saveBatch(movimientoInventarioList);
 
-
-				factura.setEstatus(EstatusEnum.APROBADO);
-				facturaRepository.save(factura);
 				return true;
 
 			}
@@ -241,10 +253,9 @@ public class FacturaServiceImpl extends ConfigMapper implements FacturaService  
 	}
 
 	@Override
-	public void pagarFactura(Long id) {
+	public void crearRegistroEnDiarioGeneral(Factura factura) {
 
-		factura = facturaRepository.findOne(id);
-		factura.setEstatus(EstatusEnum.PAGADA);
+
 
 		DiarioGeneral diarioGeneral = new DiarioGeneral();
 
@@ -254,31 +265,52 @@ public class FacturaServiceImpl extends ConfigMapper implements FacturaService  
 		diarioGeneral.setDebito(factura.getMontoTotal());
 		diarioGeneral.setCredito(new BigDecimal(0));
 		diarioGeneral.setEmpresa(factura.getEmpresa());
-		facturaRepository.save(factura);
+
 		diarioGeneralService.guardar(diarioGeneral);
 
 	}
 
 	@Override
 	public Factura cambiarEstatusFactura(Factura factura) {
-		String[] tipoDocumento = factura.getNumeroDocumento().split("-");
+		String tipoDocumento = factura.getTipoDocumento().getLlaveDocumento();
 		Long idFactura=0L;
-		if (tipoDocumento[0].toString().equals(TipoDocumentoEnum.FACTURA)) {
+		if (tipoDocumento.toString().equals(TipoDocumentoEnum.FACTURA)) {
 
 			idFactura = factura.getId();
 
-			if (factura.getEstatus().equals(EstatusEnum.APROBADO)
+			if (factura.getEstatus().equals(EstatusEnum.APROBADA)
 					&& !validEstatusActualFactura(idFactura, factura.getEstatus())) {
-				generaSalidaProductos(idFactura);
+
+				String numeroDocumento = tipoDocumentoService.getNumeroDocumento(factura.getTipoDocumento().getLlaveDocumento(),factura.getEmpresa().getId());
+
+				factura.setNumeroDocumento(numeroDocumento);
+
+				tipoDocumentoService.incrementaNumeroControl(factura.getTipoDocumento().getLlaveDocumento(),factura.getEmpresa().getId());
+
+				if (factura.isComprobanteFiscal()) {
+					ComprobanteFiscal comprobanteFiscal = factura.getCliente().getTipoCliente().getTipoNcf().getComprobanteFiscal();
+					factura.setNumeroComprobanteFiscal(comprobanteFiscal.getNcf());
+					comprobanteFiscalService.incrementarComprobanteFiscal(comprobanteFiscal.getId());
+				}
+
+
+				this.generaSalidaProductos(factura);
 			}
 
 			if (factura.getEstatus().equals(EstatusEnum.PAGADA)
 					&& !validEstatusActualFactura(idFactura, factura.getEstatus())) {
-				pagarFactura(idFactura);
+
+                this.crearRegistroEnDiarioGeneral(factura);
 			}
 		}
 
-		factura = facturaRepository.findOne(idFactura);
+
+        for (DetalleFactura detalleFactura :factura.getDetalleFactura())
+		    detalleFactura.setFactura(factura);
+
+
+		factura = facturaRepository.save(factura);
+
 		return factura;
 
 	}
@@ -294,7 +326,7 @@ public class FacturaServiceImpl extends ConfigMapper implements FacturaService  
 	@Override
 	public List<Factura> facturasPorCobrar() {
 
-		return facturaRepository.findByEstatus(EstatusEnum.APROBADO);
+		return facturaRepository.findByEstatus(EstatusEnum.APROBADA);
 	}
 
 	@Override
@@ -313,5 +345,14 @@ public class FacturaServiceImpl extends ConfigMapper implements FacturaService  
 		return contactDtoPage;
 	}
 
+	public void registraCuentasCobrar(Factura factura){
+
+		CuentasCobrar cuentasCobrar = new CuentasCobrar();
+
+		cuentasCobrar.setCliente(factura.getCliente());
+		cuentasCobrar.setEmpresa(factura.getEmpresa());
+		cuentasCobrar.setNumeroDocumento(factura.getNumeroDocumento());
+		//cuentasCobrar.setImporte(factura.getImporte());
+	}
 
 }

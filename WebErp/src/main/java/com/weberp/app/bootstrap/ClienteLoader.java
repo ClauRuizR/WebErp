@@ -68,7 +68,7 @@ public class ClienteLoader implements ApplicationListener<ContextRefreshedEvent>
 
 	
 	//clienteRepository.save(p2);
-	log.info("Cliente - Id " + p2.getId());
+//	log.info("Cliente - Id " + p2.getId());
 		
 	}
 

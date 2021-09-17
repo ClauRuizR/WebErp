@@ -39,7 +39,7 @@ public class ProductoDTO extends ParsableObject<Producto,ProductoDTO> {
 	@Mapping
 	private String codigoAlfanumerico;
 	@Mapping
-	private Integer estado = 1;
+	private Integer estado;
 
 	@Mapping
 	private Long cantidad;

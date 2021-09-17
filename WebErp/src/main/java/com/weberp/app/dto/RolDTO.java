@@ -22,7 +22,7 @@ public class RolDTO extends ParsableObject<Rol,RolDTO> {
     @Mapping
     private String rol;
     @Mapping
-    private Integer estado = 1;
+    private Integer estado;
 
     @Mapping
     private Date creadoEn;

@@ -66,6 +66,21 @@
 
 										</div>
 									</div>
+
+									<div class="form-group ">
+										<label class="col-md-3 control-label">Tipo Cliente</label>
+										<div class="col-md-9">
+
+											<select ng-model="cliente.tipoCliente"
+													chosen=""
+													options="tipocliente"
+													ng-options="a.nombre for a in tipocliente track by a.id ">
+
+												<option value="">Seleccione...</option>
+
+											</select>
+										</div>
+									</div>
 									<div class="form-group">
 										<label class="col-md-3 control-label" for="estado">Tipo DNI</label>
 										<div class="col-md-9">

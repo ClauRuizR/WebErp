@@ -20,6 +20,38 @@ public  abstract class ConfigMapper {
     private  ModelMapper modelMapper;
 
 
+
+    public CuentasPagarDTO convertCuentasPagarToDto(CuentasPagar cuentasPagar) {
+        CuentasPagarDTO cuentasPagarDTO = modelMapper.map(cuentasPagar, CuentasPagarDTO.class);
+
+        return cuentasPagarDTO;
+    }
+
+
+    public CuentasPagar convertCuentasPagarToEntity(CuentasPagarDTO cuentasPagarDTO) throws ParseException {
+        CuentasPagar  cuentasPagar = modelMapper.map(cuentasPagarDTO, CuentasPagar.class);
+
+        return cuentasPagar;
+    }
+
+
+    public CuentasCobrarDTO convertCuentasCobrarToDto(CuentasCobrar cuentasCobrar) {
+        CuentasCobrarDTO cuentasCobrarDTO = modelMapper.map(cuentasCobrar, CuentasCobrarDTO.class);
+
+        return cuentasCobrarDTO;
+    }
+
+
+    public CuentasCobrar convertCuentasCobrarToEntity(CuentasCobrarDTO cuentasCobrarDTO) throws ParseException {
+        CuentasCobrar  cuentasCobrar = modelMapper.map(cuentasCobrarDTO, CuentasCobrar.class);
+
+        return cuentasCobrar;
+    }
+
+
+
+
+
     public LocalidadDTO convertLocalidadToDto(Localidad localidad) {
         LocalidadDTO localidadDTO = modelMapper.map(localidad, LocalidadDTO.class);
 
@@ -259,5 +291,43 @@ public  abstract class ConfigMapper {
 
         return almacen;
     }
+
+
+    public ComprobanteFiscalDTO convertComprobanteFiscalToDto(ComprobanteFiscal comprobanteFiscal) {
+        ComprobanteFiscalDTO comprobanteFiscalDTO = modelMapper.map(comprobanteFiscal, ComprobanteFiscalDTO.class);
+
+        return comprobanteFiscalDTO;
+    }
+
+    public ComprobanteFiscal convertComprobanteFiscalToEntity(ComprobanteFiscalDTO comprobanteFiscalDTO) throws ParseException {
+        ComprobanteFiscal comprobanteFiscal = modelMapper.map(comprobanteFiscalDTO, ComprobanteFiscal.class);
+
+        return comprobanteFiscal;
+    }
+
+    public TipoClienteDTO convertTipoClienteToDto(TipoCliente tipoCliente) {
+        TipoClienteDTO tipoClienteDTO = modelMapper.map(tipoCliente, TipoClienteDTO.class);
+
+        return tipoClienteDTO;
+    }
+
+    public TipoCliente convertTipoClienteToEntity(TipoClienteDTO tipoClienteDTO) throws ParseException {
+        TipoCliente tipoCliente = modelMapper.map(tipoClienteDTO, TipoCliente.class);
+
+        return tipoCliente;
+    }
+
+    public TipoNcfDTO convertTipoNcfToDto(TipoNcf tipoNcf) {
+        TipoNcfDTO tipoNcfDTO = modelMapper.map(tipoNcf, TipoNcfDTO.class);
+
+        return tipoNcfDTO;
+    }
+
+    public TipoNcf convertTipoNcfToEntity(TipoNcfDTO tipoNcfDTO) throws ParseException {
+        TipoNcf tipoNcf = modelMapper.map(tipoNcfDTO, TipoNcf.class);
+
+        return tipoNcf;
+    }
+
 
 }

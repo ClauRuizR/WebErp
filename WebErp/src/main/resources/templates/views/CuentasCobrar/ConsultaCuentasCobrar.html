@@ -74,7 +74,7 @@
 					</thead>
 
 					<tbody>
-					<tr ng-repeat="fact in factura | filter: {estatusNombre: 'Aprobado'}">
+					<tr ng-repeat="fact in factura | filter:filtrarPorEstatusCuentasPorCobrar()">
 						<td class="text-center"><span><span>{{fact.id}}</span></span></td>
 						<td class="text-center"><span>{{fact.numeroDocumento}}</span></td>
 						<td class="text-center"><span>{{fact.cliente.nombre}} {{fact.cliente.apellido}}</span></td>

@@ -110,7 +110,13 @@
 
 										<i class="hi hi-plus-sign"></i>Agregar Detalle Orden
 										</button>
+										<div class="form-group ">
+											<label class="col-md-3 control-label">Producto: </label>
+											<div class="col-md-9">
 
+												<input ng-model="searchProducto"/>
+											</div>
+										</div>
 										<table class="table table-striped table-vcenter"
 											id="detalleOrdenCompra">
 											<thead>
@@ -126,7 +132,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr ng-repeat="oc in ordencompra.detalleOrdenCompra | filter: {estado: 1}">
+												<tr ng-repeat="oc in ordencompra.detalleOrdenCompra | filter: {estado: 1,nombreProducto:searchProducto }">
 
 
 													<td id="tdfacturaid" class="text-center">
@@ -172,6 +178,7 @@
 
 													<td>
 														<button name="quitarDetalleOrdenCompra"
+																ng-disabled="ordencompra.estatus != 'P'"
 																class="fa fa-trash btn btn-danger"
 															ng-click="oc.estado='0'"></button>
 													</td>

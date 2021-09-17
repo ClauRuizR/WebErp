@@ -24,9 +24,9 @@ public class DetalleAlmacenDTO extends ParsableObject<DetalleAlmacen,DetalleAlma
     private String nombreAlmacenPadre;
 
     @Mapping
-    private Long cantidad = 0L;
+    private Long cantidad;
     @Mapping
-    private Integer estado = 1;
+    private Integer estado;
 
     @Mapping
     private Date creadoEn;
@@ -39,6 +39,10 @@ public class DetalleAlmacenDTO extends ParsableObject<DetalleAlmacen,DetalleAlma
 
     @Mapping
     private String modificadoPor;
+
+
+    @Mapping
+    private String productoDetalleNombre;
 
     @Mapping
     private Long version;
@@ -116,11 +120,22 @@ public class DetalleAlmacenDTO extends ParsableObject<DetalleAlmacen,DetalleAlma
     }
 
     public String getNombreAlmacenPadre() {
+
+
+
         return nombreAlmacenPadre;
     }
 
     public void setNombreAlmacenPadre(String nombreAlmacenPadre) {
         this.nombreAlmacenPadre = nombreAlmacenPadre;
+    }
+
+    public String getProductoDetalleNombre() {
+        return  getProducto().getNombre();
+    }
+
+    public void setProductoDetalleNombre(String productoDetalleNombre) {
+        this.productoDetalleNombre = productoDetalleNombre;
     }
 
     @Override

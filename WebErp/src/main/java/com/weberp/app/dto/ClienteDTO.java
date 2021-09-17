@@ -27,7 +27,10 @@ public class ClienteDTO extends ParsableObject<Cliente,ClienteDTO> {
 	@Mapping
 	private String sexo;
 	@Mapping
-	private Integer estado = 1;
+	private Integer estado ;
+
+	@Mapping
+	private TipoClienteDTO tipoCliente = new TipoClienteDTO();
 
 	@Mapping
 	private String contacto;
@@ -54,6 +57,14 @@ public class ClienteDTO extends ParsableObject<Cliente,ClienteDTO> {
 
 	@Mapping
 	private List<ContactoDTO> contactos = new ArrayList<>();
+
+	public TipoClienteDTO getTipoCliente() {
+		return tipoCliente;
+	}
+
+	public void setTipoCliente(TipoClienteDTO tipoCliente) {
+		this.tipoCliente = tipoCliente;
+	}
 
 	public Long getId() {
 		return id;

@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.LazyCollection;
@@ -38,7 +39,7 @@ public class DetalleFactura extends Auditable<String> {
 
 	private Long cantidad = 0L;
 
-	@Transient
+
 	private BigDecimal total;
 
 	private BigDecimal precio = new BigDecimal(0);
@@ -49,7 +50,17 @@ public class DetalleFactura extends Auditable<String> {
 	@ManyToOne
 	@JoinColumn(name = "factura_id")
 	private Factura factura;
-	private BigDecimal itbis;
+
+	private BigDecimal itbis= new BigDecimal(0);
+	@NotNull
+	private BigDecimal importe= new BigDecimal(0);
+
+	@NotNull
+	private BigDecimal subTotal= new BigDecimal(0);
+
+	@NotNull
+	private BigDecimal descuento= new BigDecimal(0);
+
 	private Integer estado = 1;
 	@CreatedDate
 	private Date creadoEn;
@@ -176,6 +187,29 @@ public class DetalleFactura extends Auditable<String> {
 		this.version = version;
 	}
 
+	public BigDecimal getImporte() {
+		return importe;
+	}
 
+	public void setImporte(BigDecimal importe) {
+		this.importe = importe;
+	}
 
+	public BigDecimal getSubTotal() {
+		return subTotal;
+	}
+
+	public void setSubTotal(BigDecimal subTotal) {
+		this.subTotal = subTotal;
+	}
+
+	public BigDecimal getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(BigDecimal descuento) {
+		this.descuento = descuento;
+	}
 }
+
+

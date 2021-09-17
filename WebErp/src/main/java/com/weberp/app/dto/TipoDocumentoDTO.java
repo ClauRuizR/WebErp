@@ -25,7 +25,7 @@ public class TipoDocumentoDTO extends ParsableObject<TipoDocumento,TipoDocumento
     @Mapping
     private Long numeroControl;
     @Mapping
-    private Integer estado = 1;
+    private Integer estado;
 
     @Mapping
     private Date creadoEn;

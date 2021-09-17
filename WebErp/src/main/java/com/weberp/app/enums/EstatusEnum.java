@@ -5,7 +5,7 @@ package com.weberp.app.enums;
  */
 public class EstatusEnum {
     public final static String PENDIENTE = "P";
-    public final static String APROBADO = "A";
+    public final static String APROBADA = "A";
     public final static String PAGADA = "X";
 
 }

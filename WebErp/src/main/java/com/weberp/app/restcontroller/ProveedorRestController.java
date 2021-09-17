@@ -80,7 +80,7 @@ public class ProveedorRestController extends ConfigMapper{
         return convertProveedorToDto(proveedorService.getProveedorById(id));
     }
     @RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public void save(@Valid @RequestBody ProveedorDTO proveedorDTO, BindingResult result, HttpServletResponse httpServletResponse) {
+    public ProveedorDTO save(@Valid @RequestBody ProveedorDTO proveedorDTO, BindingResult result, HttpServletResponse httpServletResponse) {
         Proveedor proveedor = null;
         try {
             proveedor = convertProveedorToEntity(proveedorDTO);
@@ -101,7 +101,8 @@ public class ProveedorRestController extends ConfigMapper{
         }
 
 
-        proveedorService.guardar(proveedor);
+        proveedor = proveedorService.guardar(proveedor);
+        return convertProveedorToDto(proveedor);
 
     }
 

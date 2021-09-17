@@ -38,6 +38,10 @@ public class Cliente extends Auditable<String> {
 
 	private Integer estado = 1;
 
+	@OneToOne()
+	@JoinColumn(name="tipo_cliente_id")
+	private TipoCliente tipoCliente;
+
 	@Transient
 	private String contacto;
 
@@ -89,6 +93,15 @@ public class Cliente extends Auditable<String> {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+
+	public TipoCliente getTipoCliente() {
+		return tipoCliente;
+	}
+
+	public void setTipoCliente(TipoCliente tipoCliente) {
+		this.tipoCliente = tipoCliente;
 	}
 
 	public String getApellido() {

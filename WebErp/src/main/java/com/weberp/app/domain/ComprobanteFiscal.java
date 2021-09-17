@@ -1,10 +1,13 @@
 package com.weberp.app.domain;
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.*;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.util.StringUtil;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -17,19 +20,31 @@ import org.springframework.data.annotation.LastModifiedDate;
 public class ComprobanteFiscal extends Auditable<String>  {
 
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String descripcion;
-    private String codigo;
-    private Long desde;
-    private Long hasta;
-    private int secuencia;
-    private String secuenciaCaracteres;
-    private Date fechaEfectividad;
-    private Integer estado = 1;
 
+
+    private String letra;
+
+    private String numeroBase;
+
+    private String desde;
+
+    private String hasta;
+
+    private Long cantidad;
+
+    private Long contador;
+    @Transient
+    private BigDecimal porcientoNCF;
+    @Transient
+    private BigDecimal porcientoContador;
+
+    @Transient
+    private String ncf;
+
+    private Integer estado = 1;
 
     @CreatedDate
     private Date creadoEn;
@@ -46,11 +61,6 @@ public class ComprobanteFiscal extends Auditable<String>  {
     @Version
     private Long version;
 
-    @OneToOne
-    @JoinColumn(name="empresa_id")
-    private Empresa empresa;
-
-
     public Long getId() {
         return id;
     }
@@ -59,63 +69,87 @@ public class ComprobanteFiscal extends Auditable<String>  {
         this.id = id;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+
+
+
+
+    public String getLetra() {
+        return letra;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setLetra(String letra) {
+        this.letra = letra;
     }
 
-    public String getCodigo() {
-        return codigo;
+    public String getNumeroBase() {
+        return numeroBase;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setNumeroBase(String numeroBase) {
+        this.numeroBase = numeroBase;
     }
 
-    public Long getDesde() {
+    public String getDesde() {
         return desde;
     }
 
-    public void setDesde(Long desde) {
+    public void setDesde(String desde) {
         this.desde = desde;
     }
 
-    public Long getHasta() {
+    public String getHasta() {
         return hasta;
     }
 
-    public void setHasta(Long hasta) {
+    public void setHasta(String hasta) {
         this.hasta = hasta;
     }
 
-    public int getSecuencia() {
-        return secuencia;
+    public Long getCantidad() {
+        return cantidad;
     }
 
-    public void setSecuencia(int secuencia) {
-        this.secuencia = secuencia;
+    public void setCantidad(Long cantidad) {
+        this.cantidad = cantidad;
     }
 
-    public String getSecuenciaCaracteres() {
-        return secuenciaCaracteres;
+    public Long getContador() {
+        return contador;
     }
 
-    public void setSecuenciaCaracteres(String secuenciaCaracteres) {
-        this.secuenciaCaracteres = secuenciaCaracteres;
+    public void setContador(Long contador) {
+        this.contador = contador;
     }
 
-    public Date getFechaEfectividad() {
-        return fechaEfectividad;
+    public BigDecimal getPorcientoNCF() {
+        return porcientoNCF;
     }
 
-    public void setFechaEfectividad(Date fechaEfectividad) {
-        this.fechaEfectividad = fechaEfectividad;
+    public void setPorcientoNCF(BigDecimal porcientoNCF) {
+        this.porcientoNCF = porcientoNCF;
     }
 
-    public int getEstado() {
+    public BigDecimal getPorcientoContador() {
+        return porcientoContador;
+    }
+
+    public void setPorcientoContador(BigDecimal porcientoContador) {
+        this.porcientoContador = porcientoContador;
+    }
+
+    public String getNcf() {
+
+        Long contador = Long.parseLong(getDesde())+getContador();
+
+        return getLetra()+""+getNumeroBase()+""+ StringUtils.leftPad(contador.toString(),8,"0");
+
+    }
+
+    public void setNcf(String ncf) {
+        this.ncf = ncf;
+    }
+
+    public Integer getEstado() {
         return estado;
     }
 
@@ -123,42 +157,42 @@ public class ComprobanteFiscal extends Auditable<String>  {
         this.estado = estado;
     }
 
+    @Override
     public Date getCreadoEn() {
         return creadoEn;
     }
 
+    @Override
     public void setCreadoEn(Date creadoEn) {
         this.creadoEn = creadoEn;
     }
 
+    @Override
     public String getCreadoPor() {
         return creadoPor;
     }
 
+    @Override
     public void setCreadoPor(String creadoPor) {
         this.creadoPor = creadoPor;
     }
 
-    public Empresa getEmpresa() {
-        return empresa;
-    }
-
-    public void setEmpresa(Empresa empresa) {
-        this.empresa = empresa;
-    }
-
+    @Override
     public Date getModificadoEn() {
-		return modificadoEn;
-	}
+        return modificadoEn;
+    }
 
-	public void setModificadoEn(Date modificadoEn) {
-		this.modificadoEn = modificadoEn;
-	}
+    @Override
+    public void setModificadoEn(Date modificadoEn) {
+        this.modificadoEn = modificadoEn;
+    }
 
-	public String getModificadoPor() {
+    @Override
+    public String getModificadoPor() {
         return modificadoPor;
     }
 
+    @Override
     public void setModificadoPor(String modificadoPor) {
         this.modificadoPor = modificadoPor;
     }

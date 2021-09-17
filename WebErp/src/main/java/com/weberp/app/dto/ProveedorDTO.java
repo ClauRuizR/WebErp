@@ -24,7 +24,7 @@ public class ProveedorDTO extends ParsableObject<Proveedor,ProveedorDTO> {
 	@Mapping
 	private String direccion;
 	@Mapping
-	private Integer estado = 1;
+	private Integer estado;
 
 	@Mapping
 	private Date creadoEn;

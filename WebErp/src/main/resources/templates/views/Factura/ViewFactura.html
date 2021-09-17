@@ -73,11 +73,11 @@
 
 
 
-									<div class="form-group" id="divComprobanteFiscal" ng-show="factura.tipoDocumento =='FACT'">
+									<div class="form-group" id="divComprobanteFiscal" ng-show="factura.tipoDocumento.llaveDocumento =='FACT'">
 										<label class="col-md-3 control-label">Comprobante
 											Fiscal</label>
 										<div class="col-md-9">
-                                            <span> {{factura.comprobanteFiscal}}</span>
+                                            <span> {{factura.numeroComprobanteFiscal}}</span>
 										</div>
 									</div>
 									<div class="form-group">
@@ -131,8 +131,14 @@
 												<th id="thProducto" class="text-center">Producto</th>
 												<th id="thPrecio" class="text-center">Precio</th>
 												<th id="thCantidad" class="text-center">Cantidad</th>
-												<th id="thItbis" class="text-center">Itbis</th>
 												<th id="thmonto" class="text-center">Monto</th>
+												<th id="thmonto" class="text-center">Descuento</th>
+												<th id="thImporte" class="text-center">Importe</th>
+
+
+												<th id="thSubTotal" class="text-center">Sub Total</th>
+												<th id="thItbis" class="text-center">Itbis</th>
+												<th id="thTotal" class="text-center">Total</th>
 												<th class="text-center"></th>
 												<th class="text-center"></th>
 												<th class="text-center"></th>
@@ -144,9 +150,14 @@
                                                 <td class="text-center"><span><span>{{fact.producto.nombre}}</span></span></td>
                                                 <td class="text-center"><span><span>{{fact.precio | currency}}</span></span></td>
                                                 <td class="text-center"><span><span>{{fact.cantidad | number}}</span></span></td>
-                                                <td class="text-center"><span><span>{{fact.itbis | currency}}</span></span></td>
-                                                <td class="text-center"><span><span>{{fact.monto | currency}}</span></span></td>
 
+                                                <td class="text-center"><span><span>{{fact.monto | currency}}</span></span></td>
+												<td class="text-center"><span><span>{{fact.descuento | currency}}</span></span></td>
+												<td class="text-center"><span><span>{{fact.importe | currency}}</span></span></td>
+
+												<td class="text-center"><span><span>{{fact.subTotal | currency}}</span></span></td>
+												<td class="text-center"><span><span>{{fact.itbis | currency}}</span></span></td>
+												<td class="text-center"><span><span>{{fact.total | currency}}</span></span></td>
 											</tr>
 											</tbody>
 										</table>

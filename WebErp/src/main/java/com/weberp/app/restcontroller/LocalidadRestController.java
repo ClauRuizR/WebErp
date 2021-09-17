@@ -5,7 +5,7 @@ import com.weberp.app.dto.LocalidadDTO;
 import com.weberp.app.dto.config.ConfigMapper;
 import com.weberp.app.services.LocalidadService;
 import com.weberp.app.validator.LocalidadValidator;
-import org.apache.tomcat.jni.Local;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

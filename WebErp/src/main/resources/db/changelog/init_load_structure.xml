@@ -138,4 +138,22 @@
     </changeSet>
 
 
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0038">
+        <sqlFile path="classpath:/db/changelog/tables/erp_tipo_ncf.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0039">
+        <sqlFile path="classpath:/db/changelog/tables/erp_tipo_cliente.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0040">
+        <sqlFile path="classpath:/db/changelog/tables/erp_cuentas_pagar.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+    <changeSet author="cruiz" id="data-load-erp-2017-06-09-0041">
+        <sqlFile path="classpath:/db/changelog/tables/erp_cuentas_cobrar.sql" dbms="mysql" endDelimiter="\nGO" splitStatements="true" stripComments="true" />
+    </changeSet>
+
+
+
 </databaseChangeLog>

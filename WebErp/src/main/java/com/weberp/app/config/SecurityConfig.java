@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.antMatchers("/angularjs/**").permitAll()
 					.antMatchers("/app/**").permitAll()
 					.antMatchers("/console/**").permitAll()
-
+					.antMatchers("/css/**").permitAll()
 					.anyRequest().authenticated()
 					.and()
 				.formLogin()

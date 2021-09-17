@@ -27,7 +27,7 @@ import com.weberp.app.enums.TipoDocumentoEnum;
 import com.weberp.app.repositories.OrdenCompraRepository;
 
 @Service
-@Transactional(noRollbackFor = Exception.class)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 public class OrdenCompraServiceImpl extends ConfigMapper implements OrdenCompraService {
 
 	OrdenCompra ordenCompra;
@@ -44,6 +44,10 @@ public class OrdenCompraServiceImpl extends ConfigMapper implements OrdenCompraS
 
 	@Autowired
 	private ProveedorService proveedorService;
+
+
+	@Autowired
+	private CuentasPagarService cuentasPagarService;
 
 	@Autowired
 	private TipoDocumentoService tipoDocumentoService;
@@ -92,12 +96,6 @@ public class OrdenCompraServiceImpl extends ConfigMapper implements OrdenCompraS
 		if (null == ordenCompra.getId()) {
             ordenCompra.setFecha(new Date());
 
-
-			String numeroOrdenCompra = tipoDocumentoService.getNumeroDocumento(TipoDocumentoEnum.ORDEN_COMPRA,empresa.getId());
-
-			ordenCompra.setNumeroOrdenCompra(numeroOrdenCompra);
-
-			tipoDocumentoService.incrementaNumeroControl(TipoDocumentoEnum.ORDEN_COMPRA,empresa.getId());
 		}
 
 
@@ -127,18 +125,14 @@ public class OrdenCompraServiceImpl extends ConfigMapper implements OrdenCompraS
 	}
 
 	@Override
-	public boolean generaEntradaProductos(Long id) {
-
-		ordenCompra = ordenCompraRepository.findOne(id);
+	public boolean generaEntradaProductos(OrdenCompra ordenCompra) {
 
 
-		Empresa empresa = UsuarioUtil.getCurrentUserEmpresa().getEmpresa();
-
-		com.weberp.app.domain.MovimientoInventario moviemintoInventario;
+		MovimientoInventario moviemintoInventario;
 
 		try {
-			if (ordenCompra.getEstatus().equals(EstatusEnum.PENDIENTE)) {
-				com.weberp.app.domain.TipoDocumento tipoDocumento = tipoDocumentoService.buscarTipoDocumentoPorLlave(TipoDocumentoEnum.ORDEN_COMPRA,empresa.getId());
+			if (ordenCompra.getEstatus().equals(EstatusEnum.APROBADA)) {
+				TipoDocumento tipoDocumento = tipoDocumentoService.buscarTipoDocumentoPorLlave(TipoDocumentoEnum.ORDEN_COMPRA,ordenCompra.getEmpresa().getId());
 
 				List<DetalleOrdenCompra> detalleOrdenCompra = ordenCompra.getDetalleOrdenCompra();
 				String usuario = UsuarioUtil.getCurrentUser();
@@ -175,11 +169,6 @@ public class OrdenCompraServiceImpl extends ConfigMapper implements OrdenCompraS
 
                 moviemintoInventarioService.saveBatch(movimientoInventarioList);
 
-
-
-				ordenCompra.setEstatus(EstatusEnum.APROBADO);
-
-				ordenCompraRepository.save(ordenCompra);
             }
 
         } catch (OrdenCompraException ex) {
@@ -190,14 +179,10 @@ public class OrdenCompraServiceImpl extends ConfigMapper implements OrdenCompraS
 	}
 
 	@Override
-	public void pagarOrdenComprar(Long id) {
+	public void crearRegistroDiarioGeneral(OrdenCompra  ordenCompra) {
 
 		try
 		{
-			ordenCompra = ordenCompraRepository.findOne(id);
-
-
-		ordenCompra.setEstatus(EstatusEnum.PAGADA);
 
 		DiarioGeneral diarioGeneral = new DiarioGeneral();
 
@@ -210,7 +195,7 @@ public class OrdenCompraServiceImpl extends ConfigMapper implements OrdenCompraS
 
 		diarioGeneralService.guardar(diarioGeneral);
 
-		ordenCompraRepository.save(ordenCompra);
+
 		}catch(Exception ex){
 			throw new IllegalArgumentException(ex.getMessage());
 		}
@@ -220,17 +205,31 @@ public class OrdenCompraServiceImpl extends ConfigMapper implements OrdenCompraS
 	public OrdenCompra cambiarEstatusOrdenCompra(OrdenCompra ordenCompra) {
 		Long idOrdenCompra = ordenCompra.getId();
 
-		if (ordenCompra.getEstatus().equals(EstatusEnum.APROBADO)
+		if (ordenCompra.getEstatus().equals(EstatusEnum.APROBADA)
 				&& !validEstatusActualOrdenCompra(idOrdenCompra, ordenCompra.getEstatus())) {
-			generaEntradaProductos(idOrdenCompra);
+
+			this.generaEntradaProductos(ordenCompra);
+
+			String numeroOrdenCompra = tipoDocumentoService.getNumeroDocumento(TipoDocumentoEnum.ORDEN_COMPRA,ordenCompra.getEmpresa().getId());
+
+			ordenCompra.setNumeroOrdenCompra(numeroOrdenCompra);
+
+			tipoDocumentoService.incrementaNumeroControl(TipoDocumentoEnum.ORDEN_COMPRA,ordenCompra.getEmpresa().getId());
+
 		}
 
 		if (ordenCompra.getEstatus().equals(EstatusEnum.PAGADA)
 				&& !validEstatusActualOrdenCompra(idOrdenCompra, ordenCompra.getEstatus())) {
-			pagarOrdenComprar(idOrdenCompra);
+
+			this.crearRegistroDiarioGeneral(ordenCompra);
 		}
 
-		ordenCompra = ordenCompraRepository.findOne(idOrdenCompra);
+		for (DetalleOrdenCompra detalleOrdenCompra :ordenCompra.getDetalleOrdenCompra()) {
+			detalleOrdenCompra.setOrdenCompra(ordenCompra);
+
+		}
+
+		ordenCompra = ordenCompraRepository.save(ordenCompra);
 
 		return ordenCompra;
 	}
@@ -248,7 +247,7 @@ public class OrdenCompraServiceImpl extends ConfigMapper implements OrdenCompraS
 
 	@Override
 	public List<OrdenCompra> ordensPorPagar() {
-		return ordenCompraRepository.findByEstatus(EstatusEnum.APROBADO);
+		return ordenCompraRepository.findByEstatus(EstatusEnum.APROBADA);
 	}
 
 	@Override

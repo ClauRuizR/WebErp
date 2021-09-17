@@ -13,8 +13,11 @@ import org.springframework.stereotype.Service;
 
 import com.weberp.app.enums.TipoDocumentoEnum;
 import com.weberp.app.repositories.TipoDocumentoRepository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 public class TipoDocumentoServiceImpl implements TipoDocumentoService {
 
 	com.weberp.app.domain.TipoDocumento tipoDocumento;

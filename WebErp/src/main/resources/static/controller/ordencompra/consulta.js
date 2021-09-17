@@ -46,5 +46,22 @@ angular.module("WebErpApp").controller("ordenCompraConsultaController", function
     }
 
 
+    $scope.filtrarPorEstatus=function(){
+
+        return function(factura) {
+
+            return factura.estatusNombre=="Pendiente" || factura.estatusNombre =="Pagada";
+        }
+    }
+
+    $scope.filtrarPorEstatusCuentasPorPagar=function(){
+
+        return function(factura) {
+
+            return factura.estatusNombre=="Aprobada" || factura.estatusNombre =="Pagada";
+        }
+    }
+
+
 
 })

@@ -10,7 +10,7 @@ angular.module("WebErpApp").controller("clienteEditController", function($scope,
     $scope.init=function(){
         $scope.cliente;
 
-
+        $scope.getTipoCliente();
         $scope.cliente.estado=1;
         if($scope.id >0){
             $http.get("/rest/clientes/"+$scope.id).then(function(result){
@@ -23,8 +23,14 @@ angular.module("WebErpApp").controller("clienteEditController", function($scope,
 
 
     }
+    $scope.getTipoCliente = function(){
+        $http.get("/rest/tipoCliente").then(function(result){
 
+            $scope.tipocliente = result.data;
 
+        })
+
+    }
     $scope.agregarContactoCliente= function(){
 
         $scope.cliente.contactos.push({estado: 1});
@@ -39,7 +45,9 @@ angular.module("WebErpApp").controller("clienteEditController", function($scope,
 
             $('#myModalCliente').hide();
             $('.modal-backdrop').hide();
-            $scope.loadCliente();
+
+
+            $scope.cliente = result.data;
             notificarQue('Cliente fue guardado con exito! ','success');
 
 

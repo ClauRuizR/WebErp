@@ -44,7 +44,7 @@ public class EmpresaDTO extends ParsableObject<Empresa,EmpresaDTO> {
     private GrupoEmpresaDTO grupoEmpresa = new GrupoEmpresaDTO();
 
     @Mapping
-    private Integer estado = 1;
+    private Integer estado;
 
     @Mapping
     private Date creadoEn;

@@ -17,9 +17,9 @@ public interface OrdenCompraService {
 
 	void borrar(Long id);
 
-	boolean generaEntradaProductos(Long id);
+	boolean generaEntradaProductos(OrdenCompra ordenCompra);
 
-	void pagarOrdenComprar(Long id);
+	void crearRegistroDiarioGeneral(OrdenCompra ordenCompra);
 
 	OrdenCompra cambiarEstatusOrdenCompra(OrdenCompra ordenCompra);
 

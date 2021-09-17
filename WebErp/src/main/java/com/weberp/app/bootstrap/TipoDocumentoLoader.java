@@ -28,7 +28,7 @@ public class TipoDocumentoLoader implements ApplicationListener<ContextRefreshed
 		
 //		tipoDocumentoRepository.save(tipoDocumento);
 		
-		log.info("Tipo Docuento - Id " + tipoDocumento.getId());
+//		log.info("Tipo Docuento - Id " + tipoDocumento.getId());
 		
 		TipoDocumento tipoDocumento2 = new TipoDocumento();
 		tipoDocumento2.setLlaveDocumento("COT");
@@ -37,7 +37,7 @@ public class TipoDocumentoLoader implements ApplicationListener<ContextRefreshed
 		
 	//	tipoDocumentoRepository.save(tipoDocumento2);
 		
-		log.info("Tipo Docuento - Id " + tipoDocumento2.getId());
+//		log.info("Tipo Docuento - Id " + tipoDocumento2.getId());
 		
 		TipoDocumento tipoDocumento3 = new TipoDocumento();
 		tipoDocumento3.setLlaveDocumento("OC");
@@ -46,7 +46,7 @@ public class TipoDocumentoLoader implements ApplicationListener<ContextRefreshed
 		
 	//	tipoDocumentoRepository.save(tipoDocumento3);
 		
-		log.info("Tipo Docuento - Id " + tipoDocumento3.getId());
+//		log.info("Tipo Docuento - Id " + tipoDocumento3.getId());
 
 
 		TipoDocumento tipoDocumento4 = new TipoDocumento();
@@ -56,7 +56,7 @@ public class TipoDocumentoLoader implements ApplicationListener<ContextRefreshed
 
 	//		tipoDocumentoRepository.save(tipoDocumento4);
 
-		log.info("Tipo Docuento - Id " + tipoDocumento4.getId());
+//		log.info("Tipo Docuento - Id " + tipoDocumento4.getId());
 
 		TipoDocumento tipoDocumento5 = new TipoDocumento();
 		tipoDocumento5.setLlaveDocumento("ND");
@@ -75,7 +75,7 @@ public class TipoDocumentoLoader implements ApplicationListener<ContextRefreshed
 
 		//	tipoDocumentoRepository.save(tipoDocumento6);
 
-		log.info("Tipo Docuento - Id " + tipoDocumento6.getId());
+//		log.info("Tipo Docuento - Id " + tipoDocumento6.getId());
 
 	}
 

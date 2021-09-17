@@ -34,7 +34,10 @@ public class FacturaDTO extends ParsableObject<Factura,FacturaDTO> {
     @Mapping
     private String estatus = EstatusEnum.PENDIENTE;
     @Mapping
-    private Integer estado = 1;
+    private Integer estado ;
+
+    @Mapping
+    private EmpresaDTO empresa = new EmpresaDTO();
 
     @Mapping
     private Date creadoEn;
@@ -60,6 +63,19 @@ public class FacturaDTO extends ParsableObject<Factura,FacturaDTO> {
 
     @Mapping
     private BigDecimal montoTotal = new BigDecimal(0);
+
+
+    @Mapping
+    private BigDecimal itbis;
+
+    @Mapping
+    private BigDecimal importe;
+
+    @Mapping
+    private BigDecimal subTotal;
+
+    @Mapping
+    private BigDecimal total;
 
     @Mapping
     private List<DetalleFacturaDTO> detalleFactura = new ArrayList<>();
@@ -135,8 +151,8 @@ public class FacturaDTO extends ParsableObject<Factura,FacturaDTO> {
             case EstatusEnum.PENDIENTE:
                 return "Pendiente";
 
-            case EstatusEnum.APROBADO:
-                return "Aprobado";
+            case EstatusEnum.APROBADA:
+                return "Aprobada";
 
             case EstatusEnum.PAGADA:
                 return "Pagada";
@@ -228,6 +244,47 @@ public class FacturaDTO extends ParsableObject<Factura,FacturaDTO> {
 
     public void setTipoDocumento(TipoDocumentoDTO tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
+    }
+
+    public EmpresaDTO getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(EmpresaDTO empresa) {
+        this.empresa = empresa;
+    }
+
+
+    public BigDecimal getItbis() {
+        return itbis;
+    }
+
+    public void setItbis(BigDecimal itbis) {
+        this.itbis = itbis;
+    }
+
+    public BigDecimal getImporte() {
+        return importe;
+    }
+
+    public void setImporte(BigDecimal importe) {
+        this.importe = importe;
+    }
+
+    public BigDecimal getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(BigDecimal subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     @Override

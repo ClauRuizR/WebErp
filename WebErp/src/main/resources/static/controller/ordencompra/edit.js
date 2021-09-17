@@ -70,14 +70,14 @@ angular.module("WebErpApp").controller("ordenCompraEditController", function($sc
             $('#myModalProveedor').hide();
             $('.modal-backdrop').hide();
             $scope.loadProveedor();
-            notificarQue('Orden de Compra fue guardado con exito! ','success');
+            notificarQue('Proveedor fue guardado con exito! ','success');
 
 
 
         },function(error){
 
 
-            notificarQue('hubo un error intentando guardar la orden de compra! { '+error.data.message+' }','danger');
+            notificarQue('hubo un error intentando guardar el proveedor! { '+error.data.message+' }','danger');
 
 
         })
@@ -92,14 +92,14 @@ angular.module("WebErpApp").controller("ordenCompraEditController", function($sc
 
             $scope.ordencompra = result.data;
 
-            alert('Orden de compra creada satisfactoriamente.!');
-
+            notificarQue('La Orden de Compra fue guardado con exito! ','success');
+            window.location.href = "/ordencompras/view/"+result.data.id;
 
 
         },function(error){
 
 
-            alert(error.data.message);
+            notificarQue('hubo un error intentando guardar la orden de compra! { '+error.data.message+' }','danger');
 
 
         })

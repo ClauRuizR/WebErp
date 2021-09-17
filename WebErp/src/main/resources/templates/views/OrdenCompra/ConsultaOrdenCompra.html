@@ -78,7 +78,7 @@
 					</thead>
 
 					<tbody>
-						<tr ng-repeat="oc in ordencompra  | filter: {estatusNombre: 'Pagada'} || {estatusNombre: 'Pendiente'}">
+						<tr ng-repeat="oc in ordencompra  | filter:filtrarPorEstatus()">
 							<td class="text-center"><span><span>{{oc.id}}</span></span></td>
 							<td class="text-center"><span><span>{{oc.numeroOrdenCompra}}</span></span></td>
 							<td class="text-center"><span><span>{{oc.proveedor.nombre}}</span></span></td>

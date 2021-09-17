@@ -23,10 +23,13 @@ public class OrdenCompraDTO extends ParsableObject<OrdenCompra,OrdenCompraDTO> {
 	@Mapping
 	private String estatus = EstatusEnum.PENDIENTE;
 	@Mapping
-	private Integer estado = 1;
+	private Integer estado ;
 
 	@Mapping
 	private Date fecha;
+
+@Mapping
+private EmpresaDTO empresa = new EmpresaDTO();
 
 	@Mapping
 	private String estatusNombre;
@@ -93,8 +96,8 @@ public class OrdenCompraDTO extends ParsableObject<OrdenCompra,OrdenCompraDTO> {
 			case EstatusEnum.PENDIENTE:
 				return "Pendiente";
 
-			case EstatusEnum.APROBADO:
-				return "Aprobado";
+			case EstatusEnum.APROBADA:
+				return "Aprobada";
 
 			case EstatusEnum.PAGADA:
 				return "Pagada";
@@ -161,6 +164,14 @@ public class OrdenCompraDTO extends ParsableObject<OrdenCompra,OrdenCompraDTO> {
 
 	public void setVersion(Long version) {
 		this.version = version;
+	}
+
+	public EmpresaDTO getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(EmpresaDTO empresa) {
+		this.empresa = empresa;
 	}
 
 	public BigDecimal getMontoTotal() {

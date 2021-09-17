@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -58,6 +59,19 @@ public class Factura extends Auditable<String> {
 
 	@Version
 	private Long version;
+
+
+	@NotNull
+	private BigDecimal itbis;
+
+	@NotNull
+	private BigDecimal importe;
+
+	@NotNull
+	private BigDecimal subTotal;
+
+	@NotNull
+	private BigDecimal total;
 
 
 	@OneToOne
@@ -228,8 +242,8 @@ public class Factura extends Auditable<String> {
 			case EstatusEnum.PENDIENTE:
 				return "Pendiente";
 
-			case EstatusEnum.APROBADO:
-				return "Aprobado";
+			case EstatusEnum.APROBADA:
+				return "Aprobada";
 
 			case EstatusEnum.PAGADA:
 				return "Pagada";
@@ -242,6 +256,38 @@ public class Factura extends Auditable<String> {
 
 		this.estatusNombre = estatusNombre;
 
+	}
+
+	public BigDecimal getItbis() {
+		return itbis;
+	}
+
+	public void setItbis(BigDecimal itbis) {
+		this.itbis = itbis;
+	}
+
+	public BigDecimal getImporte() {
+		return importe;
+	}
+
+	public void setImporte(BigDecimal importe) {
+		this.importe = importe;
+	}
+
+	public BigDecimal getSubTotal() {
+		return subTotal;
+	}
+
+	public void setSubTotal(BigDecimal subTotal) {
+		this.subTotal = subTotal;
+	}
+
+	public BigDecimal getTotal() {
+		return total;
+	}
+
+	public void setTotal(BigDecimal total) {
+		this.total = total;
 	}
 
 	public String getNumeroDocumento() {

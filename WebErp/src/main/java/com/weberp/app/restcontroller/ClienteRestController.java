@@ -88,7 +88,7 @@ public class ClienteRestController extends ConfigMapper{
 	}
 
 	@RequestMapping(method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public void save(@Valid @RequestBody ClienteDTO clienteDTO, BindingResult result, HttpServletResponse httpServletResponse) {
+	public ClienteDTO save(@Valid @RequestBody ClienteDTO clienteDTO, BindingResult result, HttpServletResponse httpServletResponse) {
 		Cliente cliente = null;
 		try {
 			cliente = convertClienteDtoToEntity(clienteDTO);
@@ -107,14 +107,14 @@ public class ClienteRestController extends ConfigMapper{
             throw new IllegalArgumentException(stringBuilderError.toString());
 
 		}
-try{
+	try{
 
-		clienteService.guardar(cliente);
+	cliente=	clienteService.guardar(cliente);
 	}catch (Exception ex)
 	{
 		throw new IllegalArgumentException(ex.getMessage());
 	}
-
+	return convertClienteToDto(cliente);
 	}
 
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-06-15T17:08:28 -->
+<!-- 2017-07-28T11:00:42 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturacion" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="35791f28-9098-41a4-b090-9e7aa220dbe1">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="erpConn.xml"/>
@@ -27,10 +27,13 @@
 ,p.nombre
 ,b.precio
 ,b.cantidad
-,b.itbis
 ,b.monto
 ,emp.direccion as empresa_direccion
 ,emp.nombre  as empresa_nombre
+,a.importe
+,a.sub_total as subTotal
+,a.itbis
+,a.total
 from factura a 
 join detalle_factura b on a.id = b.factura_id
 join cliente c on a.cliente_id  = c.id
@@ -39,7 +42,7 @@ join producto p on p.id = b.producto_id
 join empresa emp on emp.id = a.empresa_id
 join producto pro on pro.id = b.producto_id
 join tipo_producto tpro on tpro.id = pro.tipo_producto_id
-where tpro.facturable = 1 and  a.id = $P{pId}]]>
+where tpro.facturable = 1 and td.llave_documento ='FACT' and  a.id = $P{pId}]]>
 	</queryString>
 	<field name="numero_documento" class="java.lang.String"/>
 	<field name="llave_documento" class="java.lang.String"/>
@@ -52,10 +55,13 @@ where tpro.facturable = 1 and  a.id = $P{pId}]]>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="precio" class="java.math.BigDecimal"/>
 	<field name="cantidad" class="java.lang.Long"/>
-	<field name="itbis" class="java.math.BigDecimal"/>
 	<field name="monto" class="java.math.BigDecimal"/>
 	<field name="empresa_direccion" class="java.lang.String"/>
 	<field name="empresa_nombre" class="java.lang.String"/>
+	<field name="importe" class="java.math.BigDecimal"/>
+	<field name="subTotal" class="java.math.BigDecimal"/>
+	<field name="itbis" class="java.math.BigDecimal"/>
+	<field name="total" class="java.math.BigDecimal"/>
 	<variable name="monto1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{monto}]]></variableExpression>
 	</variable>
@@ -284,7 +290,7 @@ where tpro.facturable = 1 and  a.id = $P{pId}]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="48" splitType="Stretch">
+		<band height="265" splitType="Stretch">
 			<textField>
 				<reportElement x="336" y="9" width="100" height="21" uuid="13b4a56f-1240-4c0a-941c-c1274d3ff3c5"/>
 				<textElement textAlignment="Right">
@@ -305,13 +311,62 @@ where tpro.facturable = 1 and  a.id = $P{pId}]]>
 					<pen lineStyle="Dotted"/>
 				</graphicElement>
 			</line>
+			<textField>
+				<reportElement x="436" y="86" width="100" height="20" uuid="8b8c643d-bb46-4ffa-a8cf-c3bf983c5c8c"/>
+				<textFieldExpression><![CDATA[$F{importe}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="155" width="100" height="20" uuid="161d64ee-df3b-45fc-97f7-3052734f09e4"/>
+				<textFieldExpression><![CDATA[$F{itbis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="120" width="100" height="20" uuid="532c883c-2365-4c10-92ec-92347da02daf"/>
+				<textFieldExpression><![CDATA[$F{subTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="186" width="100" height="20" uuid="4a29dca4-c1ed-4d6d-bcaf-5fd15136ea9b"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="3" y="9" width="100" height="21" uuid="0f1c8f5a-130d-46d4-8d1e-777c275c96a3"/>
-				<textElement textAlignment="Right">
+				<reportElement x="310" y="86" width="100" height="20" uuid="03b06a47-5ad6-42b9-b483-589d5a8ae86b"/>
+				<textElement textAlignment="Left">
 					<font size="14"/>
 				</textElement>
-				<text><![CDATA[Totales:]]></text>
+				<text><![CDATA[Importe:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="310" y="155" width="100" height="20" uuid="7b4ae4dd-1cd1-4c61-b414-59ea0960e6a4"/>
+				<textElement textAlignment="Left">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Itbis:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="120" width="100" height="20" uuid="7fced727-ee1e-4e5c-b297-24fa16d08522"/>
+				<textElement textAlignment="Left">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Sub Total:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="185" width="100" height="20" uuid="bab64317-7d84-4a17-ac5d-2ad1ed920e84"/>
+				<textElement textAlignment="Left">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="310" y="112" width="224" height="1" uuid="e7c3e65d-9177-474c-a8c2-624b8eae7c15"/>
+			</line>
+			<line>
+				<reportElement x="313" y="150" width="224" height="1" uuid="10d1a723-23bf-4fc5-8be1-8d409083f419"/>
+			</line>
+			<line>
+				<reportElement x="313" y="180" width="224" height="1" uuid="79598b29-b95c-40d3-bace-a941ffbb5989"/>
+			</line>
+			<line>
+				<reportElement x="313" y="210" width="224" height="1" uuid="f0f7e23f-5870-47ca-95a3-ac9e13c86451"/>
+			</line>
 		</band>
 	</summary>
 </jasperReport>

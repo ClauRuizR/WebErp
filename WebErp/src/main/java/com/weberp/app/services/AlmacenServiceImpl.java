@@ -41,6 +41,7 @@ public class AlmacenServiceImpl extends ConfigMapper implements AlmacenService {
 	private EntityManager entityManager;
 
 	Producto producto;
+	
 	@Autowired
 	private ProductoService productoService;
 
@@ -115,8 +116,14 @@ public class AlmacenServiceImpl extends ConfigMapper implements AlmacenService {
 		for (int i = 0; i < almacen.getDetalleAlmacen().size(); i++) {
 			if (almacen.getDetalleAlmacen().get(i).getProducto().getId().equals(productoId)) {
 
-				almacen.getDetalleAlmacen().get(i)
-						.setCantidad(almacen.getDetalleAlmacen().get(i).getCantidad() + cantidad);
+				if(null == almacen.getDetalleAlmacen().get(i).getCantidad()){
+					almacen.getDetalleAlmacen().get(i)
+							.setCantidad(cantidad);
+				}else {
+					almacen.getDetalleAlmacen().get(i)
+							.setCantidad(almacen.getDetalleAlmacen().get(i).getCantidad() + cantidad);
+				}
+
 				productoService.afectaEntradaProducto(almacen.getDetalleAlmacen().get(i).getProducto(),cantidad);
 			}
 
@@ -194,13 +201,13 @@ public class AlmacenServiceImpl extends ConfigMapper implements AlmacenService {
 		if(almacen==null)
 			return false;
 
-		return !almacen.getCodigo().equals(codigo);
+		return almacen.getCodigo().equals(codigo);
 	}
 
 	@Override
 	public Page<AlmacenDTO> findPaginated(int page, int size) {
 		Long empresaId = UsuarioUtil.getCurrentUserEmpresa().getEmpresa().getId();
-		Page<Almacen> almacenPage=  (almacenRepository.findByLocalidadEmpresa_Id(empresaId,new PageRequest(page,size, Sort.Direction.ASC ,"id")));
+		Page<Almacen> almacenPage=  (almacenRepository.findByLocalidadEmpresaId(empresaId,new PageRequest(page,size, Sort.Direction.ASC ,"id")));
 
 		final Page<AlmacenDTO> contactDtoPage = almacenPage.map(this::convertAlmacenToDto);
 		return contactDtoPage;

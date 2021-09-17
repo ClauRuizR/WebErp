@@ -48,7 +48,7 @@ public class AlmacenDTO extends ParsableObject<Almacen,AlmacenDTO> {
 	@Mapping
 	private String codigo;
 	@Mapping
-	private Integer estado = 1;
+	private Integer estado;
 
 	@Mapping
 	private Date creadoEn;
@@ -66,87 +66,6 @@ public class AlmacenDTO extends ParsableObject<Almacen,AlmacenDTO> {
 	private List<DetalleAlmacenDTO> DetalleAlmacen = new ArrayList<>();
 
 
-	private Page<DetalleAlmacenDTO> detalleAlmacenDTOPage = new Page<DetalleAlmacenDTO>() {
-		@Override
-		public int getTotalPages() {
-			return 0;
-		}
-
-		@Override
-		public long getTotalElements() {
-			return getDetalleAlmacen().size();
-		}
-
-		@Override
-		public <S> Page<S> map(org.springframework.core.convert.converter.Converter<? super DetalleAlmacenDTO, ? extends S> converter) {
-			return null;
-		}
-
-		@Override
-		public int getNumber() {
-			return getDetalleAlmacen().size();
-		}
-
-		@Override
-		public int getSize() {
-			return getDetalleAlmacen().size();
-		}
-
-		@Override
-		public int getNumberOfElements() {
-			return getDetalleAlmacen().size();
-		}
-
-		@Override
-		public List<DetalleAlmacenDTO> getContent() {
-			return getDetalleAlmacen();
-		}
-
-		@Override
-		public boolean hasContent() {
-			return getDetalleAlmacen().size() >0 ;
-		}
-
-		@Override
-		public Sort getSort() {
-			return null;
-		}
-
-		@Override
-		public boolean isFirst() {
-			return false;
-		}
-
-		@Override
-		public boolean isLast() {
-			return false;
-		}
-
-		@Override
-		public boolean hasNext() {
-			return false;
-		}
-
-		@Override
-		public boolean hasPrevious() {
-			return false;
-		}
-
-		@Override
-		public Pageable nextPageable() {
-			return null;
-		}
-
-		@Override
-		public Pageable previousPageable() {
-			return null;
-		}
-
-		@Override
-		public Iterator<DetalleAlmacenDTO> iterator() {
-			return null;
-		}
-	};
 
 	@Mapping
 	private Long version;
@@ -255,13 +174,6 @@ public class AlmacenDTO extends ParsableObject<Almacen,AlmacenDTO> {
 		this.version = version;
 	}
 
-	public Page<DetalleAlmacenDTO> getDetalleAlmacenDTOPage() {
-		return detalleAlmacenDTOPage;
-	}
-
-	public void setDetalleAlmacenDTOPage(Page<DetalleAlmacenDTO> detalleAlmacenDTOPage) {
-		this.detalleAlmacenDTOPage = detalleAlmacenDTOPage;
-	}
 
 	@Override
 	public Class<Almacen> getDomainClass() {

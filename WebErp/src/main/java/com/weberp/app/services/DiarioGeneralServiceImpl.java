@@ -24,6 +24,8 @@ import org.springframework.stereotype.Service;
 
 import com.weberp.app.domain.DiarioGeneral;
 import com.weberp.app.repositories.DiarioGeneralRepository;
+import scala.Int;
+
 @Service
 public class DiarioGeneralServiceImpl extends ConfigMapper implements DiarioGeneralService {
 
@@ -109,98 +111,20 @@ public class DiarioGeneralServiceImpl extends ConfigMapper implements DiarioGene
         SimpleDateFormat sdfMes = new SimpleDateFormat("MM");
 
 
-
 	     List<DiarioGeneral>  ingresosMensualesReporteList =
         diarioGeneralRepository.findByFechaBetween(yearStartDate, yearEndDate);
-       List<Double> listaMeses = new ArrayList<>();
+       List<Double> listaMeses = new ArrayList<Double>(12);
+
+       for (int i=0; i< 12;i++){
+           listaMeses.add(i,0.00);
+       }
          ingresosMensualesReporteList.stream().collect(Collectors.groupingBy(diarioGeneral -> sdfMes.format(diarioGeneral.getFecha()),
                 Collectors.summingDouble(n-> n.getDebito().subtract(n.getCredito()).doubleValue())))
-                .forEach((fecha, monto)->
-
-                        {
-                            if (fecha.equals("01")) {
-                               listaMeses.add(monto);
-                            }else{
-                                listaMeses.add(0.00);
-                            }
-
-
-                            if (fecha.contains("02")) {
-                                listaMeses.add(monto);
-                            }else{
-                                listaMeses.add(0.00);
-                            }
-
-                            if (fecha.contains("03")) {
-                                listaMeses.add(monto);
-                            }else{
-                                listaMeses.add(0.00);
-                            }
-
-                            if (fecha.contains("04")) {
-                                listaMeses.add(monto);
-                            }else{
-                                listaMeses.add(0.00);
-                            }
-
-                            if (fecha.contains("05")) {
-                                listaMeses.add(monto);
-                            }else{
-                                listaMeses.add(0.00);
-                            }
-
-                            if (fecha.contains("06")) {
-                                listaMeses.add(monto);
-                            }else{
-                                listaMeses.add(0.00);
-                            }
-
-                            if (fecha.contains("07")) {
-                                listaMeses.add(monto);
-                            }else{
-                                listaMeses.add(0.00);
-                            }
-
-                            if (fecha.contains("08")) {
-                                listaMeses.add(monto);
-                            }else{
-                                listaMeses.add(0.00);
-                            }
-
-                            if (fecha.contains("09")) {
-                                listaMeses.add(monto);
-                            }else{
-                                listaMeses.add(0.00);
-                            }
-
-                            if (fecha.contains("10")) {
-                                listaMeses.add(monto);
-                            }else{
-                                listaMeses.add(0.00);
-                            }
-
-                            if (fecha.contains("11")) {
-                                listaMeses.add(monto);
-                            }else{
-                                listaMeses.add(0.00);
-                            }
-
-                            if (fecha.contains("12")) {
-                                listaMeses.add(monto);
-                            }else{
-                                listaMeses.add(0.00);
-                            }
-
-
-                        }
-
-                        );
-
-
-
-
+                .forEach((fecha, monto)->{listaMeses.add(Integer.parseInt(fecha) - 1, monto);});
 		return listaMeses;
 	}
-
+    public boolean indexExists(final List list, final int index) {
+        return index >= 0 && index < list.size();
+    }
 
 }

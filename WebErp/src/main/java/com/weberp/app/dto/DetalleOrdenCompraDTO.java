@@ -17,7 +17,7 @@ public class DetalleOrdenCompraDTO extends ParsableObject<DetalleOrdenCompra,Det
    @Mapping
     private Long id;
     @Mapping
-    private Long cantidad = 0L;
+    private Long cantidad;
     @Mapping
     private BigDecimal precio = BigDecimal.ZERO;
     @Mapping
@@ -26,7 +26,7 @@ public class DetalleOrdenCompraDTO extends ParsableObject<DetalleOrdenCompra,Det
     @Mapping
     private ProductoDTO producto = new ProductoDTO();
 
-    private Integer estado = 1;
+    private Integer estado;
 
     @Mapping
     private Date creadoEn;
@@ -42,6 +42,17 @@ public class DetalleOrdenCompraDTO extends ParsableObject<DetalleOrdenCompra,Det
 
     @Mapping
     private Long version;
+
+    @Mapping
+    private String productoDetalleNombre;
+
+    public String getProductoDetalleNombre() {
+        return getProducto().getNombre();
+    }
+
+    public void setProductoDetalleNombre(String productoDetalleNombre) {
+        this.productoDetalleNombre = productoDetalleNombre;
+    }
 
     public Long getId() {
         return id;

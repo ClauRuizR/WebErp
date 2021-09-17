@@ -21,7 +21,7 @@ public class ContactoDTO extends ParsableObject<Contacto,ContactoDTO> {
     @Mapping
     private String tipoContacto;
     @Mapping
-    private Integer estado = 1;
+    private Integer estado ;
 
 
     @Mapping

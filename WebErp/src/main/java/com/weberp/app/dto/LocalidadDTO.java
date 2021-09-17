@@ -15,7 +15,7 @@ public class LocalidadDTO extends ParsableObject<Localidad,LocalidadDTO> {
 	@Mapping
 	private String nombre;
 	@Mapping
-	private Integer estado = 1;
+	private Integer estado ;
 
 
 	@Mapping

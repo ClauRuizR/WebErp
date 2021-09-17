@@ -37,7 +37,7 @@ public class ServicioDTO extends ParsableObject<Servicio,ServicioDTO> {
     private BigDecimal costo = BigDecimal.ZERO;
 
     @Mapping
-    private Integer estado = 1;
+    private Integer estado ;
 
 
     @Mapping

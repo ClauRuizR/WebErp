@@ -20,7 +20,7 @@ public class DetalleFacturaDTO extends ParsableObject<DetalleFactura,DetalleFact
     @Mapping
     private BigDecimal monto = new BigDecimal(0);
     @Mapping
-    private Long cantidad = 0L;
+    private Long cantidad;
 
     @Mapping
     private BigDecimal precio = new BigDecimal(0);
@@ -30,7 +30,13 @@ public class DetalleFacturaDTO extends ParsableObject<DetalleFactura,DetalleFact
     @Mapping
     private BigDecimal itbis;
     @Mapping
-    private Integer estado = 1;
+    private BigDecimal importe;
+
+    @Mapping
+    private BigDecimal subTotal;
+
+    @Mapping
+    private Integer estado ;
     @Mapping
     private Date creadoEn;
     @Mapping
@@ -43,7 +49,21 @@ public class DetalleFacturaDTO extends ParsableObject<DetalleFactura,DetalleFact
     private Long version;
 
     @Mapping
+    private BigDecimal descuento;
+
+    @Mapping
     private BigDecimal total;
+
+    @Mapping
+    private String productoDetalleNombre;
+
+    public String getProductoDetalleNombre() {
+        return getProducto().getNombre();
+    }
+
+    public void setProductoDetalleNombre(String productoDetalleNombre) {
+        this.productoDetalleNombre = productoDetalleNombre;
+    }
 
     public BigDecimal getTotal() {
         return total;
@@ -148,6 +168,30 @@ public class DetalleFacturaDTO extends ParsableObject<DetalleFactura,DetalleFact
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public BigDecimal getImporte() {
+        return importe;
+    }
+
+    public BigDecimal getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(BigDecimal descuento) {
+        this.descuento = descuento;
+    }
+
+    public void setImporte(BigDecimal importe) {
+        this.importe = importe;
+    }
+
+    public BigDecimal getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(BigDecimal subTotal) {
+        this.subTotal = subTotal;
     }
 
     @Override

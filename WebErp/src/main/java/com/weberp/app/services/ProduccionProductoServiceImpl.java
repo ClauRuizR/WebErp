@@ -54,41 +54,45 @@ public class ProduccionProductoServiceImpl implements ProduccionProductoService 
         ProduccionProducto produccionProducto = new ProduccionProducto();
         TipoServicio tipoServicio = tipoServicioService.findByTipoProducto_IdAndEmpresa_Id(detalleFacturaList.get(j).getProducto().getTipoProducto().getId(), detalleFacturaList.get(j).getProducto().getTipoProducto().getEmpresa().getId());
 
-        BigDecimal precioCompra = detalleFacturaList.get(j).getProducto().getPrecioCompra().multiply(new BigDecimal(detalleFacturaList.get(j).getCantidad()));
+        if (null != tipoServicio) {
 
-        produccionProducto.setMontoPrecioCompra(precioCompra);
+            BigDecimal precioCompra = detalleFacturaList.get(j).getProducto().getPrecioCompra().multiply(new BigDecimal(detalleFacturaList.get(j).getCantidad()));
 
-        if(!detalleFacturaList.get(j).getProducto().getTipoProducto().isFacturable())
-            continue;
+            produccionProducto.setMontoPrecioCompra(precioCompra);
 
-        BigDecimal precioVenta = detalleFacturaList.get(j).getProducto().getPrecioVenta().multiply(new BigDecimal(detalleFacturaList.get(j).getCantidad()));
-
-
-        produccionProducto.setMontoPrecioVenta(precioVenta);
-
-        BigDecimal total = precioVenta.subtract(precioCompra);
-
-        BigDecimal costoServicio = BigDecimal.ZERO;
-
-        produccionProducto.setProducto(detalleFacturaList.get(j).getProducto());
-
-        produccionProducto.setNumeroDocumento(numeroDocumento);
+            if (!detalleFacturaList.get(j).getProducto().getTipoProducto().isFacturable())
+                continue;
 
 
-        for (int i = 0; i < tipoServicio.getDetalleTipoServicio().size(); i++) {
-            DetalleTipoServicio detalleTipoServicio = tipoServicio.getDetalleTipoServicio().get(i);
-            costoServicio = costoServicio.add(detalleTipoServicio.getServicio().getCosto());
+            BigDecimal precioVenta = detalleFacturaList.get(j).getProducto().getPrecioVenta().multiply(new BigDecimal(detalleFacturaList.get(j).getCantidad()));
 
+
+            produccionProducto.setMontoPrecioVenta(precioVenta);
+
+            BigDecimal total = precioVenta.subtract(precioCompra);
+
+            BigDecimal costoServicio = BigDecimal.ZERO;
+
+            produccionProducto.setProducto(detalleFacturaList.get(j).getProducto());
+
+            produccionProducto.setNumeroDocumento(numeroDocumento);
+
+
+            for (int i = 0; i < tipoServicio.getDetalleTipoServicio().size(); i++) {
+                DetalleTipoServicio detalleTipoServicio = tipoServicio.getDetalleTipoServicio().get(i);
+                costoServicio = costoServicio.add(detalleTipoServicio.getServicio().getCosto());
+
+            }
+
+            costoServicio = costoServicio.multiply(new BigDecimal(detalleFacturaList.get(j).getCantidad()));
+
+            produccionProducto.setCostoServicio(costoServicio);
+
+            total = total.subtract(costoServicio);
+            produccionProducto.setTotal(total);
+            guardar(produccionProducto);
         }
-
-         costoServicio = costoServicio.multiply(new BigDecimal(detalleFacturaList.get(j).getCantidad()));
-
-         produccionProducto.setCostoServicio(costoServicio);
-
-         total = total.subtract(costoServicio);
-         produccionProducto.setTotal(total);
-         guardar(produccionProducto);
-        }
+    }
     }
 
     @Override

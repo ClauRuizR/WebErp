@@ -1,8 +1,12 @@
 package com.weberp.app.services;
 
+import java.text.ParseException;
 import java.util.List;
 
 import com.weberp.app.domain.ComprobanteFiscal;
+import com.weberp.app.dto.ComprobanteFiscalDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Created by claudioruiz on 8/14/16.
@@ -10,15 +14,24 @@ import com.weberp.app.domain.ComprobanteFiscal;
 public interface ComprobanteFiscalService  {
     List<ComprobanteFiscal> listaComprobanteFiscal();
 
-    ComprobanteFiscal guardar(ComprobanteFiscal comprobanteFiscal);
+    ComprobanteFiscalDTO guardar(ComprobanteFiscalDTO comprobanteFiscalDTO) throws ParseException;
 
-    ComprobanteFiscal getComprobanteFiscalById(Long id);
+    ComprobanteFiscalDTO getComprobanteFiscalById(Long id);
 
     void borrar(Long id);
 
-    String obtenerComprobanteFiscal(Long empresaId);
+
     
     void incrementarComprobanteFiscal(Long id);
+
+
+
+
+
+    Page<ComprobanteFiscalDTO> findPaginated(int page, int size);
+
+    Page<ComprobanteFiscalDTO> findComprobanteFiscalDTOAndPaginated(String letra, Pageable pageRequest) throws ParseException;
+
 
 
 }

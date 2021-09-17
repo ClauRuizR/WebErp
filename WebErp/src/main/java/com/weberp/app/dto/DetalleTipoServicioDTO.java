@@ -23,7 +23,7 @@ public class DetalleTipoServicioDTO extends ParsableObject<DetalleTipoServicio,D
 
 
     @Mapping
-    private Integer estado = 1;
+    private Integer estado;
     @Mapping
     private Date creadoEn;
     @Mapping
