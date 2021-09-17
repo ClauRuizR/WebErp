@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="ROOT.war">
+    <root id="archive" name="WebErp-0.0.1-SNAPSHOT.war">
       <element id="artifact" artifact-name="WebErp:war exploded" />
     </root>
   </artifact>
