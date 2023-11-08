@@ -3,7 +3,6 @@ package com.weberp.app.services;
 import com.weberp.app.common.model.UsuarioUtil;
 import com.weberp.app.domain.Almacen;
 import com.weberp.app.domain.Empresa;
-import com.weberp.app.domain.Rol;
 import com.weberp.app.dto.UsuarioDTO;
 import com.weberp.app.dto.config.ConfigMapper;
 import org.apache.log4j.Logger;
@@ -11,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,10 +24,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import java.net.PasswordAuthentication;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)

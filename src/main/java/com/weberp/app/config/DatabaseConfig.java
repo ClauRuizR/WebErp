@@ -13,7 +13,6 @@ public class DatabaseConfig {
 	Environment environment; 
 	
 	private String url;
-	private String username;
 	private String password;
 	public String getUrl() {
 		return url;
@@ -25,7 +24,6 @@ public class DatabaseConfig {
 		return this.environment.getProperty("spring.datasource.url");
 	}
 	public void setUsername(String username) {
-		this.username = username;
 	}
 	public String getPassword() {
 		return password;

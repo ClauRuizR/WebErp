@@ -11,7 +11,7 @@ public class Utility {
     //check duplicated value
     public static boolean checkDuplicated_withSet(Long[] sValueTemp)
     {
-        Set sValueSet = new HashSet();
+        Set<Long> sValueSet = new HashSet<Long>();
         for(Long tempValueSet : sValueTemp)
         {
             if (sValueSet.contains(tempValueSet))

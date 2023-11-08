@@ -2,11 +2,11 @@ package com.weberp.app.services;
 
 import java.util.List;
 
-import com.weberp.app.domain.Producto;
-import com.weberp.app.domain.TipoProducto;
-import com.weberp.app.dto.TipoProductoDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import com.weberp.app.domain.TipoProducto;
+import com.weberp.app.dto.TipoProductoDTO;
 
 
 public interface TipoProductoService {

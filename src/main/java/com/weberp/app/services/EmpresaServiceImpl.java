@@ -54,8 +54,6 @@ public class EmpresaServiceImpl extends ConfigMapper implements EmpresaService {
 
     @Override
     public Page<EmpresaDTO> findPaginated(int page, int size) {
-        Long empresaId = UsuarioUtil.getCurrentUserEmpresa().getEmpresa().getId();
-
         Page<Empresa> empresaPage=  (empresaRepository.findAll(new PageRequest(page,size)));
 
         final Page<EmpresaDTO> contactDtoPage = empresaPage.map(this::convertToDtoEmpresa);

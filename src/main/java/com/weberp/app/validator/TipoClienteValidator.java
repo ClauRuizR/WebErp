@@ -1,13 +1,11 @@
 package com.weberp.app.validator;
 
-import com.weberp.app.dto.ServicioDTO;
-import com.weberp.app.dto.TipoClienteDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import java.math.BigDecimal;
+import com.weberp.app.dto.TipoClienteDTO;
 
 @Component
 public class TipoClienteValidator implements Validator {
@@ -22,17 +20,6 @@ public class TipoClienteValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre", "nombre", "El nombre es obligatorio.");
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "codigo", "codigo", "El codigo es obligatorio.");
-
-
-		TipoClienteDTO tipoClienteDTO = (TipoClienteDTO)target;
-
-
-//		if (null==tipoClienteDTO.getTipoNcf().getId())
-//			errors.rejectValue("tipoNcf",
-//					"El Tipo Ncf es obligatorio.");
-
-
-
 	}
 
 }

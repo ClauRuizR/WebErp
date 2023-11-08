@@ -2,8 +2,6 @@ package com.weberp.app.services;
 
 import com.weberp.app.domain.CuentasCobrar;
 import com.weberp.app.dto.CuentasCobrarDTO;
-import com.weberp.app.dto.CuentasPagarDTO;
-import com.weberp.app.dto.Generic.ConfigMapperGeneric;
 import com.weberp.app.dto.config.ConfigMapper;
 import com.weberp.app.repositories.CuentasCobrarRepository;
 import org.springframework.beans.factory.annotation.Autowired;

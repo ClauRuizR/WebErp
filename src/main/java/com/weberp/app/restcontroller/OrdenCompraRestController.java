@@ -1,29 +1,31 @@
 package com.weberp.app.restcontroller;
 
-import com.weberp.app.domain.OrdenCompra;
-import com.weberp.app.dto.OrdenCompraDTO;
-import com.weberp.app.dto.config.ConfigMapper;
-import com.weberp.app.services.OrdenCompraService;
-import com.weberp.app.services.UserDetailsImpl;
-import com.weberp.app.validator.OrdenCompraValidator;
-import org.modelmapper.ModelMapper;
+import java.text.ParseException;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.text.ParseException;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.weberp.app.domain.OrdenCompra;
+import com.weberp.app.dto.OrdenCompraDTO;
+import com.weberp.app.dto.config.ConfigMapper;
+import com.weberp.app.services.OrdenCompraService;
+import com.weberp.app.validator.OrdenCompraValidator;
 
 /**
  * Created by claudioruiz on 6/7/17.
@@ -36,13 +38,7 @@ public class OrdenCompraRestController extends ConfigMapper {
     private OrdenCompraService ordenCompraService;
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     private OrdenCompraValidator ordenCompraValidator;
-
-
-
 
 
     @RequestMapping(value="/pagination",params = { "page", "size" },method = RequestMethod.GET)

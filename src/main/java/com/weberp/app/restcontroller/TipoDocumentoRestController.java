@@ -1,17 +1,17 @@
 package com.weberp.app.restcontroller;
 
-import com.weberp.app.common.view.BaseRestController;
-import com.weberp.app.domain.TipoDocumento;
-import com.weberp.app.repositories.TipoDocumentoRepository;
-import com.weberp.app.repositories.TipoProductoRepository;
-import com.weberp.app.services.TipoDocumentoService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.weberp.app.common.view.BaseRestController;
+import com.weberp.app.domain.TipoDocumento;
+import com.weberp.app.repositories.TipoDocumentoRepository;
+import com.weberp.app.services.TipoDocumentoService;
 
 /**
  * Created by claudioruiz on 6/6/17.

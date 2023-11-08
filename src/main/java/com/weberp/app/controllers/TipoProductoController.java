@@ -20,15 +20,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.weberp.app.domain.TipoProducto;
-import com.weberp.app.dto.TipoProductoDTO;
 import com.weberp.app.reportes.TipoProductoReporte;
 import com.weberp.app.services.TipoProductoService;
 import com.weberp.app.validator.TipoProductoValidator;
@@ -41,8 +38,6 @@ public class TipoProductoController extends BaseController {
 
 	private TipoProductoService tipoProductoService;
 
-	private TipoProductoValidator tipoProductoValidator;
-
 	@Autowired
 	private ServletContext context;
 
@@ -51,7 +46,6 @@ public class TipoProductoController extends BaseController {
 								  TipoProductoValidator tipoProductoValidator, UsuarioService usuarioService) {
 		super(usuarioService);
 		this.tipoProductoService = tipoProductoService;
-		this.tipoProductoValidator = tipoProductoValidator;
 	}
 
 	@RequestMapping("")

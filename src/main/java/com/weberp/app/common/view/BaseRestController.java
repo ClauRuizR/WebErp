@@ -18,6 +18,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("hiding")
 public abstract class BaseRestController<T, ID extends Serializable>
 {
     private Logger logger = LoggerFactory.getLogger(BaseRestController.class);

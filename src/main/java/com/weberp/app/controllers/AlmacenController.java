@@ -1,7 +1,5 @@
 package com.weberp.app.controllers;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.weberp.app.common.view.BaseController;
 import com.weberp.app.services.LocalidadService;
 import com.weberp.app.services.UsuarioService;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.weberp.app.domain.Almacen;
-import com.weberp.app.domain.DetalleAlmacen;
-import com.weberp.app.dto.AlmacenDTO;
 import com.weberp.app.dto.TransferenciaAlmacen;
 import com.weberp.app.services.AlmacenService;
 import com.weberp.app.services.ProductoService;
@@ -28,16 +24,6 @@ import com.weberp.app.validator.TransferenciaAlmacenValidator;
 @Controller
 public class AlmacenController extends BaseController {
 
-	private AlmacenService almacenService;
-
-	private AlmacenValidator almacenValidator;
-
-	private ProductoService productoService;
-
-	private LocalidadService localidadService;
-
-	private TransferenciaAlmacenValidator transferenciaAlmacenValidator;
-
 	@Autowired
 	public AlmacenController(AlmacenService almacenService, AlmacenValidator almacenValidator,
 							 ProductoService productoService,
@@ -45,11 +31,6 @@ public class AlmacenController extends BaseController {
 							 LocalidadService localidadService,
 							 UsuarioService usuarioService) {
 		super(usuarioService);
-		this.almacenService = almacenService;
-		this.almacenValidator = almacenValidator;
-		this.productoService = productoService;
-		this.transferenciaAlmacenValidator = transferenciaAlmacenValidator;
-		this.localidadService = localidadService;
 	}
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping("transferenciaAlmacen")

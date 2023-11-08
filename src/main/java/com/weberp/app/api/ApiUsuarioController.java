@@ -1,13 +1,14 @@
 package com.weberp.app.api;
 
-import com.weberp.app.domain.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.weberp.app.dto.UsuarioDTO;
 import com.weberp.app.services.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by claudioruiz on 6/22/17.
@@ -25,7 +26,6 @@ public class ApiUsuarioController {
     @ResponseBody
     public UsuarioDTO validaUsuario(@RequestParam("usuario") String usuario, @RequestParam("clave")String clave) {
 
-        UsuarioDTO usuarioDTO = null;
         try{
 
             return usuarioService.validaUsuario(usuario,clave);
@@ -33,12 +33,5 @@ public class ApiUsuarioController {
         }catch (Exception ex){
         throw new IllegalArgumentException(ex.getMessage());
         }
-
-
-
-
-
     }
-
-
 }

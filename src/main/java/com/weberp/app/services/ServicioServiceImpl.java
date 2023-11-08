@@ -23,9 +23,6 @@ public class ServicioServiceImpl extends ConfigMapper implements ServicioService
     @Autowired
     private ServicioRepository servicioRepository;
 
-    @Autowired
-    private UsuarioService usuarioService;
-
     @Override
     public List<Servicio> listaServicio() {
         return (List<Servicio>) servicioRepository.findAll();

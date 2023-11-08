@@ -2,13 +2,12 @@ package com.weberp.app.services;
 
 import java.text.ParseException;
 import java.util.List;
-import java.util.Map;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.weberp.app.domain.DiarioGeneral;
 import com.weberp.app.dto.DiarioGeneralDTO;
-import com.weberp.app.reportes.IngresosMensualesReporte;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 public interface DiarioGeneralService {
 	Page<DiarioGeneralDTO> listaDiarioGeneral(Pageable pageable);

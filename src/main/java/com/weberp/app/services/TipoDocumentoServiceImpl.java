@@ -3,30 +3,22 @@ package com.weberp.app.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
-import com.weberp.app.common.model.UsuarioUtil;
-import com.weberp.app.domain.Empresa;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.weberp.app.enums.TipoDocumentoEnum;
-import com.weberp.app.repositories.TipoDocumentoRepository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.weberp.app.common.model.UsuarioUtil;
+import com.weberp.app.domain.Empresa;
+import com.weberp.app.enums.TipoDocumentoEnum;
+import com.weberp.app.repositories.TipoDocumentoRepository;
 
 @Service
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 public class TipoDocumentoServiceImpl implements TipoDocumentoService {
 
 	com.weberp.app.domain.TipoDocumento tipoDocumento;
-
-	@Autowired
-	private EntityManager entityManager;
-
-	@Autowired
-	private UsuarioService usuarioService;
 
 	@Autowired
 	private TipoDocumentoRepository tipoDocumentoRepository;
@@ -78,7 +70,7 @@ public class TipoDocumentoServiceImpl implements TipoDocumentoService {
 	public List<com.weberp.app.domain.TipoDocumento> listaTiposDocumentosSalida() {
 		Long empresaId = UsuarioUtil.getCurrentUserEmpresa().getEmpresa().getId();
 
-		List<String> llaves = new ArrayList();
+		List<String> llaves = new ArrayList<String>();
 		llaves.add(TipoDocumentoEnum.COTIZACION);
 		llaves.add(TipoDocumentoEnum.FACTURA);
 		List<com.weberp.app.domain.TipoDocumento> tipoDocumentoList = tipoDocumentoRepository.findByLlaveDocumentoInAndEmpresa_Id(llaves,empresaId);

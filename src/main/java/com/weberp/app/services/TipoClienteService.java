@@ -1,12 +1,12 @@
 package com.weberp.app.services;
 
-import com.weberp.app.domain.TipoCliente;
-import com.weberp.app.dto.TipoClienteDTO;
+import java.text.ParseException;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.text.ParseException;
-import java.util.List;
+import com.weberp.app.dto.TipoClienteDTO;
 
 /**
  * Created by claudioruiz on 7/6/17.

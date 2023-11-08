@@ -1,12 +1,9 @@
 package com.weberp.app.restcontroller;
 
-import com.weberp.app.domain.Factura;
-import com.weberp.app.dto.FacturaDTO;
-import com.weberp.app.dto.config.ConfigMapper;
-import com.weberp.app.exception.FacturaException;
-import com.weberp.app.services.FacturaService;
-import com.weberp.app.validator.FacturaValidator;
-import org.modelmapper.ModelMapper;
+import java.text.ParseException;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,12 +13,20 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import java.text.ParseException;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.weberp.app.domain.Factura;
+import com.weberp.app.dto.FacturaDTO;
+import com.weberp.app.dto.config.ConfigMapper;
+import com.weberp.app.exception.FacturaException;
+import com.weberp.app.services.FacturaService;
+import com.weberp.app.validator.FacturaValidator;
 
 /**
  * Created by claudioruiz on 6/6/17.
@@ -33,9 +38,6 @@ public class FacturacionRestController extends ConfigMapper {
 
     @Autowired
     private FacturaService facturaService;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Autowired
     private FacturaValidator facturaValidator;

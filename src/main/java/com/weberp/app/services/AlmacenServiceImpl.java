@@ -1,17 +1,12 @@
 package com.weberp.app.services;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import com.weberp.app.common.model.UsuarioUtil;
-import com.weberp.app.domain.Empresa;
 import com.weberp.app.dto.AlmacenDTO;
 import com.weberp.app.dto.config.ConfigMapper;
-import com.weberp.app.utils.LocalDateAttributeConverter;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,19 +18,15 @@ import com.weberp.app.domain.Almacen;
 import com.weberp.app.domain.DetalleAlmacen;
 import com.weberp.app.domain.Producto;
 import com.weberp.app.repositories.AlmacenRepository;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 
 @Service
 @Transactional(noRollbackFor = Exception.class)
 public class AlmacenServiceImpl extends ConfigMapper implements AlmacenService {
 
 	Almacen almacen;
-
-	private Logger log = Logger.getLogger(UsuarioServiceImpl.class);
 
 	@Autowired
 	private EntityManager entityManager;

@@ -1,10 +1,10 @@
 package com.weberp.app.repositories;
 
-import com.weberp.app.domain.Servicio;
-import com.weberp.app.domain.TipoServicio;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
+
+import com.weberp.app.domain.Servicio;
 
 /**
  * Created by claudioruiz on 6/12/17.

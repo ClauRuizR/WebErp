@@ -17,7 +17,13 @@ import java.util.Date;
 
 @Entity
 public class CuentasPagar extends Auditable<String> implements Serializable {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6144091771871989586L;
+
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 

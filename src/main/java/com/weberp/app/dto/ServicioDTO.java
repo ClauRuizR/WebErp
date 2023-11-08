@@ -6,9 +6,7 @@ import com.weberp.app.mapperobject.Mapping;
 import com.weberp.app.mapperobject.ParsableObject;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by claudioruiz on 6/13/17.

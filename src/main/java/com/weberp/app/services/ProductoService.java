@@ -3,12 +3,12 @@ package com.weberp.app.services;
 import java.text.ParseException;
 import java.util.List;
 
-import com.weberp.app.domain.DetalleAlmacen;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.weberp.app.domain.Producto;
 import com.weberp.app.dto.DetalleAlmacenDTO;
 import com.weberp.app.dto.ProductoDTO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 public interface ProductoService {
 

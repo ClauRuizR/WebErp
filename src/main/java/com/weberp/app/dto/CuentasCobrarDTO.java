@@ -10,7 +10,12 @@ import java.util.Date;
 public class CuentasCobrarDTO implements Serializable{
 
 
-    private Long id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 833818824997900786L;
+
+	private Long id;
 
     private String comentario;
 

@@ -2,27 +2,15 @@ package com.weberp.app.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -74,9 +62,10 @@ public class DetalleFactura extends Auditable<String> {
 	private Long version;
 
 	public BigDecimal getTotal() {
-		BigDecimal resultado = BigDecimal.ZERO;
-		resultado = new BigDecimal(getCantidad()).multiply(getPrecio());
-		return resultado;
+		if (getCantidad() != null && getPrecio() != null) {
+			return new BigDecimal(getCantidad()).multiply(getPrecio());	
+		}
+		return total;
 	}
 
 	public void setTotal(BigDecimal total) {
@@ -210,6 +199,7 @@ public class DetalleFactura extends Auditable<String> {
 	public void setDescuento(BigDecimal descuento) {
 		this.descuento = descuento;
 	}
+	
 }
 
 

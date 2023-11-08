@@ -4,20 +4,11 @@ import com.weberp.app.domain.Producto;
 import com.weberp.app.mapperobject.EntityMapper;
 import com.weberp.app.mapperobject.Mapping;
 import com.weberp.app.mapperobject.ParsableObject;
-import com.weberp.app.services.AlmacenService;
-import com.weberp.app.services.ProductoService;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Column;
-
 @EntityMapper
 public class ProductoDTO extends ParsableObject<Producto,ProductoDTO> {
-
-	@Autowired
-	private ProductoService productoService;
 
 	@Mapping
 	private Long id;

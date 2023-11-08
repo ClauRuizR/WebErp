@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.ServletContext;
-
 /**
  * Created by claudioruiz on 6/18/17.
  */
@@ -18,16 +16,9 @@ import javax.servlet.ServletContext;
 public class ProduccionProductoController extends BaseController {
 
 
-    private ProduccionProductoService produccionProductoService;
-
-
-    @Autowired
-    private ServletContext context;
-
     @Autowired
     public ProduccionProductoController(ProduccionProductoService produccionProductoService, UsuarioService usuarioService) {
         super(usuarioService);
-        this.produccionProductoService = produccionProductoService;
 
     }
 

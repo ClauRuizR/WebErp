@@ -1,7 +1,6 @@
 package com.weberp.app.controllers;
 
 import com.weberp.app.common.view.BaseController;
-import com.weberp.app.domain.Usuario;
 import com.weberp.app.services.UsuarioService;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -11,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping(value="/usuarios")
 public class UsuarioController extends BaseController {
-
-    private UsuarioService usuarioService;
 
     public UsuarioController(UsuarioService usuarioService){
         super(usuarioService);

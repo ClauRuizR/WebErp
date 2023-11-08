@@ -1,9 +1,7 @@
 package com.weberp.app.services;
 
 import com.weberp.app.domain.Empresa;
-import com.weberp.app.domain.TipoDocumento;
 import com.weberp.app.dto.EmpresaDTO;
-import com.weberp.app.dto.UsuarioDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

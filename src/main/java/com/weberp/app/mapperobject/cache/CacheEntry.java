@@ -33,7 +33,7 @@ public class CacheEntry<KeyType, ValueType> {
         if (!(object instanceof CacheEntry)) {
             return false;
         }
-        CacheEntry entry = (CacheEntry) object;
+        CacheEntry<?, ?> entry = (CacheEntry<?, ?>) object;
         return this.getKey().equals(entry.getKey());
     }
 }

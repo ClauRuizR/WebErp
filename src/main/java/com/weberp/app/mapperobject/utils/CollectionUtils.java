@@ -16,7 +16,7 @@ public class CollectionUtils {
      * @return true if empty or null
      * @since Commons Collections 3.2
      */
-    public static boolean isEmpty(Collection coll) {
+    public static boolean isEmpty(Collection<?> coll) {
         return (coll == null || coll.isEmpty());
     }
 }

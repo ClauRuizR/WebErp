@@ -1,8 +1,5 @@
 package com.weberp.app.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.weberp.app.common.view.BaseController;
@@ -17,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.weberp.app.domain.Cliente;
-import com.weberp.app.domain.Contacto;
-import com.weberp.app.dto.ClienteDTO;
 import com.weberp.app.services.ClienteService;
 import com.weberp.app.validator.ClienteValidator;
 import com.weberp.app.validator.ContactoValidator;
@@ -27,18 +22,10 @@ import com.weberp.app.validator.ContactoValidator;
 @Controller
 public class ClienteController extends BaseController {
 
-	private ClienteService clienteService;
-
-	private ClienteValidator clienteValidator;
-
-
-
 	@Autowired
 	public ClienteController(ClienteService clienteService, ClienteValidator clienteValidator,
 							 ContactoValidator contactoValidator, UsuarioService usuarioService) {
 		super(usuarioService);
-		this.clienteValidator = clienteValidator;
-		this.clienteService = clienteService;
 		
 	}
 

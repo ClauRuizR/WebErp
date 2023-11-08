@@ -1,17 +1,9 @@
 package com.weberp.app.dto;
 
 import com.weberp.app.domain.ComprobanteFiscal;
-import com.weberp.app.domain.Empresa;
-import com.weberp.app.domain.TipoNcf;
 import com.weberp.app.mapperobject.EntityMapper;
 import com.weberp.app.mapperobject.Mapping;
 import com.weberp.app.mapperobject.ParsableObject;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 

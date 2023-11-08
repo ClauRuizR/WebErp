@@ -20,13 +20,12 @@ public class MapperCache<KeyType, ValueType> implements Cache<KeyType, ValueType
         cacheMap.clear();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public synchronized void put(KeyType key, ValueType value) {
         if (key == null) {
             throw new IllegalArgumentException("Cache entry key cannot be null");
         }
-        CacheEntry<KeyType, ValueType> cacheEntry = new CacheEntry(key, value);
+        CacheEntry<KeyType, ValueType> cacheEntry = new CacheEntry<KeyType, ValueType>(key, value);
         cacheMap.put(cacheEntry.getKey(), cacheEntry);
     }
 
@@ -62,7 +61,11 @@ public class MapperCache<KeyType, ValueType> implements Cache<KeyType, ValueType
 
     class LRUMap extends LinkedHashMap<KeyType, CacheEntry<KeyType, ValueType>> {
 
-        private int maximumSize;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1043600172666661201L;
+		private int maximumSize;
 
         LRUMap(int maximumSize) {
             this.maximumSize = maximumSize;

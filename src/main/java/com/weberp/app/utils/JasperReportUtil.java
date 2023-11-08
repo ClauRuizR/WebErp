@@ -12,9 +12,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-
 import com.mysql.jdbc.Connection;
 
 import net.sf.jasperreports.engine.JRException;
@@ -26,11 +23,6 @@ import net.sf.jasperreports.engine.type.OrientationEnum;
 import net.sf.jasperreports.engine.util.JRLoader;
 
 public class JasperReportUtil {
-
-	@Autowired
-	private Environment env;
-
-	private static final String DATASOURCE = "datasource";
 
 	public final static String REPORTE_FACTURACION = "/reportes/facturacion.jasper";
 

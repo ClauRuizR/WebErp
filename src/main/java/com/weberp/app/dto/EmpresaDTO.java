@@ -1,12 +1,11 @@
 package com.weberp.app.dto;
 
+import java.util.Date;
+
 import com.weberp.app.domain.Empresa;
-import com.weberp.app.domain.GrupoEmpresa;
 import com.weberp.app.mapperobject.EntityMapper;
 import com.weberp.app.mapperobject.Mapping;
 import com.weberp.app.mapperobject.ParsableObject;
-
-import java.util.Date;
 
 /**
  * Created by claudioruiz on 6/9/17.

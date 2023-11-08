@@ -5,7 +5,6 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.weberp.app.bootstrap.ClienteLoader;
 import com.weberp.app.services.UserDetailsImpl;
 
 

@@ -1,18 +1,14 @@
 package com.weberp.app.restcontroller;
 
-import com.weberp.app.common.view.BaseRestController;
 import com.weberp.app.domain.Empresa;
-import com.weberp.app.domain.GrupoEmpresa;
 import com.weberp.app.dto.EmpresaDTO;
 import com.weberp.app.dto.config.ConfigMapper;
-import com.weberp.app.repositories.EmpresaRepository;
 import com.weberp.app.services.EmpresaService;
 import com.weberp.app.validator.EmpresaValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;

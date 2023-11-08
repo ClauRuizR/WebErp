@@ -1,17 +1,10 @@
 package com.weberp.app.services;
 
-import static java.util.Calendar.getInstance;
-
 import java.text.ParseException;
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
-import com.weberp.app.common.model.UsuarioUtil;
 import com.weberp.app.dto.ComprobanteFiscalDTO;
 import com.weberp.app.dto.config.ConfigMapper;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,12 +22,6 @@ import com.weberp.app.repositories.ComprobanteFiscalRepository;
 public class ComprobanteFiscalServiceImpl extends ConfigMapper implements ComprobanteFiscalService {
 
 	ComprobanteFiscal comprobanteFiscal;
-
-	@Autowired
-	private EntityManager entityManager;
-
-	@Autowired
-	private UsuarioService usuarioService;
 
 	@Autowired
 	private ComprobanteFiscalRepository comprobanteFiscalRepository;

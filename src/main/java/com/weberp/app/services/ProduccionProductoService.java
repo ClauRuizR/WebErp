@@ -2,9 +2,6 @@ package com.weberp.app.services;
 
 import com.weberp.app.domain.DetalleFactura;
 import com.weberp.app.domain.ProduccionProducto;
-import com.weberp.app.domain.Producto;
-
-import java.util.Iterator;
 import java.util.List;
 
 /**

@@ -1,11 +1,11 @@
 package com.weberp.app.validator;
 
-import com.weberp.app.domain.Localidad;
-import com.weberp.app.domain.TipoProducto;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import com.weberp.app.domain.Localidad;
 
 @Component
 public class LocalidadValidator implements Validator {

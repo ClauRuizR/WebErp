@@ -1,11 +1,11 @@
 package com.weberp.app.validator;
 
-import com.weberp.app.dto.ComprobanteFiscalDTO;
-import com.weberp.app.dto.TipoNcfDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import com.weberp.app.dto.ComprobanteFiscalDTO;
 
 @Component
 public class ComprobanteFiscalValidator implements Validator {

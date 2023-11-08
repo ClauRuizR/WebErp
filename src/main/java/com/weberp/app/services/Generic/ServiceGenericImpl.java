@@ -1,14 +1,11 @@
 package com.weberp.app.services.Generic;
 
-import com.weberp.app.utils.JasperReportUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -25,7 +22,8 @@ public class ServiceGenericImpl<S,ID extends Serializable> implements ServiceGen
     private JpaRepository<S, ID> repository;
 
 
-    public ServiceGenericImpl() {
+    @SuppressWarnings("unchecked")
+	public ServiceGenericImpl() {
         ParameterizedType genericSuperclass = (ParameterizedType) getClass()
                 .getGenericSuperclass();
         this.entityDtoClass = (Class<S>) genericSuperclass

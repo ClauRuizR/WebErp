@@ -5,28 +5,22 @@ import com.weberp.app.dto.ClienteDTO;
 import com.weberp.app.dto.config.ConfigMapper;
 import com.weberp.app.services.ClienteService;
 import com.weberp.app.validator.ClienteValidator;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import com.weberp.app.domain.Cliente;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static scala.Console.out;
 
 @RestController
 @RequestMapping("/rest/clientes")

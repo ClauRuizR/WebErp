@@ -6,13 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.weberp.app.common.model.UsuarioUtil;
-import com.weberp.app.domain.*;
-import com.weberp.app.dto.OrdenCompraDTO;
-import com.weberp.app.dto.config.ConfigMapper;
-import com.weberp.app.exception.FacturaException;
-import com.weberp.app.exception.OrdenCompraException;
-import com.weberp.app.utils.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,10 +14,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.weberp.app.common.model.UsuarioUtil;
+import com.weberp.app.domain.Almacen;
+import com.weberp.app.domain.DetalleOrdenCompra;
+import com.weberp.app.domain.DiarioGeneral;
+import com.weberp.app.domain.Empresa;
+import com.weberp.app.domain.MovimientoInventario;
+import com.weberp.app.domain.OrdenCompra;
+import com.weberp.app.domain.Proveedor;
+import com.weberp.app.domain.TipoDocumento;
+import com.weberp.app.dto.OrdenCompraDTO;
+import com.weberp.app.dto.config.ConfigMapper;
 import com.weberp.app.enums.EstatusEnum;
-import com.weberp.app.enums.TipoMovimientoInventario;
 import com.weberp.app.enums.TipoDocumentoEnum;
+import com.weberp.app.enums.TipoMovimientoInventario;
+import com.weberp.app.exception.OrdenCompraException;
 import com.weberp.app.repositories.OrdenCompraRepository;
+import com.weberp.app.utils.Utility;
 
 @Service
 @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -38,16 +44,6 @@ public class OrdenCompraServiceImpl extends ConfigMapper implements OrdenCompraS
 	private AlmacenService almacenService;
 	@Autowired
 	private OrdenCompraRepository ordenCompraRepository;
-
-	@Autowired
-	private ProductoService productoService;
-
-	@Autowired
-	private ProveedorService proveedorService;
-
-
-	@Autowired
-	private CuentasPagarService cuentasPagarService;
 
 	@Autowired
 	private TipoDocumentoService tipoDocumentoService;

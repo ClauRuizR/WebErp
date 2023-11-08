@@ -6,10 +6,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.annotation.CreatedBy;
@@ -19,8 +15,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity(name = "cliente")
 public class Cliente extends Auditable<String> {
-
-	private static final long serialVersionUID = -486827370610335742L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

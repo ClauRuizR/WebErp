@@ -9,10 +9,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.weberp.app.common.model.UsuarioUtil;
-import com.weberp.app.domain.Empresa;
-import com.weberp.app.domain.Usuario;
-import com.weberp.app.dto.config.ConfigMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,8 +16,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.weberp.app.common.model.UsuarioUtil;
+import com.weberp.app.domain.Empresa;
 import com.weberp.app.domain.Proveedor;
 import com.weberp.app.dto.ProveedorDTO;
+import com.weberp.app.dto.config.ConfigMapper;
 import com.weberp.app.repositories.ProveedorRepository;
 
 @Service

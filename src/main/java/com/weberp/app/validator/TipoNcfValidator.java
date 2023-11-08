@@ -1,12 +1,11 @@
 package com.weberp.app.validator;
 
-import com.weberp.app.domain.TipoNcf;
-import com.weberp.app.dto.TipoClienteDTO;
-import com.weberp.app.dto.TipoNcfDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import com.weberp.app.dto.TipoNcfDTO;
 
 @Component
 public class TipoNcfValidator implements Validator {
@@ -22,16 +21,11 @@ public class TipoNcfValidator implements Validator {
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "codigo", "codigo", "El codigo es obligatorio.");
 
-
 		TipoNcfDTO tipoNcfDTO = (TipoNcfDTO)target;
-
-
+		
 		if (null==tipoNcfDTO.getComprobanteFiscal())
 			errors.rejectValue("tipoNcf",
 					"El Comprobante Fiscal es obligatorio.");
-
-
-
 	}
 
 }

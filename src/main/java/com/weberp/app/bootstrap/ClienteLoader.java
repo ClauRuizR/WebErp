@@ -1,11 +1,8 @@
 package com.weberp.app.bootstrap;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -13,12 +10,8 @@ import org.springframework.stereotype.Component;
 
 import com.weberp.app.domain.Cliente;
 import com.weberp.app.domain.Contacto;
-import com.weberp.app.domain.Producto;
-import com.weberp.app.domain.TipoProducto;
 import com.weberp.app.repositories.ClienteRepository;
 import com.weberp.app.repositories.ContactoRepository;
-import com.weberp.app.repositories.ProductoRepository;
-import com.weberp.app.repositories.TipoProductoRepository;
 
 
 
@@ -29,8 +22,6 @@ public class ClienteLoader implements ApplicationListener<ContextRefreshedEvent>
 	private ClienteRepository clienteRepository; 
 	private ContactoRepository contactoRepository;
 
-	
-	private Logger log = Logger.getLogger(ClienteLoader.class);
 	
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -50,9 +41,6 @@ public class ClienteLoader implements ApplicationListener<ContextRefreshedEvent>
 	p1.setApellido("Leon Jaramillo");
 	p1.setDni("El Capo");
 	p1.setTipoDni(1L);
-	
-	LocalDate today = LocalDate.now();
-
 	
 	contactoList.add(contacto);
 	

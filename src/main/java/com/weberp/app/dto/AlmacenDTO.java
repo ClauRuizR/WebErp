@@ -1,28 +1,11 @@
 package com.weberp.app.dto;
 
 import com.weberp.app.domain.Almacen;
-import com.weberp.app.domain.DetalleAlmacen;
-import com.weberp.app.domain.Localidad;
-import com.weberp.app.domain.MovimientoInventario;
 import com.weberp.app.mapperobject.EntityMapper;
 import com.weberp.app.mapperobject.Mapping;
 import com.weberp.app.mapperobject.ParsableObject;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.springframework.core.convert.converter.*;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 

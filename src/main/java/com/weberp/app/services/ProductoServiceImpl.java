@@ -7,25 +7,17 @@ import com.weberp.app.domain.Producto;
 import com.weberp.app.domain.TipoProducto;
 import com.weberp.app.dto.DetalleAlmacenDTO;
 import com.weberp.app.dto.ProductoDTO;
-import com.weberp.app.dto.TipoProductoDTO;
 import com.weberp.app.dto.config.ConfigMapper;
-import com.weberp.app.mapperobject.Mapper;
-import com.weberp.app.mapperobject.MapperObject;
 import com.weberp.app.repositories.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service

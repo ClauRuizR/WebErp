@@ -1,16 +1,19 @@
 package com.weberp.app.api;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.weberp.app.domain.Producto;
 import com.weberp.app.dto.ProductoDTO;
 import com.weberp.app.dto.config.ConfigMapper;
 import com.weberp.app.services.ProductoService;
-import com.weberp.app.validator.ProductoValidator;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by claudioruiz on 6/22/17.
@@ -23,14 +26,6 @@ public class ApiProductoController extends ConfigMapper {
 
     @Autowired
     private ProductoService productoService;
-
-    @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
-    private ProductoValidator productoValidator;
-
-
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody

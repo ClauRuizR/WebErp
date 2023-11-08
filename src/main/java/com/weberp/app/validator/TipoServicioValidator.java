@@ -1,11 +1,11 @@
 package com.weberp.app.validator;
 
-import com.weberp.app.dto.TipoProductoDTO;
-import com.weberp.app.dto.TipoServicioDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+
+import com.weberp.app.dto.TipoServicioDTO;
 
 @Component
 public class TipoServicioValidator implements Validator {

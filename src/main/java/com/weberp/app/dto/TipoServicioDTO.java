@@ -1,14 +1,13 @@
 package com.weberp.app.dto;
 
-import com.weberp.app.domain.DetalleTipoServicio;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import com.weberp.app.domain.TipoServicio;
 import com.weberp.app.mapperobject.EntityMapper;
 import com.weberp.app.mapperobject.Mapping;
 import com.weberp.app.mapperobject.ParsableObject;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by claudioruiz on 6/13/17.

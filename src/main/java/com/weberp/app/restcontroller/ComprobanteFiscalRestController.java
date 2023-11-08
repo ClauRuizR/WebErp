@@ -1,11 +1,12 @@
 package com.weberp.app.restcontroller;
 
-import com.weberp.app.common.model.UsuarioUtil;
-import com.weberp.app.domain.ComprobanteFiscal;
-import com.weberp.app.dto.ComprobanteFiscalDTO;
-import com.weberp.app.dto.config.ConfigMapper;
-import com.weberp.app.services.UsuarioService;
-import com.weberp.app.validator.ComprobanteFiscalValidator;
+import java.text.ParseException;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,15 +14,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.weberp.app.domain.ComprobanteFiscal;
+import com.weberp.app.dto.ComprobanteFiscalDTO;
+import com.weberp.app.dto.config.ConfigMapper;
 import com.weberp.app.services.ComprobanteFiscalService;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.text.ParseException;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.weberp.app.validator.ComprobanteFiscalValidator;
 
 
 /**
@@ -35,11 +40,6 @@ public class ComprobanteFiscalRestController extends ConfigMapper {
 
     @Autowired
     private ComprobanteFiscalService comprobanteFiscalService;
-
-
-    @Autowired
-    private UsuarioService usuarioService;
-
 
 
     @Autowired

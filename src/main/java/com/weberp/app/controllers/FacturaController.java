@@ -1,10 +1,7 @@
 package com.weberp.app.controllers;
 
 import com.weberp.app.common.view.BaseController;
-import com.weberp.app.domain.DetalleFactura;
 import com.weberp.app.domain.Factura;
-import com.weberp.app.domain.Producto;
-import com.weberp.app.dto.FacturaDTO;
 import com.weberp.app.enums.TipoDocumentoEnum;
 import com.weberp.app.exception.FacturaException;
 import com.weberp.app.services.*;
@@ -12,11 +9,9 @@ import com.weberp.app.utils.JasperReportUtil;
 import com.weberp.app.validator.FacturaValidator;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletContext;
@@ -24,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Created by claudioruiz on 7/27/16.
@@ -37,17 +31,11 @@ public class FacturaController extends BaseController {
     JasperReportUtil jasperReportUtil;
     private FacturaService facturaService;
 
-    private FacturaValidator facturaValidator;
-
-    private ComprobanteFiscalService comprobanteFiscalService;
-
     private ProductoService productoService;
 
     private ClienteService clienteService;
 
     private TipoDocumentoService tipoDocumentoService;
-
-    private EstatusService estatusService;
 
     @Autowired
     private ServletContext context;
@@ -60,11 +48,8 @@ public class FacturaController extends BaseController {
         super(usuarioService);
         this.facturaService = facturaService;
         this.clienteService = clienteService;
-        this.comprobanteFiscalService = comprobanteFiscalService;
         this.tipoDocumentoService = tipoDocumentoService;
         this.productoService = productoService;
-        this.estatusService = estatusService;
-        this.facturaValidator = facturaValidator;
     }
 
     @RequestMapping("")

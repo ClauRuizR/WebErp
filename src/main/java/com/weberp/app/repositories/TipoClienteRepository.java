@@ -1,12 +1,10 @@
 package com.weberp.app.repositories;
 
-import com.weberp.app.domain.TipoCliente;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-
-import java.util.List;
+import com.weberp.app.domain.TipoCliente;
 
 /**
  * Created by claudioruiz on 7/6/17.

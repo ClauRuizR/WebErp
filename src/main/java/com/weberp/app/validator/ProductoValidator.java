@@ -2,15 +2,14 @@ package com.weberp.app.validator;
 
 import java.math.BigDecimal;
 
-import com.weberp.app.dto.ProductoDTO;
-import com.weberp.app.services.TipoProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.weberp.app.domain.Producto;
+import com.weberp.app.dto.ProductoDTO;
+import com.weberp.app.services.TipoProductoService;
 
 @Component
 public class ProductoValidator implements Validator {

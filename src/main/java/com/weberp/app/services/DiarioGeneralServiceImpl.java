@@ -1,30 +1,24 @@
 package com.weberp.app.services;
 
-import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-
-import static java.util.stream.Collectors.*;
-
-import java.util.stream.Collector;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import com.weberp.app.common.model.UsuarioUtil;
-import com.weberp.app.dto.DiarioGeneralDTO;
-import com.weberp.app.dto.config.ConfigMapper;
-import com.weberp.app.reportes.IngresosMensualesReporte;
-import org.h2.expression.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.weberp.app.common.model.UsuarioUtil;
 import com.weberp.app.domain.DiarioGeneral;
+import com.weberp.app.dto.DiarioGeneralDTO;
+import com.weberp.app.dto.config.ConfigMapper;
 import com.weberp.app.repositories.DiarioGeneralRepository;
-import scala.Int;
 
 @Service
 public class DiarioGeneralServiceImpl extends ConfigMapper implements DiarioGeneralService {
@@ -34,9 +28,6 @@ public class DiarioGeneralServiceImpl extends ConfigMapper implements DiarioGene
 	
 	@Autowired
 	private DiarioGeneralRepository diarioGeneralRepository;
-
-	@Autowired
-    private UsuarioService usuarioService;
 	
 	@Override
 	public Page<DiarioGeneralDTO> listaDiarioGeneral(Pageable pageable) {
@@ -123,7 +114,7 @@ public class DiarioGeneralServiceImpl extends ConfigMapper implements DiarioGene
                 .forEach((fecha, monto)->{listaMeses.add(Integer.parseInt(fecha) - 1, monto);});
 		return listaMeses;
 	}
-    public boolean indexExists(final List list, final int index) {
+    public boolean indexExists(final List<?> list, final int index) {
         return index >= 0 && index < list.size();
     }
 

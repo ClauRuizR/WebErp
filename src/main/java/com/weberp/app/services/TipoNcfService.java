@@ -1,12 +1,12 @@
 package com.weberp.app.services;
 
-import com.weberp.app.domain.TipoNcf;
-import com.weberp.app.dto.TipoNcfDTO;
+import java.text.ParseException;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.text.ParseException;
-import java.util.List;
+import com.weberp.app.dto.TipoNcfDTO;
 
 public interface TipoNcfService {
 

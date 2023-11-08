@@ -1,14 +1,13 @@
 package com.weberp.app.validator;
 
-import com.weberp.app.domain.Producto;
-import com.weberp.app.domain.Servicio;
-import com.weberp.app.dto.ServicioDTO;
+import java.math.BigDecimal;
+
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import java.math.BigDecimal;
+import com.weberp.app.dto.ServicioDTO;
 
 @Component
 public class ServicioValidator implements Validator {

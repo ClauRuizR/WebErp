@@ -16,7 +16,8 @@ import java.util.List;
  */
 public class MapperObject implements Mapper {
     private static MapperObject instance = null;
-    private MapperCache<Class, List> mapperCache;
+    @SuppressWarnings("rawtypes")
+	private MapperCache<Class, List> mapperCache;
 
     public static MapperObject getInstance() {
         if (instance == null)
@@ -29,15 +30,18 @@ public class MapperObject implements Mapper {
         mapperCache = new MapperCache<>();
     }
 
-    @Override
+    @SuppressWarnings("rawtypes")
+	@Override
     public <T> T map(Object source, T destination) {
 
         try {
 
-            List<Field> sourceFields = CollectionUtils.isEmpty(mapperCache.get(source.getClass())) ?
+            @SuppressWarnings("unchecked")
+			List<Field> sourceFields = CollectionUtils.isEmpty(mapperCache.get(source.getClass())) ?
                     getAllDeclaredField(source.getClass()) : mapperCache.get(source.getClass());
 
-            List<Field> destinationFields = CollectionUtils.isEmpty(mapperCache.get(destination.getClass())) ?
+            @SuppressWarnings("unchecked")
+			List<Field> destinationFields = CollectionUtils.isEmpty(mapperCache.get(destination.getClass())) ?
                     getAllDeclaredField(destination.getClass()) : mapperCache.get(destination.getClass());
 
             List<Field> fieldsClassAnnotation =

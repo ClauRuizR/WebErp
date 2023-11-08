@@ -4,9 +4,6 @@ import com.weberp.app.domain.DiarioGeneral;
 import com.weberp.app.mapperobject.EntityMapper;
 import com.weberp.app.mapperobject.Mapping;
 import com.weberp.app.mapperobject.ParsableObject;
-import org.springframework.data.annotation.LastModifiedBy;
-
-import javax.persistence.Column;
 import java.math.BigDecimal;
 import java.util.Date;
 

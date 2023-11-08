@@ -21,9 +21,6 @@ import java.util.List;
 public class TipoServicioServiceImpl extends ConfigMapper implements TipoServicioService {
 
     @Autowired
-    private UsuarioService usuarioService;
-
-    @Autowired
     private TipoServicioRepository tipoServicioRepository;
 
     @Override

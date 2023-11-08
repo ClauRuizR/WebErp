@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Guil on 5/7/2016.
  */
-public interface Parsable<D, V extends Parsable> {
+public interface Parsable<D, V extends Parsable<?, ?>> {
 
     public D parse();
 

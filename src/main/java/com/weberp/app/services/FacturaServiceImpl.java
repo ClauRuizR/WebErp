@@ -1,23 +1,15 @@
 package com.weberp.app.services;
 
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-
-import javax.persistence.EntityManager;
-
 import com.weberp.app.common.model.UsuarioUtil;
 import com.weberp.app.domain.*;
 import com.weberp.app.dto.FacturaDTO;
 import com.weberp.app.dto.config.ConfigMapper;
 import com.weberp.app.utils.Utility;
-import org.modelmapper.Converter;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,12 +40,6 @@ public class FacturaServiceImpl extends ConfigMapper implements FacturaService  
 	Cliente cliente;
 
 	@Autowired
-	private ModelMapper modelMapper;
-
-	@Autowired
-	private EntityManager entityManager;
-
-	@Autowired
 	private AlmacenService almacenService;
 
 	@Autowired
@@ -68,9 +54,6 @@ public class FacturaServiceImpl extends ConfigMapper implements FacturaService  
 
 	@Autowired
 	private ProduccionProductoService produccionProductoService;
-
-	@Autowired
-	private CuentasCobrarService cuentasCobrarService;
 
 	@Autowired
 	private MovimientoInventarioService moviemintoInventarioService;
@@ -167,6 +150,11 @@ public class FacturaServiceImpl extends ConfigMapper implements FacturaService  
 	public List<TipoFactura> listaTipoFacturas() {
 
 		List<TipoFactura> listaTipoFactura = new ArrayList<TipoFactura>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 7042385651422192690L;
+
 			{
 				add(new TipoFactura(1L, "Cotizacion"));
 				add(new TipoFactura(2L, "Factura"));

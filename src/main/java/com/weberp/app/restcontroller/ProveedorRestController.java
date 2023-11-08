@@ -5,7 +5,6 @@ import com.weberp.app.dto.ProveedorDTO;
 import com.weberp.app.dto.config.ConfigMapper;
 import com.weberp.app.services.ProveedorService;
 import com.weberp.app.validator.ProveedorValidator;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,9 +29,6 @@ public class ProveedorRestController extends ConfigMapper{
 
     @Autowired
     private ProveedorService proveedorService;
-
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Autowired
     private ProveedorValidator proveedorValidator;

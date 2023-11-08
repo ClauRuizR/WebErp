@@ -1,17 +1,17 @@
 package com.weberp.app.services;
 
-import com.weberp.app.common.model.UsuarioUtil;
-import com.weberp.app.domain.Rol;
-import com.weberp.app.dto.RolDTO;
-import com.weberp.app.dto.config.ConfigMapper;
-import com.weberp.app.repositories.RolRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.weberp.app.domain.Rol;
+import com.weberp.app.dto.RolDTO;
+import com.weberp.app.dto.config.ConfigMapper;
+import com.weberp.app.repositories.RolRepository;
 
 /**
  * Created by claudioruiz on 6/9/17.

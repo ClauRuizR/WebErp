@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Guil on 5/7/2016.
  */
-public abstract class ParsableObject<D, V extends Parsable> implements Parsable<D, V> {
+public abstract class ParsableObject<D, V extends Parsable<?, ?>> implements Parsable<D, V> {
 
     private Mapper mapper = MapperObject.getInstance();
 
